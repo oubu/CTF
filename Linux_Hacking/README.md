@@ -1,15 +1,14 @@
 # Linux Hacking
 
-## Privilege Escalation
+## 提权
 
 * [Unix Privilege Escalation Exploits by years](https://github.com/Kabot/Unix-Privilege-Escalation-Exploits-Pack).
 
-## Folders
+## 附件文件夹
 
-### SSH Hacking
+### SSH攻击
 
-- getting unencrypted ssh keys from memory
-
+- 从内存中获取未加密的ssh密钥
 
 
 ### Shellshock
@@ -19,126 +18,108 @@
 
 ---
 
-## UNIX Exploits
+## UNIX利用
 
 ### RPC Daemons
 
-* rexd (remote execution): remote user runs a program on the system as a local user.
+* rexd (远程执行): 远程用户如同本地用户般执行程序
 
-* rshd, rlogind, sshd: honor trust relationship established with the source's IP address.
+* rshd, rlogind, sshd: 对基于源IP地址的建立关系高度信任
 
 
 ---
 
-## My Linux Guide & Tricks
+## 关于Linux的指南和技巧
 
-# The Linux Environment
+# Linux环境
 
 
-## The Linux Filesystem
+## Linux文件系统
 
-* Let's start getting an idea of our system. The *Linux filesystem* is composed of several system directories locate at **/**:
+* 让我们来了解我们的Linux系统。Linux文件系统由根目录（/）下多个系统目录构成：
 
 ```
 $ ls /
 ```
 
-* You can verify their sizes and where they are mounted with:
-
+* 你可以使用如下命令验证他们的大小和挂载点：
 ```
 $ df -h .
 Filesystem              Type  Size  Used Avail Use% Mounted on
 /dev/mapper/fedora-home ext4  127G   62G   59G  51% /home
 ```
 
-
-* The filesystem architecture is generally divided into the following folders:
+## Linux文件系统框架分为以下几个目录：
 
 ### /bin, /sbin and /user/sbin
-* **/bin** is a directory containing executable binaries, essential commands used in single-user mode, and essential commands required by all system users.
-
-* **/sbin** contains commands that are not essential for the system in single-user mode.
+* **/bin** 目录包含可执行文件，单用户模式下及所有系统用户的基本命令。
+* **/sbin**目录包含单用户模式系统非基本的命令 
 
 ### /dev
-* **/dev** contains device nodes, which are a type of pseudo-file used by most hardware and software devices (except for network devices).
+* **/dev** 目录包含设备节点（一种被大多数硬件和软件设备使用的为文件，网络设备除外） 
 
-* The directory also contains entries that are created by the **udev** system, which creates and manages device nodes on Linux (creating them dynamically when devices are found).
+* 目录还包括由udev系统生成的条目。（dev系统负责生成和管理Linux系统的设备节点，通常能够在发现设备时自动生成）
 
 ### /var
-* **/var** stands for variable and  contains files that are expected to be changing in size and content as the system is running.
-
-* For example, the system log files are located at **/var/log**, the packages and database files are located at **/var/lib**, the print queues are located at **/var/spool**, temporary files stay inside **/var/tmp**, and networks services can be found in subdirectories such as **/var/ftp** and **/var/www**.
+* **/var**是variable的简称，该目录包含系统运行过程中可变化大小和内容的文件。
+* 例如， 系统日志文件位于**/var/log**目录下, 包与数据库文件位于 **/var/lib**目录下,打印序列位于**/var/spool**目录下, 临时文件位于**/var/tmp**目录下,另外可以在**/var/ftp** 和**/var/www**等子目录下找到网络服务相关的文件
 
 ### /etc
 
-* **/etc** stands for the system configuration files. It contains no binary programs, but it might have some executable scripts.
+* **/etc**代表系统配置文件。该目录不包含二进制程序，但是会有一些可执行的脚本。
 
-* For instance, the file **/etc/resolv.conf** tells the system where to go on the network to obtain the host name of some IP address (*i.e.* DNS).
-
-* Additionally, the **/etc/passwd** file is the authoritative list of users on any Unix system. It does not contain the passwords: the encrypted password information was migrated into **/etc/shadow**.
+* 例如**/etc/resolv.conf**文件 包含主机名和相应的IP地址来完成DNS解析工作。
+* 另外t**/etc/passwd** 文件包含所有Unix系统上用户的认证信息，但其中不包含密码：经加密的密码信息已经被转存于**/etc/shadow**文件中。
 
 ### /lib
-* **/lib** contains libraries (common code shared by applications and needed for them to run) for essential programs in **/bin** and **/sbin**.
+* **/lib** 包含**/bin** 和 **/sbin**目录下基本程序的库(应用运行所需要并且相互共享的公共代码)。
 
-* This library filenames either start with ```ld``` or ```lib```  and are  called *dynamically loaded libraries* (or shared libraries).
-
+* 这些库文件名称通常以```ld```或者```lib``` 开头并且被称作*动态链接库*（或者共享库）
 
 ### /boot
 
-* **/boot** contains the few essential files needed to boot the system.
+* **/boot** 目录包含引导系统所需要的最基本的文件。
+* 安装在系统上每一个可替换的内核都包含4个文件：
 
-* For every alternative kernel installed on the system, there are four files:
+    * ```vmlinuz```: 引导所需要的压缩的Linux内核。
 
-    * ```vmlinuz```: the compressed Linux kernel, required for booting.
+    * ```initramfs``` or ```initrd```: 引导所需要的初始内存文件系统。
+    * ```config```: 调试所需要的内核配置文件。
 
-    * ```initramfs``` or ```initrd```: the initial RAM filesystem, required for booting.
+    * ```system.map```: 内核标志表。
 
-    * ```config```: the kernel configuration file, used for debugging.
-
-    * ```system.map```: the kernel symbol table.
-
-    * [GRUB](http://www.gnu.org/software/grub/) files can also be found here.
-
-
+    * [GRUB](http://www.gnu.org/software/grub/) 在这里也可以找到文件。
 
 ### /opt
-* Optional directory for application software packages, usually installed manually by the user.
+* 可选的应用软件包目录。该目录下的软件通常由用户手动安装。
 
 ### /tmp
-* **/tmp** contains temporary files that are  erased in a reboot.
+* **/tmp**目录包含一些临时文件，这些临时文件在重启后将被删除。 
 
 ### /usr
 
-* **/usr** contains multi-user applications, utilities and data. The common subdirectories are:
-    * **/usr/include**: header files used to compile applications.
+* **/usr** 目录包含多用户的应用、插件和数据。通常子目录有：
+    * **/usr/include**: 编译应用所用的头文件。
 
-    * **usr/lib**: libraries for programs in **usr/(s)bin**.
+    * **usr/lib**: 包含**usr/(s)bin**目录下程序的库文件。
 
-    * **usr/sbin**: non-essential system binaries, such as system daemons. In  modern Linux systems, this is actually linked together to **/sbin**.
+    * **usr/sbin**: 包含非必须的系统二进制文件，例如系统守护进程n。在目前的Linux系统中通常被链接至 **/sbin**目录。
 
-    * **usr/bin**: primary directory of executable commands of the system.
+    * **usr/bin**: 系统可执行命令的主要目录。
+    * **usr/share**: 被应用所使用的shaped数据, 通常是平台无关的。
+    * **usr/src**: 通常为Linux内核的源码。
 
-    * **usr/share**: shaped data used by applications, generally architecture-independent.
-
-    * **usr/src**: source code, usually for the Linux kernel.
-
-    * **usr/local**: data and programs specific to the local machine.
-
-
+    * **usr/local**: 针对本机的数据和程序。
 
 
 ---
 ## /dev Specials
 
-* There exist files provided by the operating system that do not represent any physical device, but provide a way to access special features:
-
-    * **/dev/null** ignores everything written to it. It's convenient for discarding unwanted output.
-
-    * **/dev/zero** contains an *infinite* numbers of zero bytes, which can be useful for creating files of a specified length.
-
-    * **/dev/urandom** and **/dev/random** contain infinite stream of operating-system-generated random numbers, available to any application that wants to read them. The difference between them is that the second guarantees strong randomness (it will wait until enough is available) and so it should used for encryption, while the former can be used for games.
-
-* For example, to output random bytes, you can type:
+* 存在操作系统提供的文件。这些文件虽然不代表任何物理设备, 但是使得用户能访问特殊功能。
+    * **/dev/null** 忽略任何写入的文件。 方便用于丢弃不要的输出。
+    * **/dev/zero** 包含一个无数个0字节*。可用于创建指定长度的文件。
+    * **/dev/urandom** and **/dev/random** 都包含无限个操作系统生成的随机数。对于所有应用程序都可访问。 两者的区别在于后者随机性更强，因此可用于加密。而前者只可用于游戏。
+* 例如使用一下命令即可输出随机数:
 
 ```
 $ cat /dev/urandom | strings
@@ -148,30 +129,30 @@ $ cat /dev/urandom | strings
 
 ## The Kernel
 
-*  The **Linux Kernel** is the program that manages *input/output requests* from software, and translates them into *data processing instructions* for the *central processing unit* (CPU).
+*  **Linu内核** 是管理来自软件*输入/输出请求* 并编译成CPU可执行的*数据处理指令* 的程序。
 
-* To find the Kernel information you can type:
+* 如何查找内核信息?
 
 ```
 $ cat /proc/version
 Linux version 3.14.9-200.fc20.x86_64 (mockbuild@bkernel02.phx2.fedoraproject.org) (gcc version 4.8.3 20140624 (Red Hat 4.8.3-1) (GCC) ) #1 SMP Thu Jun 26 21:40:51 UTC 2014
 ```
 
-* You can also print similar system information with  the specific command to print system information, ```uname```. The flag **-a** stands for all:
+* 你也可以通过指定的命令```uname```来查看类似的系统信息：
 
 ```
  $ uname -a
  Linux XXXXX 3.14.9-200.fc20.x86_64 #1 SMP Thu Jun 26 21:40:51 UTC 2014 x86_64 x86_64 x86_64 GNU/Linux
 ```
 
-* For instance, we might be interested on **checking whether you are using the latest Kernel**. You can do this by checking whether the outputs of the following commands match:
+* 例如，你可能想要验证你是否使用最新的内核。你可以通过查看如下两个命令输出是否一致来确认：
 
 ```
 $ rpm -qa kernel | sort -V | tail -n 1
 $ uname -r
 ```
 
-* Additionally, for Fedora (and RPM systems) you can check  what kernels are installed with:
+* 另外，对于Fedora(以及其他RPM系统)你可以使用如下命令查看安装的内核情况：
 
 ```
 $ rpm -q kernel
@@ -181,9 +162,8 @@ $ rpm -q kernel
 ---
 ## Processes
 
-* A running program is called **process**. Each process has a **owner** (in the same sense as when we talk about file permissions below).
-
-* You can find out which programs are running with the **ps** command. This also gives the **process ID** or **PID**, which is a unique long-term identity for the process (different copies of a given program will have separate PIDs).
+* 正在运行的程序被称作**process**（进程）。每个进程都有一个**owner**（所属用户）。（这和我们下面谈到的文件权限一样）
+* 通过**ps**命令你可以知道那些程序在运行。命令的输出也列出**process ID** 或者称 **PID**。这是某个进程的唯一标识（也是长期的）。如果对某个程序进行复制，每个进程将会分的不同的PID。
 
 * To put a job (process) in the background we either run it with **&** or we press CTRL-Z and then type **bg**. To bring back to the foreground, we type **fg**.
 
@@ -192,19 +172,19 @@ $ rpm -q kernel
 
 ### ps
 
-* To see the processes that were not started from your current session you can run:
+* 想要查看非当前会话启动的进程可以执行如下命令:
 
 ```
 $ ps x
 ```
 
-* To see your processes and those belonging to other users:
+* 查看当前用户与其他用户进程:
 
 ```
 $ ps aux
 ```
 
-* To list all zombie processes you can either do:
+* 列出所有僵尸进程:
 
 ```
 $ ps aux | grep -w Z
@@ -219,123 +199,114 @@ $ ps -e
 
 ### top
 
-* Another useful command is **top** (table of processes). It tells you which programs are using the most of memory or CPU:
-
+* 另一个有用的命令是**top** (table of processes)。它能告诉你占用内存和CPU最高的是那些进程。 
 ```
 $ top
 ```
 
-* I particularly like [htop](http://hisham.hm/htop/)  over top, which needs to be installed if you want to use it.
+* 我特别喜欢 [htop](http://hisham.hm/htop/) 命令，甚至胜过了top命令。htop命令需要安装才能使用。
 
 ### kill
 
-* To stop running a command you can use **kill**. This will send a message called  **signal** to the program. There are [64 different signals](http://www.linux.org/threads/kill-commands-and-signals.4423/), some having   distinct meanings from *stop running*:
+*  你可以使用**kill**命令来结束运行的程序。 这个命令将向程序发送称为 **signal**（信号量）的消息。 有[64种不同的信号量](http://www.linux.org/threads/kill-commands-and-signals.4423/), 每一种信号量都有不同的意义:
 
 ```
 $ kill <ID or PID>
 ```
 
-* The default signal sent by kill is **SIGTERM**, telling the program that you want it to quit. This is just a request, and the program can choose to ignore it.
+* kill命令默认发送的信号量是**SIGTERM**,告诉程序你想要退出 。这只是一个请求，程序可以选择忽视他。
 
-* The signal **SIGKILL** is mandatory and cause the immediate end of the process. The only exception is if the program is in the middle of making a request to the operating system, *i.e.* a system call). This is because the request needs to finish first.   **SIGKILL** is the 9th signal in the list and it is usually sent with:
-
+* 信号量 **SIGKILL** 具有强制性，能够立刻终止某个进程。但是也存在特殊情况，比如进程正处于在向操作系统的某个请求中（例如某种系统调用），而请求需要先完成。**SIGKILL**是信号量列表中第9个，因此往往通过以下形式命令发送信号量。
 ```
 $ kill -9 <ID or PID>
 ```
 
-* Pressing CTRL-C is a simpler way to tell the program to quit, and it sends a message called **SIGINT**. You can also specify the PID as an argument to kill.
+* CTRL-C组合键是一个退出进程更加简单的方式 ，它发送的信号量为**SIGINT**。你也可以指定一个PID座位参数。
 
 
 ### uptime
 
-* Another great command is **uptime**, which shows how long the system has been running, with a measure of its load average as well:
-
+* 另一个好用的命令是 **uptime**。它能够给出系统运行的时间，同时也能计算出系统的平均负载。
 ```
 $ uptime
 ```
 
 ### nice and renice
 
-* Finally, you can change processes priority using ```nice``` (runs a program with modified scheduling priority) and ```renice```(alter priority of running processes).
+*  最后介绍的是```nice``` 和```renice```。你可以使用使用这两个命令来修改进程的优先级。其中nice命令使用计划变更的优先级运行某个程序，而renice直接修改某个运行中进程的优先级。
 
 
 ---
-## Environment Variables
+## 环境变量
 
-* *Environment variables* are several dynamic named values in the operating system that can be used in running processes.
+* *Environment variables*（环境变量） 是一些操作系统中可被用于运行中进程的动态命名变量。 
 
 
-### set and env
-*  You can see the *environment variables and configuration* in your system with:
+### set与env
+*  你可以在系统中使用如下命令查看环境变量和配置：
 
 ```
 $ set
 ```
-or
+或者
 ```
 $ env
 ```
 
-### export and echo
-* The value of an environment variable can be changed with:
+### export与echo
+* 使用如下命令可以修改环境变量的值：
 
 ```
 $ export VAR=<value>
 ```
 
-* The value can be checked with:
+* 使用echo命令即可检查环境变量的值：
 
 ```
 $ echo $VAR
 ```
 
-* The **PATH** (search path) is the list of directories that the shell look in to try to find a particular command. For example, when you type ```ls``` it will look at ```/bin/ls```. The path is stored in the variable **PATH**, which is a list of directory names separated by colons and it's coded inside **./bashrc**. To export a new path you can do:
-
+*  **PATH** (搜索路径) 是一些供shell寻找命令的目录。 例如当你输入 ```ls```命令后，它将查看```/bin/ls```。 目录被存储在环境变量**PATH**中,这些目录被冒号分割并且被编码在文件**./bashrc** 中。你可以使用以下命令来增加一个新目录。
 ```
 $ export PATH=$PATH:/<DIRECTORY>
 ```
 
-### Variable in Scripts
+### 脚本中的变量
 
-* Inside a running shell script, there are pseudo-environment variables that are called with **$1**, **$2**, etc., for individual arguments that were passed to the script when it was run. In addition, **$0** is the name of the script and **$@** is for the list of all the command-line arguments.
-
-
-
+* 在一个运行的shell脚本中，有称为**$1**和**$2**等等的虚拟环境变量，这些变量对应相应的被传入脚本的参数。另外**$0**代表脚本的名字，**$@**代表所有命令行参数的列表。 
 
 
 ---
-##  The "~/." Files (dot-files)
+##  "~/." 文件 (dot-files)
 
-*  The leading dot in a file is used as an indicator to not list these files normally, but only when they are specifically requested. The reason is that, generally, dot-files are used to store configuration and sensitive information for  applications.
+* 某些文件的文件名前带有一个点号（英文句号）。在这里点号表明不该正常列出这些文件，除非特别地指明需要列出这些文件。这是因为dot-files（点号文件）通常用于存储应用功能的配置和敏感信息。
 
 ### ~/.bashrc
 
-* **~/.bashrc** contains scripts and variables that are executed when bash is invoked.
-
-* It's a good experience to customize your **~/.bashrc**. Just google for samples, or take a look at this [site dedicated for sharing dot-files](http://dotfiles.org), or at  [mine](https://github.com/mariwahl/Dotfiles-and-Bash-Examples/blob/master/configs/bashrc). Don't forget to ```source``` your **./bashrc** file every time you make a change (opening a new terminal has the same effect):
+* **~/.bashrc**包含bash被调用后执行的脚本和变量。
+* 自定义你的 **~/.bashrc**文件是一种很棒的体验. 可以google一下或者看下[site dedicated for sharing dot-files](http://dotfiles.org)以及 [mine](https://github.com/mariwahl/Dotfiles-and-Bash-Examples/blob/master/configs/bashrc)。不要忘了每次你更改**./bashrc**文件后使用```source``` 命令（重新打开一个终端也有同样的效果):
 
 ```
 $ source ~/.bashrc
 ```
 
-### Sensitive dot-files
+### 重要的dot-files
 
-* If you use  cryptographic programs such as [ssh](http://en.wikipedia.org/wiki/Secure_Shell) and [gpg](https://www.gnupg.org/), you'll find that they keep a lot of information in the directories **~/.ssh** and **~/.gnupg**.
+* 如果你使用具有加密功能的程序I例如 [ssh](http://en.wikipedia.org/wiki/Secure_Shell) 和 [gpg](https://www.gnupg.org/), 你会在目录**~/.ssh** 和**~/.gnupg**下找到它们存储的大量的信息。
+* 如果你是*Firefox* 用户, **~/.mozilla**目录包含了你web浏览器的历史记录、书签、cookie和任何被保存的密码。
 
-* If you are a *Firefox* user, the **~/.mozilla** directory contains your  web browsing history, bookmarks, cookies, and any saved passwords.
-
-* If you use [Pidgin](http://pidgin.im/), the **~/.purple** directory (after the name of [the IM library](https://developer.pidgin.im/wiki/WhatIsLibpurple)) contains private information. This includes sensitive cryptographic keys for users of cryptographic extensions to Pidgin such as [Off-the-Record](https://otr.cypherpunks.ca/).
+* 如果你使用 [Pidgin](http://pidgin.im/), **~/.purple** 目录 ([the IM library](https://developer.pidgin.im/wiki/WhatIsLibpurple)) 包含隐私信息。其中包括敏感的Pidgin加密扩展（比如 [Off-the-Record](https://otr.cypherpunks.ca/)）的用户密钥。
 
 
 ---
-## File Descriptors
+## 文件描述符
 
-* A **file descriptor** (FD) is a number indicator for accessing an I/O resource. The values are the following:
-    * fd 0: stdin (standard input).
-    * fd 1: stdout (standard output).
-    * fd 2: stderr (standard error).
+* **file descriptor** (文件描述符) 是访问I/O资源所使用的数字描述符。其值如下：
+    * fd 0: stdin (标准输入).
+    * fd 1: stdout (标准输出).
+    * fd 2: stderr (标准错误).
 
-* This naming is used for manipulation of these resources  in the command line. For example,  to send an **input** to a program you use **<**:
+* 这种命名方式用于在命令行中操作这些资源。例如，可以使用 **<**将输出重定向到某个程序：
 
 ```
 $ <PROGRAM> < <INPUT>
@@ -360,7 +331,7 @@ $ <PROGRAM> 2>&1
 ```
 
 ----
-## File Permissions
+## 文件权限
 
 * Every file/directory in Linux is said to belong to a particular **owner** and a particular **group**. Files also have permissions stating what operations are allowed.
 
