@@ -35,9 +35,9 @@ All in one big bag. Educational purposes.
 
 ----
 
-### Useful Command Line
+### 好用的Linux命令
 
-#### Searching
+#### 搜索
 
 
 ```
@@ -53,7 +53,7 @@ find -size f1
 
 
 
-#### Compressed Files
+#### 压缩文件
 
 
 ```
@@ -68,7 +68,7 @@ tar -xvf file
 
 
 
-#### Connecting to a Server/Port
+#### 远程连接
 
 ```
 
@@ -83,14 +83,14 @@ nmap -p 31000-32000 localhost
 telnet localhost 3000
 ```
 
-
 ----
 
-## References:
+## 参考资料
 
-### Books I Recommend
+### 推荐数据
 
-#### Technical
+#### 技术类
+
 - [Bulletproof SSL and TLS](http://www.amazon.com/gp/product/1907117040?psc=1&redirect=true&ref_=oh_aui_detailpage_o06_s00)
 - [Reversing: Secrets of Reverse Engineering](http://www.amazon.com/Reversing-Secrets-Engineering-Eldad-Eilam/dp/0764574817)
 - [The Art of Memory Forensics](http://www.amazon.com/gp/product/1118825098?psc=1&redirect=true&ref_=oh_aui_search_detailpage)
@@ -108,13 +108,13 @@ telnet localhost 3000
 - [Shellcoders Handbook](www.amazon.com/The-Shellcoders-Handbook-Discovering-Exploiting/dp/047008023X)
 - [Practice Malware Analysis](https://www.nostarch.com/malware)
 
-#### Fun
+#### 娱乐
 
 - [Spam Nation](http://www.amazon.com/Spam-Nation-Organized-Cybercrime-Epidemic/dp/1492603236/ref=tmm_pap_swatch_0?_encoding=UTF8&sr=&qid=)
 - [The Art of Intrusion](http://www.amazon.com/The-Art-Intrusion-Intruders-Deceivers/dp/0471782661http://www.amazon.com/The-Art-Intrusion-Intruders-Deceivers/dp/0471782661)
 - [This Machine Kills Secrets](http://www.amazon.com/This-Machine-Kills-Secrets-Whistleblowers/dp/0142180491/ref=sr_1_1?s=books&ie=UTF8&qid=1436039456&sr=1-1&keywords=this+Machine+Kills+Secrets)
 
-### Other Resources
+### 其他资源
 
 - Krebs Series on how to be in InfoSec: [Thomas Ptacek](http://krebsonsecurity.com/2012/06/how-to-break-into-security-ptacek-edition/#more-15594), [Bruce Schneier](http://krebsonsecurity.com/2012/07/how-to-break-into-security-schneier-edition/#more-15592), [Charlie Miller](http://krebsonsecurity.com/category/how-to-break-into-security/)
 - [How to be a InfoSec Geek](http://www.primalsecurity.net/how-to-be-an-infosec-geek/)
