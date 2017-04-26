@@ -1,36 +1,36 @@
-# Forensics
+# 取证
 
-## Disk Forensics
+## 磁盘取证
 
-### Basic useful CLI tools:
+### 一些基础使用的命令行工具
 
 #### ps
-Show the processes for all users (a), displaying the process's user/ownser (u), and the processes that are not attached to a terminal (x):
+
+列出所有用户的进程（a）,并显示所属用户名（u）,另外还包括没有绑定终端的（x）.
 
 ```shell
 $ ps aux
 ```
-
-Display the full listing of all processes (useful for finding underisable processes):
+显示所有进程完整的列表
 
 ```shell
 $ ps ef
 ```
 
 #### lsof
+查看指定进程详细信息，包括与之相关的文件和端口。
 
-Display a specific pricess in more details, by displaying the files and ports associated with that process.
 ```shell
 $ lsof -p
 ```
-
-Display processes running form or acessing files that have been unlinked: 
+查看进程运行状态或者正在访问的文件：
 
 ```shell
 $ lsof +L1
 ```
 
 #### find
+查找命令
 
 ```shell
 $ find / -uid 0
@@ -38,15 +38,14 @@ $ find / -uid 0
 
 ### arp
 
-Display all MAC to IP address mapping of the system (useful for finding addresses of systems that are not part of the network.
+查看所有系统的MAC&IP地址映射
 
 ```shell
 $ arp -a
 ```
 
 
-Others: uptime, free, df.
-
+其他一些命令: uptime, free, df.
 
 ### dd
 
