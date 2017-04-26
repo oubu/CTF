@@ -1,9 +1,9 @@
-CTFs & Wargames Archives
+CTFs 与 Wargames 整理
 ========================
 
 # CTFs
 
-## 2014
+## 见附件
 
 - ASIS Final
 - CSAW Quals
@@ -15,50 +15,41 @@ CTFs & Wargames Archives
 ---
 # Wargames
 
-## 2014
+## 见附件
 
 - OverTheWire: Krypton, Narnia
 
 
 ----
 
-# Trivia List (For Reference)
-
-## CSAW CTF 2014
-
-1. This is the name of the new USENIX workshop that featured papers on CTFs being used for education. Answer: **3GSE**
-
-2. This x86 instruction is an alias for pop eip/rip.
-Answer: **RET**
-
-3. This is a type of informal security meetup that has been gaining popularity in different cities over the last several years.  Answer: **CitySec**
-
-4. This is what geohot and other members of the CTF community are calling live streamed CTF competitions where spectators can watch competitors screens as they solve challenges. Answer: **livectf**
-
-5. On this day in November, the CSAW Career Fair takes place in Brooklyn, New York. Answer: **14**
-
-6. This is the Twitter handle of the student who runs CSAW CTF. Answer: **poopsec**
- 
-
 ---
-# Recon
+# Recon-侦察
 
+### 互联网浏览 
 
-### Searching the Internets
 
 The recon problems usually give you someone/something's name and a task or a hint to find some specific information about it. So the first thing is of course google it.
 
 Google anything using keywords such as ```filetype:cgi inurl:cgi-bin```
 
+>译者注：此法即为Goole Hacking。可以使用火狐浏览器的hack search插件方便地进行Google Hacking。
 
-### In addition we can look at:
 
-- Facebook, Twitter, Linkedin, Google+, reddit,  /r/netsec.
-- IRC: with **/whois **.
+
+### 另外我们也可以查询：
+
+- Facebook, Twitter, Linkedin, Google+, reddit,/r/netsec.
+- IRC: with **/whois**.
 - [namechk] 
-- Github: check in the commit history.
+- Github: 检查提交历史记录。
 
-#### Search Engines for People Lookup
+
+#### DNS信息(补充)
+- http://robtex.org DNS关联碰撞、WHOIS信息
+
+
+
+#### 身份搜索引擎
 
 - http://www.lookup.com
 - http://www.spokeo.com
@@ -73,19 +64,20 @@ Google anything using keywords such as ```filetype:cgi inurl:cgi-bin```
 - http://radaris.com/ 
 - http://www.yellowbook.com
 - http://www.dexknows.com
-- https://www.facebook.com/directory/people/
+- https://www.facebook.com/directory/people/ (facebook高级搜索，chrome群聊人员插件)
 - http://regulargeek.com/2012/07/15/yacktrack-will-be-shutting-down/
 - http://www.peekyou.com
 - http://www.swithcboard.com
 - http://www.bigfoot.com
 
-#### Background Check:
+
+#### 背景调查
 
 - http://www.intelius.com/background-check.html
 - http://www.jailbase.com/en/sources/fl-lcso/
 - http://www.peoplerecords.com
 
-#### E-Mail Lookup:
+#### 电子邮箱调查
 
 - http://www.snapbird.org
 - https://connect.data.com/
@@ -94,7 +86,7 @@ Google anything using keywords such as ```filetype:cgi inurl:cgi-bin```
 - http://www.emailaddresses.com
 
 
-#### Finding pictures:
+#### 图片搜索
 
 - [karmadecay]
 - [tineye]
@@ -105,6 +97,10 @@ Google anything using keywords such as ```filetype:cgi inurl:cgi-bin```
 [tineye]:  https://www.tineye.com/
 [images.google.com]: https://images.google.com/?gws_rd=ssl
 [namechk]: http://namechk.com
+
+#### 网络空间资产搜索(补充)
+- http://censys.io
+- 钟馗之眼
 
 
 ----
