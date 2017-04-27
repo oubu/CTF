@@ -58,21 +58,21 @@ $ BOOT_IMAGE=/vmlinuz-3.5.0-23-generic
 
 
 
-### scalpel
+### scalpel 文件分割器
 
-### TrID
+### TrID 文件类型分析工具
 
-### binwalk
+### binwalk 后门（固件）分析工具
 
-### foremost
+### foremost 文件恢复工具
 
-### ExifTool
+### ExifTool 图片信息查看工具
 
-### dff
+### dff （Digital Forensics Framework）恢复丢失文件，证据分析
 
-### CAINE
+### CAINE 填补不同工具间的互操作间隙
 
-### The Sleuth Kit
+### The Sleuth Kit 分析磁盘映像，恢复文件
 
 
 ----------
