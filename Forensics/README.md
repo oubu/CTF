@@ -77,7 +77,7 @@ $ BOOT_IMAGE=/vmlinuz-3.5.0-23-generic
 
 ----------
 
-## Memory Forensics
+## 内存取证
 
 ### memdump
 
