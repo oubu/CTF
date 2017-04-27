@@ -83,11 +83,11 @@ $ BOOT_IMAGE=/vmlinuz-3.5.0-23-generic
 
 
 
-### Volatility: 分析备份文件系统
+### Volatility分析镜像文件: 分析备份文件系统
 
-* [Lots of material on Volatility and Memory Forensics here](volatility.md)
-* [On OSX Memory Forensics](osx_memory_forensics.md)
-* I highly recommend their training.
+* [更多关于分析镜像，备份文件系统的信息](volatility.md)
+* [OSX系统内存取证](osx_memory_forensics.md)
+* 强烈推荐他们的练习.
 
 
 ---------------
