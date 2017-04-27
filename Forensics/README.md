@@ -47,9 +47,11 @@ $ arp -a
 
 其他一些命令: uptime, free, df.
 
-### dd
+### dd 
+拷贝文件并转换
 
-### strings
+### strings 
+查找字符串
 
 ```shell
 $ strings /tmp/mem.dump | grep BOOT_
@@ -91,7 +93,7 @@ $ BOOT_IMAGE=/vmlinuz-3.5.0-23-generic
 
 
 ---------------
-## Scripts
+## 脚本
 
 #### PDFs
 测试PDF文件的工具:
