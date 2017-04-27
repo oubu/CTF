@@ -333,8 +333,7 @@ $ <PROGRAM> 2>&1
 ----
 ## 文件权限
 
-* Every file/directory in Linux is said to belong to a particular **owner** and a particular **group**. Files also have permissions stating what operations are allowed在Linux中每一个文件或目录据说都属于一个特定的**owner**和一个特定的**group**
-.文件可以在操作被允许的地方进行声明.
+* 在Linux中每一个文件或目录据说都属于一个特定的**owner**和一个特定的**group**.文件可以在操作被允许的地方进行声明.
 
 
 ### chmod
