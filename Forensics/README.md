@@ -79,11 +79,11 @@ $ BOOT_IMAGE=/vmlinuz-3.5.0-23-generic
 
 ## 内存取证
 
-### memdump
+### 内存显示备份文件系统
 
 
 
-### Volatility: Analysing Dumps
+### Volatility: 分析备份文件系统
 
 * [Lots of material on Volatility and Memory Forensics here](volatility.md)
 * [On OSX Memory Forensics](osx_memory_forensics.md)
@@ -101,7 +101,7 @@ $ BOOT_IMAGE=/vmlinuz-3.5.0-23-generic
 
 
 -----------
-## References
+## 参考文献
 
-* [File system analysis](http://wiki.sleuthkit.org/index.php?title=FS_Analysis)
-* [TSK Tool Overview](http://wiki.sleuthkit.org/index.php?title=Mactime)
+* [文件系统分析](http://wiki.sleuthkit.org/index.php?title=FS_Analysis)
+* [TSK工具概述](http://wiki.sleuthkit.org/index.php?title=Mactime)
