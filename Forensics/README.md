@@ -94,7 +94,7 @@ $ BOOT_IMAGE=/vmlinuz-3.5.0-23-generic
 ## Scripts
 
 #### PDFs
-Tools to test a PDF file:
+测试PDF文件的工具:
 
 - pdfid
 - pdf-parser
