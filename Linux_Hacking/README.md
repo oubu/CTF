@@ -318,7 +318,7 @@ $ <PROGRAM> < <INPUT>
 $ <PROGRAM> > /dev/null
 ```
 
-* To send the program's error messages to a file you use the file descriptor 2:
+* 你可以使用“file descriptor 2”向文件发送程序错误信息:
 
 ```
 $ <PROGRAM> 2> <FILE>
