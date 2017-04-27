@@ -312,7 +312,7 @@ $ source ~/.bashrc
 $ <PROGRAM> < <INPUT>
 ```
 
-* To send a program's **output** somewhere else than the terminal (such as a file), you use **>**. For example, to just  discard the output:
+* 你可以使用**>**向终端以外（例如文件）发送程序的**output**，例如，仅仅删除输出:
 
 ```
 $ <PROGRAM> > /dev/null
@@ -324,7 +324,7 @@ $ <PROGRAM> > /dev/null
 $ <PROGRAM> 2> <FILE>
 ```
 
-* To send the program's error messages to the same place where **stdout** is going, *i.e.* merging it into a single stream (this works greatly for pipelines):
+* 为了向**stdout**正在运行的地方发送程序错误的信息，*i.e.*将其并入一个单独的字串流（这在导管输送中极为有效）:
 
 ```
 $ <PROGRAM> 2>&1
@@ -333,7 +333,8 @@ $ <PROGRAM> 2>&1
 ----
 ## 文件权限
 
-* Every file/directory in Linux is said to belong to a particular **owner** and a particular **group**. Files also have permissions stating what operations are allowed.
+* Every file/directory in Linux is said to belong to a particular **owner** and a particular **group**. Files also have permissions stating what operations are allowed在Linux中每一个文件或目录据说都属于一个特定的**owner**和一个特定的**group**
+.文件可以在操作被允许的地方进行声明.
 
 
 ### chmod
