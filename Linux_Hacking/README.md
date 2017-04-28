@@ -360,11 +360,11 @@ $ <PROGRAM> 2>&1
     * An abbreviated letter-based form using symbolic modes:  u, g, or a, followed by a plus or minus, followed by a letter r, w, or x. This means that u+x "grants user execute permission", g-w  "denies group write permission", and a+r  "grants all read permission":```$ chmod g-w <FILENAME>```.
 
 
-* To change the group you use ```chgrp```, using the same logic as for chmod.
+* 你可以使用```chgrp```来改变组别,与改变权限是一样的逻辑.
 
 
 
-* To see the file permissions in the current folder, type:
+* 如果想要在最近的文件夹里查看文件的权限，需要输入:
 
 ```
 $ ls -l
@@ -375,13 +375,13 @@ $ ls -l
 
 ---
 
-#  Shell Commands and Tricks
+#  Shell Commands 和 Tricks
 
-## Reading Files
+## 浏览文件
 
 ### cat
 
-* Prints the content of a file in the terminal:
+* 在终端打印文件内容:
 
 ```
 $ cat <FILENAME>
@@ -389,29 +389,29 @@ $ cat <FILENAME>
 
 ### tac
 
-* Prints the inverse of the content of a file  in the terminal (starting from the bottom):
+* 在终端颠倒着打印文件内容（从底部开始）:
 
 ```
 $ tac <FILENAME>
 ```
 
-### less and more
+### less 和 more
 
-* Both print the content of a file, but adding page control:
+* 两者都是打印文件内容，但是加入了页数控制:
 
 ```
 $ less <FILENAME>
 $ more <FILENAME>
 ```
 
-### head and tail
-* To read 20 lines from the begin:
+### head 和 tail
+* 从开头浏览20行:
 
 ```
 $ head -20 <FILENAME>
 ```
 
-* To read 20 lines from the bottom:
+* 从底部浏览20行:
 
 ```
 $ tail -10 <FILENAME>
@@ -419,7 +419,7 @@ $ tail -10 <FILENAME>
 
 ### nl
 
-* To print (cat) a file with line numbers:
+* 打印含有行数数字的文件:
 
 ```
 $ nl <FILENAME>
@@ -427,7 +427,7 @@ $ nl <FILENAME>
 
 ### tee
 
-* To save the output of a program and see it as well:
+* 保存文件的输出并使它可见:
 
 ```
 $ <PROGRAM> | tee -a <FILENAME>
@@ -435,7 +435,7 @@ $ <PROGRAM> | tee -a <FILENAME>
 
 ### wc
 
-* To print the length and number of lines of a file:
+* 打印文件的长度和行数:
 
 ```
 $ wc <FILENAME>
@@ -445,17 +445,18 @@ $ wc <FILENAME>
 
 ---
 ## Searching inside Files
+在文件中搜索
 
-### diff and diff3
+### diff 和 diff3
 
-* **diff** can be used to compare files and directories. Useful flags include: **-c** to list  differences, **-r** to recursively compare subdirectories, **-i** to ignore case, and **-w** to ignore spaces and tabs.
+* **diff**可以用来比较文件和目录.实用的参数包括：**-c**列举不同之处,**-r**递归比较子目录,**-i**忽略大小写,**-w**忽略空格和符号.
 
-* You can compare three files at once using **diff3**, which uses one file as the reference basis for the other two.
+* 你可以立刻使用**diff3**来比较三个文件，其中一个被用以作为另外两个的参考依据.
 
 
 ### file
 
-* The command **file** shows the real nature of a file:
+* 命令**file**展现了文件的真实属性:
 
 ```
 $ file requirements.txt
@@ -463,7 +464,7 @@ requirements.txt: ASCII text
 ```
 
 ### grep
-* **grep** finds matches for a particular search pattern. The flag **-l** lists the files that contain matches, the flag **-i** makes the search case insensitive, and the flag **-r** searches all the files in a directory and subdirectory:
+* **grep** finds matches for a particular search pattern. The flag **-l** lists the files that contain matches, the flag **-i** makes the search case insensitive, and the flag **-r** searches all the files in a directory and subdirectory**grep**寻找特定搜索模式匹配.:
 
 ```
 $ grep -lir <PATTERN> <FILENAME>
