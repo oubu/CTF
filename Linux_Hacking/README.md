@@ -346,14 +346,14 @@ $ <PROGRAM> 2>&1
 * 使用```chmod```命令以改变权限.
 
 
-### chown and chgrp
+### 改变文件所属的用户和组
 
-* Unix permissions model  does not support *access control lists*  allowing a file to be shared with an enumerated list of users for a particular purpose. Instead, the admin needs to put all the users in a group and make the file  to belong to that group. File owners cannot share files with an arbitrary list of users.
+* Unix权限模型不支持*access control lists*命令以出于特定目的与枚举用户列表分享文件.因此,管理员需要将所有用户拉入一个特殊组别使得文件属于这个组别.文件的拥有者将不能随意分享文件.
 
 
-* There are three agents relate to the resource: user, group, and all. Each of them can have separated permissions to read, write, and execute.
+* 关于资源有三个操作者：使用者,特定组别和所有人.每一个都有他们相分割的权限来浏览,编辑和执行文件.
 
-* To change the owner of a resource you use ```chown```. There are two ways of setting permissions with chmod:
+* 你可以使用```chown```来改变资源的拥有者.有两种方法来设置改变权限的权限:
 
     * A numeric form using octal modes: read = 4, write = 2, execute = 1, where you multiply by user = x100, group = x10, all = x1, and sum the values corresponding to the granted permissions. For example 755 = 700 + 50 + 5 = rwxr-xr-x: ``` $ chmod 774 <FILENAME>```
 
