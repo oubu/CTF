@@ -336,14 +336,14 @@ $ <PROGRAM> 2>&1
 * 在Linux中每一个文件或目录据说都属于一个特定的**owner**和一个特定的**group**.文件可以在操作被允许的地方进行声明.
 
 
-### chmod
-* A resource can have three permissions: read, write, and execute:
+### 改变文件或目录访问权限
+* 资源会有三个权限：只读，可写和执行:
 
-    * For a file resource, these permission are: read the file, to modify the file, and to run the file as a program.
+    * 对于一个文件来说,这些权限是阅读文件,修改文件和以程序运行文件.
 
-    * For a directory, these permissions are: the ability to list the directory's contents, to create and delete files inside the directory, and to access files within the directory.
+    * 对于目录来说,这些权限则是：列出目录内容,创建或删除目录中的文件和访问目录中的文件.
 
-* To change the permissions you use the command ```chmod```.
+* 使用```chmod```命令以改变权限.
 
 
 ### chown and chgrp
