@@ -57,7 +57,7 @@ $ wget -rck <TARGET-WEBSITE>
 ```
 * 电子邮件账户身份证明: 使用 **theharverster**, **maltego**, **msfcli (metasploit)**.
 
-* 提取元数据: 使用 **Metagoofil** 和 **FOCA**. 也可以使用 googling qith ```地址来完成: www.url.com ext:pdf intitle:"Documents and settings"```.
+* 提取元数据: 使用 **Metagoofil** 和 **FOCA**. 也可以使用 googling qith ```with: www.url.com ext:pdf intitle:"Documents and settings"```.
 
 * 对建立在相同IP地址的其他域的搜索（虚拟主机）: 使用 **revhosts**.
 
