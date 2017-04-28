@@ -370,7 +370,7 @@ $ <PROGRAM> 2>&1
 $ ls -l
 ```
 
-* For example, ```-rw-r--r--``` means that it is a file (-) where the owner has read (r) and write (w) permissions, but not execute permission (-).
+* 例如,```-rw-r--r--```表示这是文件(-)拥有者阅读(r)编辑(w)的权限,但是并没有执行权限(-).
 
 
 ---
