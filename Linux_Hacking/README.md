@@ -451,7 +451,7 @@ $ wc <FILENAME>
 
 * **diff**可以用来比较文件和目录.实用的参数包括：**-c**列举不同之处,**-r**递归比较子目录,**-i**忽略大小写,**-w**忽略空格和符号.
 
-* 你可以立刻使用**diff3**来比较三个文件，其中一个被用以作为另外两个的参考依据.
+* 你可以立刻使用**diff3**来比较三个文件，其中一个文件被用以作为另外两个的参考依据.
 
 
 ### file
@@ -464,13 +464,13 @@ requirements.txt: ASCII text
 ```
 
 ### grep
-* **grep** finds matches for a particular search pattern. The flag **-l** lists the files that contain matches, the flag **-i** makes the search case insensitive, and the flag **-r** searches all the files in a directory and subdirectory**grep**寻找特定搜索模式匹配.:
+* **grep**寻找特定搜索模式匹配.参数**-l**列举包含匹配的文件,参数**-i** 使得搜索对于大小写非常敏感,**-r**搜索所有目录以及子目录里的文件:
 
 ```
 $ grep -lir <PATTERN> <FILENAME>
 ```
 
-* For example, to remove lines that are not equal to a word:
+* 例如,移动整行并不等于移动一个词:
 
 ```
 $ grep -xv <WORD> <FILENAME>
@@ -482,19 +482,19 @@ $ grep -xv <WORD> <FILENAME>
 
 ### ls
 
-* **ls**  lists  directory and files. Useful flags are **-l** to list the permissions of each file in the directory and **-a** to include the dot-files:
+* **ls**列出目录和文件.实用的参数**-l**用以列出目录中的每个文件的权限,**-a**把dot文件列入:
 
 ```
 $ ls -la
 ```
 
-* To list files sorted by size:
+* 根据大小排序文件:
 
 ```
 $ ls -lrS
 ```
 
-* To list the names of the 10 most recently modified files ending with .txt:
+* 列出最近修改的10个以.txt结尾的文件的文件名:
 
 ```
 $ ls -rt *.txt | tail -10
@@ -503,12 +503,12 @@ $ ls -rt *.txt | tail -10
 
 ### tree
 
-* The **tree** command lists contents of directories in a tree-like format.
+* **tree**命令用以列举树形图中目录的内容.
 
 
 ### find
 
-* To find files in a directory:
+* 在目录中查找文件:
 
 ```
 $ find <DIRECTORY> -name <FILENAME>
@@ -516,7 +516,7 @@ $ find <DIRECTORY> -name <FILENAME>
 
 ### which
 
-* To find  binaries in PATH variables:
+* 找到二进制文件的路径变量:
 
 ```
 $ which ls
@@ -524,7 +524,7 @@ $ which ls
 
 ### whereis
 
-* To find any file in any directory:
+* 在任意目录中查找文件:
 
 ```
 $ whereis <FILENAME>
@@ -532,13 +532,13 @@ $ whereis <FILENAME>
 
 ### locate
 
-* To find files by name (using database):
+* 按文件名查找文件（使用数据库）:
 
 ```
 $ locate <FILENAME>
 ```
 
-* To test if a a file exist:
+* 如果文件存在就加以检验:
 
 ```
 $ test -f <FILENAME>
@@ -546,36 +546,37 @@ $ test -f <FILENAME>
 
 ---
 ## Modifying Files
+修改文件
 
 ### true
 
-* To make a file empty:
+* 清空文件:
 ```
 $ true > <FILENAME>
 ```
 
 ### tr
 
-*  **tr** takes a pair of strings as arguments and replaces, in its input, every letter that occurs in the first string by the corresponding characters in the second string. For example, to make everything lowercase:
+*  **tr**用一双字符串作为参数和替换，在这里的输入中，每个在第一个字符串中出现的字母由第二个字符串中相应的字符替换.例如，使每个字母降级:
 
 ```
 $ tr A-Z a-z
 ```
 
-* To put every word in a line by replacing spaces with newlines:
+* 通过用新行替换空格在每一行中放入单词:
 
 ```
 $ tr -s ' ' '\n'
 ```
 
-* To combine multiple lines into a single line:
+* 混合单行成为独立的一行:
 
 
 ```
 $ tr -d '\n'
 ```
 
-* **tr** doesn't accept the names of files to act upon, so we can pipe it with cat to take input file arguments (same effect as ```$ <PROGRAM> < <FILENAME>```):
+* **tr**不接受文件的名称来运作,所以我们可以运用cat输入文件内容（与```$ <PROGRAM> < <FILENAME>```同效）:
 
 ```
 $ cat "$@" | tr
@@ -583,19 +584,19 @@ $ cat "$@" | tr
 
 ### sort
 
-* Sort the contents of text files. The flag **-r** sort backwards, and the flag **-n** selects numeric sort order (for example, without it, 2 comes after 1000):
+* 将文本文件排序.**-r**按背景排序，**-n**选择数字化排序（例如,如果没有它，2会在1000之后）：
 
 ```
 $ sort -rn <FILENAME>
 ```
 
-* To output a frequency count (histogram):
+* 输出频率计数（按柱状图形式）:
 
 ```
 $ sort <FILENAME> | uniq -c | sort -rn
 ```
 
-* To chose random lines from a file:
+* 从文件中随机选取数行：
 
 ```
 $ sort -R  <FILENAME> | head -10
