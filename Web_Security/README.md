@@ -1,21 +1,21 @@
 # Web安全
 
-## Folders:
+## 附件文件夹:
 
 ### urllib2
 
-- simple GET, POST, header, authentication scripts
-- Scanning CMS suites installations
-- Brute force directories and file locations
-- Brute force HTML form authentication
+- 简单报文GET、POST、报头、身份认证脚本
+- 扫描CMS配套设施
+- 暴力破解目录和文件位置
+- 暴力破解HTML表单认证
 
-### OS Command Injection
+### 命令注入攻击
 
-- Brute force password
+- 暴力破解密码
 
-### SQLi
+### 注入漏洞
 
-- Brute force password
+- 暴力破解密码
 - Timed SQLi
 - Cookie force brute
 
