@@ -1,6 +1,6 @@
 # Web安全
 
-## 附件文件夹:
+## 文件夹:
 
 ### urllib2
 
@@ -16,28 +16,28 @@
 ### 注入漏洞
 
 - 暴力破解密码
-- Timed SQLi
-- Cookie force brute
+- 定时SQL注入
+- Cookie的暴力破解
 
 
-### PHP Shellcodes
+### PHP 壳代码（Shellcodes）
 
-- php primer
-- xor
-- exploits
+- php入门
+- “异”或（逻辑运算）（xor）
+- 开发
 
-### User ID
-- cookie auth
-- user id
+### 用户名
+- cookie身份验证
+- 用户名
 
-### Phishing
+### 钓鱼网站
 
 - log.php
 
 
-### Scanners
+### 检测装置
 
-- heartbleed
+- heartbleed（中文译名：心脏出血BUG）
 
 
 
@@ -45,30 +45,30 @@
 
 ---
 
-## Steps of web exploitation:
+## Web开发的步骤:
 
-### 1) Information Gathering
+### 1) 信息收集
 
-* creation of dictionary: with **cewl.rb**/
+* 创建字典: 使用 **cewl.rb**/
 
-* download website: **wget -rck**, **httrack**:
+* 下载网站: **wget -rck**, **httrack**:
 ```
 $ wget -rck <TARGET-WEBSITE>
 ```
-* identification of email accounts: with **theharverster**, **maltego**, **msfcli (metasploit)**.
+* 电子邮件账户身份证明: 使用 **theharverster**, **maltego**, **msfcli (metasploit)**.
 
-* extract metadata: with **Metagoofil** and **FOCA**. It also can be done with googling qith ```site: www.url.com ext:pdf intitle:"Documents and settings"```.
+* 提取元数据: 使用 **Metagoofil** 和 **FOCA**. 也可以使用 googling qith ```地址来完成: www.url.com ext:pdf intitle:"Documents and settings"```.
 
-* a search for other domains that are hosted on the same IP  (virtual host): with **revhosts**.
+* 对建立在相同IP地址的其他域的搜索（虚拟主机）: 使用 **revhosts**.
 
-* Tips:
+* 帮助:
 
-	* If a database is involved -->  SQL injection.
+	* 如果涉及一个数据库 -->  资料隐码的入侵模式.
 
-	* If the input is used in the website --> XSS vulnerability.
+	* 如果这种输入被用在网站中 --> XSS漏洞.
 
 
-### 2) Automatic Testing (scanners)
+### 2) 自动检测 (检测装置)
 
 * Tools: **Nikto**, **w3af**, **skipfish**, **Arachni**, **ZAP**/
 
