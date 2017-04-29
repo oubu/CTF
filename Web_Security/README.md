@@ -70,18 +70,18 @@ $ wget -rck <TARGET-WEBSITE>
 
 ### 2) 自动检测 (检测装置)
 
-* Tools: **Nikto**, **w3af**, **skipfish**, **Arachni**, **ZAP**/
+* 工具: **Nikto**, **w3af**, **skipfish**, **Arachni**, **ZAP**/
 
-* spidering: **GoLISMERO**.
+* 爬虫: **GoLISMERO**.
 
-* interesting files: search for robots.txt, gitignore, .svn, .listin, .dstore, etc. Tool: **FOCA**.
+* 有趣的文件: search for robots.txt, gitignore, .svn, .listin, .dstore, 等等. 工具: **FOCA**.
 
-* brute force folders and files: **dirb** and **dirbuster**.
+* 暴力破解文件夹和文件: **dirb** 和 **dirbuster**.
 
-* fuzzing to the various parameters, directories and others, in order to identify different types of vulnerabilities such as: XSS, SQLi, LDAPi, Xpathi, LFI, or RFI. Tool: **PowerFuzzer**, **Pipper** or ***Burpproxy***. A good fuzzy dictionary is **fuzzdb**.
+* 为了识别不同类型的漏洞，模糊各种参数、目录和其他，例如: XSS, SQLi, LDAPi, Xpathi, LFI, or RFI. 工具: **PowerFuzzer**, **Pipper** 或者 ***Burpproxy***. 推荐模糊字典： **fuzzdb**.
 
 
-### 3. Manual testing
+### 3. 人工测试
 
 * testing vulnerabilities: Burpproxy, ZAP, sitescope.
 
