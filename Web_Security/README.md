@@ -83,9 +83,9 @@ $ wget -rck <TARGET-WEBSITE>
 
 ### 3. 人工测试
 
-* testing vulnerabilities: Burpproxy, ZAP, sitescope.
+* 测试漏洞: Burpproxy, ZAP, sitescope.
 
-* identify components and plugins that have enabled the Website, as might be the following types of CMS (Content Management Systems): Joomla Component, Wordpress plugin, Php-Nuke, drupal, Movable Type, Custom CMS, Blogsmith/Weblogs, Gawker CMS, TypePad, Blogger/Blogspot, Plone, Scoop, ExpressionEngine, LightCMS, GoodBarry, Traffik, Pligg, Concrete5, Typo3, Radiant CMS, Frog CMS, Silverstripe, Cushy CMS etc. Then find known vulnerabilities and **/** associated with it. Tools: **joomla Scan** or **cms-explorer**.
+* 确定允许网站操作的组件和插件,可能是以下类型的CMS(内容管理系统): Joomla组件, Wordpress插件, Php-Nuke, drupal, Movable Type, Custom CMS, Blogsmith/Weblogs, Gawker CMS, TypePad, Blogger/Blogspot, Plone, Scoop, ExpressionEngine, LightCMS, GoodBarry, Traffik, Pligg, Concrete5, Typo3, Radiant CMS, Frog CMS, Silverstripe, Cushy CMS 等等. 然后找到已知的漏洞 **/** associated with it. 工具: **joomla Scan** or **cms-explorer**.
 
 * headers, http methods, sessions, certifications: we could use any tool like a proxy or a simple telnet connection to the Website.
 * fingerprinting to identify the architecture and configuration of the site: **httprint**.
