@@ -121,7 +121,7 @@ ExternalInterface.addCallback
 SharedObject.getLocal, SharedObject.getRemote
 ```
 
-* authentication system: the first thing is to determine if the website stored the credentials in the browser. This could be exploited with attacks on defaults accounts and dictionary attacks. The default accounts are: admin, administrator, root, system, user, default, name application. We can use **hydra** for this:
+* 认证系统:首先是确定网站的凭证是否存储在浏览器中。这可能会被对默认账户和字典的攻击所利用。默认账户有：admin, administrator, root, system, user, default, name application.我们可以使用 **hydra** ：
 
 ```
 $ hydra -L users.txt -P pass.txt <WEBSTE> http-head/private
@@ -130,37 +130,37 @@ $ hydra -L users.txt -P pass.txt <WEBSTE> http-head/private
 
 
 ---
-## How do You Hack a Web Application
+## 你如何攻击一个Web应用程序
 
-* **Fuzz testing**: what happens when unexpected data is sent into the application?
-* **Authentication testing**: are authentication requirements always enforced?
-* **Authorization testing**: can authorization be bypassed?
-* **Information disclosure**: is information disclosed that might help compromise the application.
+* **模糊测试**： 当非预期的数据被输入到应用程序时会发生什么？
+* **认证测试**: 身份验证要求总是强制执行的吗？
+* **授权测试**: 授权可以被绕过吗？
+* **信息披露**: 信息披露有助于妥协应用吗？
 
 
-### Web Testing Methodology:
+### Web测试方法：
 
-- Map the attack surface:
-	* Crawl and inventory all requests and responses.
-	* Follow all links.
-	* Fill in every form with valid data.
-	* Unauthenticated/Authenticated.
-	* Unprivileged/Privileged.
+- 映射攻击面：
+	* 抓取并清点所有的请求和回复。
+	* 遵循所有链接。
+	* 用有效的数据填写每个表格。
+	* 未经验证的/已验证的。
+	* 无特权的/特许的。
 
-- Identify key requests, functionality during crawl.
+- 在抓取过程中识别关键请求和功能。
 
-- Use logs as input for fuzzing GET & POST parameters.
+- 使用日志作为模糊GET和POST参数的输入。
 
-- Use authenticated log to uncover unprotected resources.
+- 使用经过验证日志来发现未受保护的资源。
 
-- Use privileged log to uncover resources without proper authorization.
+- 使用特权日志发现没有正当授权的资源。
 
-- Analyze logs for other potential weakness.
+- 针对其他潜在弱点分析日志。
 
 
 ---
 
-### When we have a Website/IP Address:
+### 当我们有一个网站/ IP地址:
 
 - Try to add folders to the domain, such as http://csaw2014.website.com or http://key.website.com.
 
