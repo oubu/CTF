@@ -775,7 +775,7 @@ $ dhclient
 ### netstat
 
 
-* **netstat** prints the network connections, routing tables, interface statistics, among others. Useful  flags are **-t** for TCP, **-u** for UDP, **-l** for listening, **-p** for program, **-n** for numeric. For example:
+* **netstat**打印网络连接、路由表、接口数据等。实用的参数是TCP的**-t**,UDP的**-u**,听方面的**-l**,项目的**-p**,数字的**-n**.例如:
 
 ```
 $ netstat -tulpn
@@ -785,13 +785,13 @@ $ netstat -tulpn
 
 ### netcat, telnet and ssh
 
-* To connect to a host server, you can  use **netcat** (nc) and **telnet**. To connect under an encrypted session, **ssh** is used. For example, to send a string to a host at port 3000:
+* 为了连接到主机服务器,可以使用**netcat**(nc)和**telnet**。**ssh**用以连接一个加密的会话.例如,将字符串发送到主机的3000端口上:
 
 ```
 $ echo 4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e | nc localhost 3000
 ```
 
-* To telnet to localhost at port 3000:
+* 在3000端口上远程登录到本地主机:
 
 ```
 $ telnet localhost 3000
@@ -801,25 +801,25 @@ $ telnet localhost 3000
 
 ### lsof
 
-* **lsof** lists open files (remember that everything is considered a file in Linux):
+* **lsof**列出公开文件(记住,一切都被认为是一个Linux下的文件):
 
 ```
 $ lsof <STRING>
 ```
 
-* To see open TCP ports:
+* 查看公开的TCP端口:
 
 ```
 $ lsof | grep TCP
 ```
 
-* To see IPv4 port(s):
+* 查看IPv4端口:
 
 ```
 $ lsof -Pnl +M -i4
 ```
 
-* To see IPv6 listing port(s):
+* 查看IPv6列表端口:
 
 ```
 $ lsof -Pnl +M -i6
@@ -834,24 +834,24 @@ $ lsof -Pnl +M -i6
 ### echo
 
 
-* **echo** prints its arguments as output. It can be useful for pipeling, and in this case you use the flag **-n** to not output the trailing new line:
+* **echo**打印它的参数作为输出.对于传输途径它可能是有用的,在这种情况下,使用**-n**不输出新行:
 ```
 $ echo -n <FILENAME>
 ```
 
-* **echo** can be useful to generate commands inside scripts (remember the discussion about file descriptor):
+* **echo**对于脚本中生成命令有用(记得讨论文件描述符):
 
 ```
 $ echo 'Done!' >&2
 ```
 
-* Or to find shell environment variables (remember the discussion about them):
+* 或查找shell环境变量(记得讨论):
 
 ```
 $ echo $PATH
 ```
 
-* Fir example, we can send the current date information to a file:
+* 例如,我们可以向文件发送最近的数据信息:
 
 ```
 $ echo Completed at $(date) >> log.log
@@ -859,13 +859,13 @@ $ echo Completed at $(date) >> log.log
 
 ### bc
 
-* A calculator program is given by the command **bc** The flag **-l** stands for the standard math library:
+* 命令**bc**给出计算机程序,**-l**代表标准的数据库:
 
 ```
 $ bc -l
 ```
 
-* For example, we can make a quick calculation with:
+* 例如,我们可以用它进行快速的计算:
 ```
 $ echo '2*15454' | bc
 30908
@@ -876,7 +876,7 @@ $ echo '2*15454' | bc
 ### w, who, finger, users
 
 
-* To find information about logged users you can use the commands **w, who, finger**, and **users**.
+* 你可以使用**w, who, finger**和**users**命令来查找关于登录用户的信息.
 
 
 
