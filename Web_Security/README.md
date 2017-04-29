@@ -91,9 +91,9 @@ $ wget -rck <TARGET-WEBSITE>
 
 * 指纹识别网站的架构和配置: **httprint**.
 
-* manipulation of parameters  to identify any errors and / or vulnerabilities. We can use any proxy to manipulate the requests. Alteration of the normal operation of the application by: single quotes, nulls values “%00”, carriage returns, random numbers, etc.
+* 对识别任何错误和/或漏洞的参数的操作。 我们可以使用任何代理来巧妙地处理请求。 对应用程序的正常运行的修改： 单引号,null值“% 00”,回车,随机数等。
 
-* analysis of Flash, Java, and other files: identify and download all flash files that exist on the Website. To do this, we could use the Google search: ```filetype:swf site:domain.com```. We could also use wget tool:
+* 分析Flash、Java和其他文件: 识别并下载网站上所有的Flash文件。 要做到这一点,我们可以使用谷歌搜索: ```filetype:swf site:domain.com```. 我们也可以使用wget工具：
 
 ```
 $ /wget -r -l1 -H -t1 -nd -N -nd -N -A.swf -erobots=off <WEBSITE> -i output_swf_files.txt
