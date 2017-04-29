@@ -324,7 +324,7 @@ $ <PROGRAM> > /dev/null
 $ <PROGRAM> 2> <FILE>
 ```
 
-* 为了向**stdout**正在运行的地方发送程序错误的信息，*i.e.*将其并入一个单独的字串流（这在导管输送中极为有效）:
+* 为了向**stdout**正在运行的地方发送程序错误的信息，*i.e.*将其并入一个字串流（这在导管输送中极为有效）:
 
 ```
 $ <PROGRAM> 2>&1
@@ -569,7 +569,7 @@ $ tr A-Z a-z
 $ tr -s ' ' '\n'
 ```
 
-* 混合单行成为独立的一行:
+* 混合多行成为独立的一行:
 
 
 ```
@@ -602,7 +602,7 @@ $ sort <FILENAME> | uniq -c | sort -rn
 $ sort -R  <FILENAME> | head -10
 ```
 
-* 合并多个单独文件成为一个整理好的文件:
+* 合并多个文件成为一个整理好的文件:
 
 ```
 $ sort -m <FILENAME>
@@ -652,22 +652,21 @@ $ join <FILENAME1> <FILENAME2>
 
 ### mkdir
 
-* **mkdir** creates a directory. An useful flag is **-p** which creates  the entire path of directories (in case they don't exist):
+* **mkdir**创建目录.一个实用的**-p**可以创建目录的完整路径（以防万一它们不存在）:
 
 ```
 $ mkdir -p <DIRNAME>
 ```
 
-
 ### cp
 
-* Copying directory trees is done with **cp**. The flag **-a** is used to preserve all metadata:
+* **cp**用以复制目录.**-a**保留所有的元数据:
 
 ```
 $ cp -a <ORIGIN> <DEST>
 ```
 
-* Interestingly, commands enclosed in **$()** can be run and then the output of the commands is substituted for the clause and can be used as a part of another command line:
+* 有趣的是,**$()**中包含的命令可以运行,命令的输出由条款代替,还可以被用作另一个命令行的部分:
 
 ```
 $ cp $(ls -rt *.txt | tail -10) <DEST>
@@ -676,17 +675,17 @@ $ cp $(ls -rt *.txt | tail -10) <DEST>
 
 ### pushd and popd
 
-* The **pushd** command saves the current working directory in memory so it can be returned to at any time, optionally changing to a new directory:
+* **pushd**命令用以在内存中保存最近的工作目录所以可以在任意时间返回,选择性转变为新的目录:
 
 ```
  $ pushd ~/Desktop/
 ```
 
-* The **popd** command returns to the path at the top of the directory stack.
+* **popd**命令返回路径在目录堆栈的顶部.
 
 ### ln
 
-* Files can be linked with different names with the **ln**. To create a symbolic (soft) link you can use the flag **-s**:
+* **ln**用来以不同名字关联文件.你可以使用**-s**创建一个符号（软）链接:
 
 ```
 $ ln -s <TARGET> <LINKNAME>
@@ -695,13 +694,13 @@ $ ln -s <TARGET> <LINKNAME>
 
 ### dd
 
-* **dd** is used for disk-to-disk copies, being useful for making copies of raw disk space. For example, to back up your [Master Boot Record](http://en.wikipedia.org/wiki/Master_boot_record) (MBR):
+* **dd**对于磁盘到磁盘的复制很有用,原始磁盘空间的复制也有很大用处.例如,备份你的 [主引导记录](http://en.wikipedia.org/wiki/Master_boot_record) (MBR):
 
 ```
 $ dd if=/dev/sda of=sda.mbr bs=512 count=1
 ```
 
-* To use **dd** to make a copy of one disk onto another:
+* 用**dd**从磁盘向另一个磁盘进行复制:
 
 ```
 $ dd if=/dev/sda of=/dev/sdb
@@ -714,19 +713,19 @@ $ dd if=/dev/sda of=/dev/sdb
 
 ### du
 
-* **du** shows how much disk space is used for each file:
+* **du**显示每个文件所占用的磁盘空间:
 
 ```
 $ du -sha
 ```
 
-* To see  this information sorted  and only the 10 largest files:
+* 显示信息分类及10个最大的文件:
 
 ```
 $ du -a | sort -rn | head -10
 ```
 
-* To determine which subdirectories are taking a lot of disk space:
+* 确定哪些子目录正在占用大量的磁盘空间:
 
 ```
 $ du --max-depth=1  | sort -k1 -rn
@@ -734,7 +733,7 @@ $ du --max-depth=1  | sort -k1 -rn
 
 ### df
 
-* **df**  shows how much disk space is used on each mounted filesystem. It displays  five columns for each filesystem: the name, the size, how much is used, how much is available, percentage of use, and where it is mounted. Note the values won't add up because Unix filesystems have **reserved** storage blogs which only the root user can write to.
+* **df**显示每个挂载文件系统所占用的磁盘空间. 每个文件系统显示5列: 文件名,大小,使用次数,可用大小,使用百分比,安装地点. 注意值不会增加因为Unix文件系统有只有根用户才能写入的**reserved**存储日志.
 
 ```
 $ df -h
@@ -744,25 +743,25 @@ $ df -h
 
 ### ifconfig
 
-* You can check and configure your network interface with:
+* 你可以检查和配置网络接口:
 
 ```
 $ ifconfig
 ```
 
-* In general, you will see the following devices when you issue **ifconfig**:
+* 总体而言,当你使用**ifconfig**时,你将会看到下列设备:
 
-    * ***eth0***: shows the Ethernet card with information such as: hardware (MAC) address, IP address, and the network mask.
+    * ***eth0***:显示以太网卡上的信息例如: 硬件地址,IP地址,网络掩码.
 
-    * ***lo***: loopback address or localhost.
+    * ***lo***:环回地址或本地主机.
 
 
-* **ifconfig** is supposed to be deprecated. See [my short guide on ip-netns](https://coderwall.com/p/uf_44a).
+* **ifconfig**可能会被否决. 查看 [我的短ip-netns指南](https://coderwall.com/p/uf_44a).
 
 
 ### dhclient
 
-* Linux has a DHCP server that runs a daemon called ```dhcpd```, assigning IP address to all the systems on the subnet (it also keeps logs files):
+* Linux的DHCP服务器运行一个守护进程称为```dhcpd```,将IP地址分配给所有子网上的系统(也使日志文件如此):
 
 ```
 $ dhclient
@@ -771,7 +770,7 @@ $ dhclient
 ### dig
 
 
-* **dig** is a DNS lookup utility (similar to ```dnslookup``` in Windows).
+* **dig**是一个DNS查找工具(类似于Windows中的```dnslookup```).
 
 ### netstat
 
