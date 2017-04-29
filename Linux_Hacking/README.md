@@ -1235,10 +1235,10 @@ $ convert -delay 20 -loop 0 *.jpg myimage.gif
 ```
 
 ---
-## Easy access to the History
+## 简单访问历史
 
 
-* Type ```!!``` to run the last command in the history, ```!-2``` for the command before that, and so on.
+* 输入```!!``` 运行历史上最后一条命令, ```!-2``` 在此之前的指令以及其他.
 
 
 
