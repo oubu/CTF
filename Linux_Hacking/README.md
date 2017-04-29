@@ -885,38 +885,38 @@ $ echo '2*15454' | bc
 ---
 ## Regular Expression 101
 
-* **Regular expressions** (regex) are  sequences of characters that forms a search pattern for use in pattern matching with strings.
+* **Regular expressions**正则表达式(regex)的字符序列,形成一个搜索模式用于模式匹配字符串.
 
-* Letters and numbers match themselves. Therefore,  'awesome' is a regular expression that matches 'awesome'.
+*  字母和数字匹配。因此,'awesome'是一个正则表达式匹配'awesome'.
 
-* The main rules that can be used with **grep** are:
-    * ```.``` matches any character.
-    * ```*``` any number of times (including zero).
-    * ```.*``` matches any string (including empty).
-    * ```[abc]``` matches any character a or b or c.
-    * ```[^abc]``` matches any character other than a or b or c.
-    * ```^``` matches the beginning of a line.
-    * ```$``` matches the end of a line.
+* 可以和**grep**一同使用的主要规则为:
+    * ```.``` 匹配任何字符.
+    * ```*``` 任何的次数(包括零).
+    * ```.*``` 匹配任意字符串(包括空串).
+    * ```[abc]``` 匹配任何字符a或b或c.
+    * ```[^abc]``` 匹配任何字符除却a或b或c.
+    * ```^``` 匹配一行的开始.
+    * ```$``` 匹配一行的结尾.
 
-* For example, to find lines in a file that begin with a particular string you can use the regex symbol **^**:
+* **^**例如,发现在一个文件中可以从一个特定的字符串可以使用正则表达式符号**^**:
 
 ```
 $ grep ^awesome
 ```
 
-* Additionally, to find lines that end with a particular string you can use **$**:
+* 此外,查找以一个特定的字符串结束的行可以使用**$**:
 
 ```
 $ grep awesome$
 ```
 
-*  As an extension, **egrep** uses a version called *extended regular expresses* (EREs) which include things such:
-    * ```()``` for grouping
-    * ```|``` for or
-    * ```+``` for one or more times
-    * ```\n``` for back-references (to refer to an additional copy of whatever was matched before by parenthesis group number n in this expression).
+*  As an extension,  uses a version called *extended regular expresses* (EREs) which include things such作为扩展,**egrep**使用一个叫做*extended regular expresses*(扩展正则表达)的版本来包含这类事情:
+    * ```()``` 对于分组
+    * ```|``` 或者
+    * ```+``` 一次或多次
+    * ```\n``` 反向引用(在这个表达式中，引用括号组数字n之前的任何匹配的副本).
 
-* For instance, you can use ``` egrep '.{12}'```to find words of at least 12 letters. You can use ```egrep -x '.{12}'``` to find words of exactly twelve letters.
+* 例如,可以使用``` egrep '.{12}'```找到至少12个字母的单词。您可以使用```egrep -x '.{12}'```找到由十二个字母构成的单词.
 
 
 
@@ -925,23 +925,23 @@ $ grep awesome$
 
 ## Awk and Sed
 
-* **awk**  is a pattern scanning tool while **sed** is a stream editor for filtering and transform text. While these tools are extremely powerful, if you have knowledge of any very high level languages such as Python or Ruby, you  don't necessary need to learn them.
+* **awk**是一个模式扫描工具而**sed**是过滤和转换文本流编辑器.虽然这些工具非常强大, 但是如果你有任何高水平的语言知识如Python或Ruby, 那么你不就需要学习它们这些工具.
 
 ### sed
 
-* Let's say we want  to replace every occurrence of *mysql* and with MySQL (Linux is case sensitive), and then save the new file to <FILENAME>. We can write an one-line command that says  "search for the word mysql and replace it with the word MySQL":
+* 假设我们想用mysql取代每个*mysql*(Linux大小写敏感), 然后保存新文件<FILENAME>. 我们可以写一个单行命令说“搜索词mysql,代之以MySQL”:
 
 ```
 $ sed s/mysql/MySQL/g <FILEORIGIN> > <FILEDEST>
 ```
 
-* To replace any instances of period followed by any number of spaces with a period followed by a single space in every file in this directory:
+* 用这个目录中每个文件后跟单独空间的一段时期来替换后跟任意数量空间的任何时期的实例:
 
 ```
 $ sed -i 's/\. */. /g' *
 ```
 
-* To pass an input through a stream editor and then quit after printing the number of lines designated by the script's first parameter:
+*在打印出第一个参数指定的脚本行数后通过一个输入流编辑器然后放弃:
 
 ```
 $ sed ${1}q
@@ -949,17 +949,16 @@ $ sed ${1}q
 
 
 
-
 ----
 
 # Some More Advanced Stuff
-
+一些更高级的东西
 
 ## Scheduling Recurrent Processes
-
+调度过程
 
 ### at
-* A very cute bash command is **at**, which allows you to run processes later (ended with CTRL+D):
+* 一个非常可爱的bash命令**at**, 允许你稍后运行流程(以CTRL + D结束）:
 
 ```
 $ at 3pm
@@ -967,30 +966,29 @@ $ at 3pm
 
 
 ### cron
-* If you  have to run processes periodically, you should use **cron**, which is already running as a [system daemon](http://en.wikipedia.org/wiki/Daemon_%28computing%29). You can add a list of tasks in a file named **crontab** and install those lists using a program also called **crontab**. **cron** checks all the installed crontab files and run cron jobs.
+* 如果你需要定期运行过程, 你应该使用**cron**, 像这样运行[系统守护进程](http://en.wikipedia.org/wiki/Daemon_%28computing%29).你可以在任务列表中添加一个文件命名为**crontab**用被称为**crontab**的程序运行列表. **cron**检查所有安装的定时任务文件并运行计划文件作业.
 
-
-* To view the contents of your crontab, run:
+* 查看你的定时任务的内容并运行:
 
 ```
 $ crontab -l
 ```
 
-* To edit your crontab, run:
+* 编辑你的定时任务的内容并运行:
 
 ```
 $ crontab -e
 ```
 
-* The format of cron job is: *min, hour, day, month, dow* (day of the week, where Sunday is 0). They are separated by tabs or spaces. The symbol * means any. It's possible to specify many values with commas.
+* 配置文件的格式: *min, hour, day, month, dow* (以数字表示周几,周日是0). 他们由制表符或空格隔开. 标志*代表任意.可以指定用逗号代替许多值.
 
-* For example, to run a backup every day at 5am, edit your crontab to:
+* 例如,每天早上5点运行备份,编辑你的定时任务:
 
 ```
 0 5 * * * /home/files/backup.sh
 ```
 
-* Or if you want to remember some birthday, you can edit your crontab to:
+* 或者你想要记住一些人的生日,你可以编辑你的定时任务:
 
 ```
 * * 16 1 * echo "Remember Mom's bday!"
