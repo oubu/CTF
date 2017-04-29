@@ -602,7 +602,7 @@ $ sort <FILENAME> | uniq -c | sort -rn
 $ sort -R  <FILENAME> | head -10
 ```
 
-* To combine multiple files into one sorted file:
+* 合并多个单独文件成为一个整理好的文件:
 
 ```
 $ sort -m <FILENAME>
@@ -611,13 +611,13 @@ $ sort -m <FILENAME>
 ### uniq
 
 
-* **uniq** remove *adjacent* duplicate lines. The flag **-c** can include a count:
+* **uniq**移动相邻的重复行.**-c**将其列入单独列表:
 
 ```
 $ uniq -c <FILENAME>
 ```
 
-* To output only duplicate lines:
+* 输出只重复两次的行:
 
 ```
 $ uniq -d <FILENAME>
@@ -625,20 +625,20 @@ $ uniq -d <FILENAME>
 
 ### cut
 
-* **cut** selects particular fields (columns) from a structured text files (or particular characters from each line of any text file). The flag **-d** specifies what delimiter should be used to divide columns (default is tab), the flag **-f** specifies which field or fields to print and in what order:
+* **cut**从有结构的文本文件中选择特定的字段（列）（或是从任意文本文件中每一行选取特定的字符）.**-d**指定定界符分割列的位置（默认选项卡）,**-f**指定需要打印的字段以及打印的顺序:
 
 ```
 $ cut -d ' ' -f 2 <FILENAME>
 ```
 
-* The flag **-c** specifies a range of characters to output, so **-c1-2** means to output only the first two characters of each line:
+* **-c**指定输出的字符范围,所以**-c1-2**只输出每一行的开头两个字符:
 
 ```
 $ cut -c1-2 <FILENAME>
 ```
 
 ### join
-* **join** combines multiple file by common delimited fields:
+* **join**通过常见的分隔字段组合多个文件:
 
 ```
 $ join <FILENAME1> <FILENAME2>
