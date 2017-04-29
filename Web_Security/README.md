@@ -99,7 +99,7 @@ $ wget -rck <TARGET-WEBSITE>
 $ /wget -r -l1 -H -t1 -nd -N -nd -N -A.swf -erobots=off <WEBSITE> -i output_swf_files.txt
 ```
 
-* Once we have identified and downloaded *.swf files, we must analyze the code, the functions (as *loadMovie*) variables in order to identify those that call and allow other types of vulnerabilities such as cross site scripting. Below shows some vulnerable functions:
+* 一旦我们确定并下载。 *.swf 文件, 我们必须分析代码的函数(如* loadMovie *)变量以识别那些请求并允许例如跨站脚本等其他类型的漏洞。下面显示了一些有漏洞的函数：
 
 ```
 _root.videourl = _root.videoload + '.swf';
@@ -110,7 +110,7 @@ function.getURL,javascript:alert('css')
 	TextField.html - payload: <img src='javascript:alert("css")//.swf'>
 ```
 
-* We could use tools such as **Deblaze** and **SWFIntruder**. We should also analyze the parameter AllowScriptAccess, Flash Parameter Pollution or sensitive APIs:
+* 我们可以例如* * Deblaze * *和* * SWFIntruder * *的工具。我们还应该分析 AllowScriptAccess, Flash Parameter Pollution 或者 sensitive APIs的参数：
 
 ```
 loadVariables, loadVariblesNum, MovieClip.loadVariables, loadVars.load, loadVars.sendAndLoad
