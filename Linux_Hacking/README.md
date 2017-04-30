@@ -2,7 +2,7 @@
 
 ## 提权
 
-* [Unix Privilege Escalation Exploits by years](https://github.com/Kabot/Unix-Privilege-Escalation-Exploits-Pack).
+* [多年以来Unix特权如何升级利用](https://github.com/Kabot/Unix-Privilege-Escalation-Exploits-Pack).
 
 ## 附件文件夹
 
@@ -1013,21 +1013,21 @@ $ rsync -av <DIRECTORY> <HOST>:/planning
 
 
 ----
-## File Compression
+## 文件压缩
 
-* Historically, **tar** stood for tape archive and was used to archive files to a magnetic tape. Today **tar** is used to allow you to create or extract files from an archive file, often called a **tarball**.
+* 从历史上看, **tar**代表磁带归档,用于利用磁带归档文件.在今天**tar**用于允许你从一个通常称为**tarball**的归档文件中创建或提取文件.
 
-* Additionally you can add *file compression*, which works by finding redundancies in a file (like repeated strings) and creating more concise representation of the file's content. The most common compression programs are **gzip** and **bzip2**.
+* 此外你可以添加*file compression*,通过在文件中查找冗余之处(例如重复的字符串)以及创建更多文件内容的简洁表达来工作.最常见的压缩程序是**gzip** 和**bzip2**.
+ 
+ * 使用**tar**时,**f**必须是最后选择.不需要连字符.你可以添加**v**作为详细阐述.
 
-* When issuing **tar**, the flag **f** must be the last option. No hyphen is needed. You can add **v** as verbose.
-
-* A simple tarball is created with the flag **c**:
+* 使用**c**指令可以生成一个简单的打包工具:
 
 ```
 $ tar cf <FILE.tar> <CONTENTS>
 ```
 
-* To extract a tarball you use the flag **x**:
+* 使用**x**指令可以解压:
 
 ```
 $ tar xf <FILE.tar>
@@ -1036,17 +1036,17 @@ $ tar xf <FILE.tar>
 ### gzip
 
 
-* **gzip** is the most frequently used Linux compression utility. To create the archive and compress with gzip you use the flag **z**:
+* **gzip**是Linux最常用的实用压缩程序.使用**z**可以用gzip来进行文件的归档或是解压:
 
 ```
 $ tar zcf <FILE.tar.gz>
 ```
 
-* You can directly work with gzip-compressed files with ```zcat, zmore, zless, zgrep, zegrep```.
+* 你可以用```zcat, zmore, zless, zgrep, zegrep```直接对gzip压缩的文件进行操作.
 
 ### bzip2
 
-* **bzip2** produces files significantly smaller than those produced by gzip. To create the archive and compress with bz2 you use the flag **j**:
+* **bzip2**创建的文件比gzip压缩的文件小得多.你可以用**j**通过bz2对文件进行归档和压缩:
 
 ```
 $ tar jcf <FILE.tar.bz2>
@@ -1054,7 +1054,7 @@ $ tar jcf <FILE.tar.bz2>
 
 ### xz
 
-* **xz** is the most space efficient compression utility used in Linux. To create the archive and compress with xz:
+* **xz**是Linux系统中使用最高效的压缩效用.使用xz以创建文件的归档和压缩:
 
 ```
 $ tar Jcf <FILE.tar.xz>
@@ -1064,22 +1064,22 @@ $ tar Jcf <FILE.tar.xz>
 ----
 ## Logs
 
-* Standard logging facility can be found  at ```/var/log```. For instance:
-    *  ```/var/log/boot.log``` contains information that are logged when the system boots.
-    * ```/var/log/auth.log``` contains system authorization information.
-    * ```/var/log/dmesg``` contains kernel ring buffer information.
+* d在```/var/log```可以看到标准日志功能.例如:
+    *  ```/var/log/boot.log``` 包含系统启动时登记的信息.
+    * ```/var/log/auth.log``` 包含系统授权信息.
+    * ```/var/log/dmesg``` 包含内核环缓冲区信息.
 
 
 * The file ```/etc/rsyslog.conf``` controls what goes inside the log files.
 
-* The folder ```/etc/services``` is a plain ASCII file providing a mapping between friendly textual names for internet services, and their underlying assigned port numbers and protocol types. To check it:
+* 文件夹```/etc/services```是一个简单的ASCII文件,提供互联网服务的友好名称文本之间的映射,以及他们的基本分配的端口号和协议类型.检验可用以下方法:
 
 ```
 $ cat /etc/services
 $ grep 110 /etc/services
 ```
 
-* To see what your system is logging:
+* 查看您的系统日志记录:
 
 ```
 $ lastlog
@@ -1089,25 +1089,25 @@ $ lastlog
 -----
 ## /proc and inodes
 
-* If the last link to a file is deleted but this file is open in some editor, we can still retrieve its content. This can be done, for example, by:
-    1. attaching a debugger like **gdb** to the program that has the file open,
+* 如果最后一个到文件的链接被删除,但这个文件打开在一些编辑器中, 我们仍然可以获取其内容. 例如，可以这样做:
+    1. 向文件被打开的程序的调试器添加例如**gdb**的指令 ,
 
-    2. commanding the program to read the content out of the file descriptor (the **/proc** filesystem), copying the file content directly out of the open file descriptor pseudo-file inside **/proc**.
+    2. 指挥程序阅读文件描述符的内容 (**/proc**文件系统), 直接在打开的有文件描述符的伪文件里面复制文件内容.
 
-* For example, if one runs ```$ dd if=/dev/zero of=trash & sleep 10; rm trash```, the available disk space on the system will continue to go downward (since more  contents gets written into the file by which **dd** is sending its output).
+* 例如,如果执行```$ dd if=/dev/zero of=trash & sleep 10; rm trash```命令,系统上的可用磁盘空间将继续下行(因为更多的内容在**dd**发送其输出的地址写入到文件).
 
-* However, the file can't be seen everywhere in the system! Only  killing the **dd** process will cause this space to be reclaimed.
+* 但是, 文件在系统中任何地点都不可见!只有查看**dd**命令的执行进度会导致这个空间被回收.
 
-* An **index node** (inode) is a data structure used to represent a filesystem object such as files or  directories. The true name of a file, even when it has no other name, is in fact its *inode number* within the filesystem it was created, which can be obtained by
+* **index node** (索引节点)是一种用来表示一个文件系统对象例如文件或目录的数据结构. 一个文件的真实名称,即使它没有其他的名字, 实际上是其在文件系统中创建时的*inode number*,这可以以下列途径获得
 ```
 $ stat
 ```
-or
+或是
 ```
 $ ls -i
 ```
 
-* Creating a hard link with **ln** results in a new file with the same *inode number* as the original. Running *rm* won't affect the other file:
+* 与一个新文件中的**ln**结果创建硬链接与 其原本的*inode number*一致.运行*rm*不会影响另一个文件:
 
 ```
 $ echo awesome > awesome
@@ -1122,9 +1122,9 @@ $ ls -i *some
 ----
 ## Text, Hexdump, and Encodings
 
-* A Linux text file contains lines consisting of zero of more text characters, followed by the **newline character** (ASCII 10, also referred to as hexadecimal 0x0A or '\n').
+* A Linux text file contains lines consisting of zero of more text characters一个Linux文本文件包含由零更多的文本字符组成的数行代码,**newline character**紧随其后(ASCII 10,也称为十六进制的0x0A或是'\n').
 
-* A text with a single line containing the word 'Hello' in  ASCII would be 6 bytes (one for each letter, and one for the trailing newline). For example, the text below:
+* 有一行含有单词'Hello'的文本ASCII是6字节 (每个字母是一个字节, 每个拖尾换行符也是一个字节). 例如以下文字:
 
 ```
 $ cat text.txt
@@ -1133,7 +1133,7 @@ Linux is really cool.
 Let's learn more!
 ```
 
-is represented as:
+代表着:
 
 ```
 $ hexdump -c < text.txt
@@ -1144,7 +1144,7 @@ $ hexdump -c < text.txt
 0000038
 ```
 
-* The numbers displayed at left are the hexadecimal byte offsets of each output line in the file.
+* The numbers displayed at left are the hexadecimal byte offsets of each output line in the file左边数字显示的十六进制字节是文件中的每个输出行的偏移量.
 
 * Unlike text files on other operating systems, Linux files does not end with a special end-of-file character.
 
