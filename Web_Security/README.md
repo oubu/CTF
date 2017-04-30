@@ -160,47 +160,48 @@ $ hydra -L users.txt -P pass.txt <WEBSTE> http-head/private
 
 ---
 
-### 当我们有一个网站/ IP地址:
+### 当我们有一个网站/ IP地址：
 
-- Try to add folders to the domain, such as http://csaw2014.website.com or http://key.website.com.
+- 试图将文件夹添加到域,如： http://csaw2014.website.com or http://key.website.com.
 
-- We brute force the subdomains, for example, with [subbrute.py]. This tool performs multi-threaded DNS lookups to a configurable list of DNS resolvers, searching through a list of possible subdomains.
+- 我们暴力破解子域，例如：使用 [subbrute.py]. 这个工具通过搜索可能的子域的列表，执行多线程DNS，查找到一个可配置DNS解析器列表。
 
-- Use the command ```dig``` or ```ping``` in Linux to find the IP  address of the website.
+- 在Linux中使用 ```dig``` 或 ```ping``` 命令来找到IP地址或者网站。
 
-- *wgetting* the entire website with something like ```wget -e robots=off --tries=40 -r -H -l 4 <WEBSITE>```.
+- 用类似于 ```wget -e robots=off --tries=40 -r -H -l 4 <WEBSITE>``` 的东西 *wgetting* 整个网站。
 
-- Check the *robot.txt* file for hidden folders.
+- 检查 *robot.txt* 文件来搜寻隐藏文件夹。
 
-- Inspect the DOM using the browser's developer tools to look for HTML comments (plain view-source won't work when the content is loaded through Ajax).
+- 使用浏览器的开发工具检查DOM，寻找HTML注释（当内容通过Ajax加载时，单纯地查看源代码不会有用）。
 
 
 -----
 
-## URLs
+## URLs（统一资源定位符）
 
-### Octal
+### 八进制
 
-- Example: http://017700000001 --> 127.0.0.1
+- 例如: http://017700000001 --> 127.0.0.1
 
-- For example 206.191.158.50:
+- 例如： 206.191.158.50:
 
 ((206 * 256 + 191) * 256 + 158 ) * 256 + 50 = 3468664370.
 
-Now, there is a further step that can make this address even more obscure. You can add to this dword number, any multiple of the quantity 4294967296 (2564)
+现在,有一种方法可以进一步让这个地址更模糊。 你可以将这个4字节的数字相加， 乘上 4294967296 (2564) 的任意倍数。
+（Now, there is a further step that can make this address even more obscure. You can add to this dword number, any multiple of the quantity 4294967296 (2564)）
 
 
-### Great @
+### 伟大的 @
 
-- Everything between "http://" and "@" is completely irrelevant
+- 在 "http://" 和 "@" 之间的任何东西都是彻底不相关的。
 
 ```
 http://doesn'tmatter@www.google.org
 http://!$^&*()_+`-={}|[]:;@www.google.com
 ```
 
-- @ symbol can be represented by its hex code %40
-- dots are %2e
+- @ 标志可以用它的十六进制代码%40表现。
+- 点是 %2e
 
 
 
