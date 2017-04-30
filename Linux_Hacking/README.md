@@ -2,7 +2,7 @@
 
 ## 提权
 
-* [多年以来Unix特权如何升级利用](https://github.com/Kabot/Unix-Privilege-Escalation-Exploits-Pack).
+* [多年以来Unix特权是如何升级利用的](https://github.com/Kabot/Unix-Privilege-Escalation-Exploits-Pack).
 
 ## 附件文件夹
 
@@ -190,7 +190,7 @@ $ ps aux
 $ ps aux | grep -w Z
 ```
 
-or
+或是
 
 ```
 $ ps -e
@@ -1144,30 +1144,30 @@ $ hexdump -c < text.txt
 0000038
 ```
 
-* The numbers displayed at left are the hexadecimal byte offsets of each output line in the file左边数字显示的十六进制字节是文件中的每个输出行的偏移量.
+* 左边数字显示的十六进制字节是文件中的每个输出行的偏移量.
 
-* Unlike text files on other operating systems, Linux files does not end with a special end-of-file character.
-
-
-* Linux text files were traditionally always interpreted as **ASCII**. In ASCII, each character is a single byte, the ASCII standard as such defines exactly **128 characters** from **ASCII 0 to ASCII 127**. Some of them are non-printable (such as newline). The printable stats at **32**. In that case, **ISO 8859** standards were  extensions to ASCII where the character positions **128 to 255** are given foreign-language interpretation.
-
-* Nowadays, Linux files are most often interpreted as **UTF-8**, which is an encoding of **Unicode**, a character set standard able to represent a very large number of languages.
-
-* For East asian languages, **UTF-8 **chars are interpreted with **3 bytes** and  **UTF-16** chars are interpreted with **2 bytes**. For western languages (such as German, for example), **UTF-16** characters are interpreted with **2 bytes**, and all the regular characters have **00** in front of it.
-
-* In **UTF-16**, sentences start with two bytes **fe ff** (decimal 254 255) which don't encode as any part of the text. These are the **Unicode byte order mark** (BOM), which guards against certain kinds of encoding errors [1].
+* 不同于文本文件在其他操作系统中的情况,Linux中文件不以一个特殊的文件结束字符结束.
 
 
-* Linux has a command to translate between character sets:
+* Linux文本文件通常总是解释为**ASCII**.在ASCII中,每个字符是一个字节,ASCII的标准定义 **128 characters**从**ASCII 0到ASCII 127**.其中有些是非输出的(例如换行符).输出数据统计在**32**之后.既然那样,当字符位置处于**128到255**并给出外语翻译时,**ISO 8859**是ASCII标准的扩展 .
+
+* 现在,Linux文件通常解释为**UTF-8**,**Unicode**的一种编码, 一套字符标准能够代表大量的语言.
+
+* 对于东亚语言, **UTF-8 **字符是用**3 bytes**翻译的并且**UTF-16**字符是用**2 bytes**翻译的.对于西方语言(例如德语), **UTF-16**字符是用**2 bytes**翻译的,并且所有字符之前有**00**.
+
+* 在**UTF-16**中,句子以不像其他任何部分文本编码的**fe ff**开始(小数为254 255) .这些是**Unicode byte order mark** (BOM),用来防范某些类型的编码错误[1].
+
+
+* Linux字符集之间有一个命令翻译:
 
 ```
 $ recode iso8859-1..utf-8
 ```
 
-* This is useful if you see a **mojibake**, which is a character set encoding mismatch bug.
+* 如果你看到**mojibake**,这是一个字符集编码不匹配错误,是有用的.
 
 
-* There are only two mandatory rules about characters that can't appear in filename: null bytes (bytes that have numeric value zero) and forward slashes **/**.
+* 只有两个强制性规则的字符不能在文件名中出现:空字节(字节数值为0)和斜线 **/**.
 
 
 
@@ -1178,7 +1178,7 @@ $ recode iso8859-1..utf-8
 
 ## Creating Pseudo-Random Passwords
 
-* Add this to your **~/.bashrc**:
+*向你的**~/.bashrc**添加如下内容:
 
 ```
 genpass() {
@@ -1188,13 +1188,13 @@ genpass() {
 }
 ```
 
-* Then, to generate passwords, just type:
+* 接着,生成密码,只输入:
 
 ```
 $ genpass
 ```
 
-* For example:
+*例如:
 
 ```sh
 $ genpass
@@ -1211,13 +1211,13 @@ ZEfgQvpY4ixePt
 ---
 ## Password Asterisks
 
-* By default, when you type your password in the terminal you should see no feedback. If you would like to see asterisks instead, edit:
+*当您输入您的密码时,默认在终端看不到任何反馈. 如果相反你想看到星号,那么编辑:
 
 ```
 $ sudo visudo
 ```
 
-to have the value:
+来获得权限:
 
 ```
 Defaults                           pwfeedback
@@ -1227,7 +1227,7 @@ Defaults                           pwfeedback
 ----
 ## imagemagick
 
-* You can create a gif file from terminal with  ***imagemagick***:
+* 你可以使用***imagemagick***在终端创建一个gif文件:
 
 ```
 $ mogrify -resize 640x480 *.jpg
