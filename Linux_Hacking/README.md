@@ -998,13 +998,13 @@ $ crontab -e
 ---
 ##  rsync
 
-*  **rsync**  performs file synchronization and file transfer. It can compress the data transferred using *zlib* and can use SSH or [stunnel](https://www.stunnel.org/index.html) to encrypt the transfer.
+*  **rsync**执行文件同步和文件传输.使用*zlib*可以进行压缩转移数据,也可以使用SSH或是[stunnel软件](https://www.stunnel.org/index.html) 进行加密传输.
 
-* **rsync** is very efficient when recursively copying one directory tree to another because only the differences are transmitted over the network.
+* 当递归地复制一个目录树到另一个时**rsync**非常有效因为这些差别只在网络上传输.
 
-* Useful flags are: **-e** to specify the SSH as remote shell, **-a** for archive mode, **-r** for recurse into directories, and **-z** to compress file data.
+* 实用的命令是: **-e**像远程shell一样指定SSH, **-a**用于归档模式, **-r**用于递归到目录,以及**-z**用于压缩文件数据.
 
-* A very common set is **-av** which makes **rsync** to work recursively, preserving metadata about the files it copies, and displaying the name of each file as it is copied. For example, the command below is used to transfer some directory  to the **/planning** subdirectory on a remote host:
+* **-av**是一个很常见的设置可以使得**rsync**递归地工作,它保留有关文件的元数据复制,显示正在复制的每个文件的名称.例如,下面的命令是用来传输一些目录到远程主机上的**/planning**子目录:
 
 ```
 $ rsync -av <DIRECTORY> <HOST>:/planning
