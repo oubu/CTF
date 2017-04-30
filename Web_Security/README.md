@@ -289,9 +289,9 @@ Set-Cookie: SID=472ndsw;expires=DATE;path=/;domain=SITE,HttpOnly
 
 ----
 
-## Same-Origin Policy
+## 同源策略
 
-### DOM Same-Origin Policy
+### DOM同源策略
 
 * JavaScript executing in context of one document should not be allowed to access context of another document, unless: **protocol, hostname and port all match**. This defines a document's origin.
 
@@ -299,13 +299,12 @@ Set-Cookie: SID=472ndsw;expires=DATE;path=/;domain=SITE,HttpOnly
 
 * Wildcard * policies is ill-advised: explore content on your domain to script access from any/all origins.
 
-### Cross-Domain Policies
-
+### 跨域策略
 * Extend SOP beyond a document's origin.
 * Permit applets originating from another domain access to resources.
 * Permit issuing arbitrary HTTP requests with whitelisted headers.
 
-### CORS - Cross Origin Resource Sharing
+### CORS - 跨来源资源共享
 
 * Browser allows XMLHttpRequest's to access response data return from cross-origin requests when:
 	- Response contains Access-Control-Allow -Origin header
@@ -314,7 +313,7 @@ Set-Cookie: SID=472ndsw;expires=DATE;path=/;domain=SITE,HttpOnly
 
 ----
 
-## OWASP TOP 10
+## OWASP前十名
 
 1. Injection
 2. XSS
@@ -329,12 +328,12 @@ Set-Cookie: SID=472ndsw;expires=DATE;path=/;domain=SITE,HttpOnly
 
 
 ----
-## Injection Flaws
+## 注入式攻击
 
 * Happens when mixing Code and Input in the same context.
 * Hostile input is parsed as code by the interpreter.
 
-### SQL Injection
+### SQL 注入
 
 * For example an input text box for username and password. The server-side code can be:
 ```
@@ -354,7 +353,7 @@ SELECT user_id FROM user_data  WHERE name='john' and password='password'
 
 ----
 
-## CSRF
+## 跨站点请求伪造（CSRF）
 
 * Tricks victim's browsers into performing unsuspecting actions.
 
@@ -374,7 +373,7 @@ CSRF.
 * A simple mitigation, often hard to implement: include secret user/session specific value with request.
 
 
-### Example of CSRF
+### CSRF示例：
 
 1. User logs into account at bank.com
 2. In another tab, user visit a site that sources an image from:
@@ -387,7 +386,7 @@ CSRF.
 
 ----
 
-## XSS
+## 跨站脚本攻击（XSS）
 
 * Occurs when untrusted data is sent to the web browser without validating or encoding the content.
 
