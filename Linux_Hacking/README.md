@@ -355,9 +355,9 @@ $ <PROGRAM> 2>&1
 
 * 你可以使用```chown```来改变资源的拥有者.有两种方法来设置改变权限的权限:
 
-    * A numeric form using octal modes: read = 4, write = 2, execute = 1, where you multiply by user = x100, group = x10, all = x1, and sum the values corresponding to the granted permissions. For example 755 = 700 + 50 + 5 = rwxr-xr-x: ``` $ chmod 774 <FILENAME>```
+    * 使用八进制数字形式模式: read = 4, write = 2, execute = 1, 以及 user = x100, group = x10, all = x1,并且求出授予权限对应的值.例如755 = 700 + 50 + 5 = rwxr-xr-x: ``` $ chmod 774 <FILENAME>```
 
-    * An abbreviated letter-based form using symbolic modes:  u, g, or a, followed by a plus or minus, followed by a letter r, w, or x. This means that u+x "grants user execute permission", g-w  "denies group write permission", and a+r  "grants all read permission":```$ chmod g-w <FILENAME>```.
+    * 使用符号模式缩写letter-based形式:字母u, g,或a,其次是加减,再其次是字母r,w,或x. u+x代表着"授予用户执行权限", g-w表示"否认组别拥有写入权限",以及a+r代表"授予所有人阅读权限":```$ chmod g-w <FILENAME>```.
 
 
 * 你可以使用```chgrp```来改变组别,与改变权限是一样的逻辑.
