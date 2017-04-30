@@ -265,25 +265,24 @@ name=John&type=2
 * 5xx - 服务器错误。 例如： 500: Internal Server Error.
 
 
-### Session IDs
+### 会话标识符（IDs）
 
-* HTTP protocol does not maintain state between requests. To maintain a state, must use a state tracking mechanism such as session identifier (session ID), which is passed within a request to associate requests with a session.
-
-* Session ID's can be passed in these places:
+* HTTP协议不维护请求之间的状态。如果想要保持状态,必须使用状态跟踪机制,如会话标识符(会话ID),会话标识符在请求中传递，用来连接请求和会话。
+* 会话标识符可以在这些地方传递：
 	- URL
-	- Hidden Form Field
-	- Cookie HTTP Header
+	- 隐藏表单字段
+	- Cookie HTTP头部
 
 
 ### Cookies
 
-* To initiate a session, server sends a Set-Cookie header, which begins with a NAME=VALUE pair, followed by zero or more semi-colon-separated attribute-value pairs (Domain, Path, Expires, Secure).
+* 想要初始化一个会话，服务器发送一个Set-Cookie的头，这个头以名称=值对（NAME=VALUE pair）开始，接着是零个或多个半冒号分割属性值对（semi-colon-separated attribute-value pairs）(域, 路径, 有效期, 安全).
 
 ```
 Set-Cookie: SID=472ndsw;expires=DATE;path=/;domain=SITE,HttpOnly
 ```
 
-* Client sends Cookie header to server to continue session.
+* 客户机向服务器发送Cookie头以继续会话。
 
 
 
