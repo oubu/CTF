@@ -225,15 +225,15 @@ http://!$^&*()_+`-={}|[]:;@www.google.com
 	- 接受（Accept）:支持MIME文档(如无格式正文（text/plain）或MPEG格式的音频)
 	- 支持的语言(Accept-Language):支持语言代码
 	- 来源(referer): 原始页面的请求
-* The headers are terminated with a single empty line, which may be followed by any payload the client wishes to pass to the server (the length should be specified with the Content-Length header).
+* 头用一个空行终止,后可能紧接任何客户端希望传递给服务器负载（长度需要是内容长度的头所指定的）。、
 
-* The  payload is usually browser data, but there is no requirements.
+* 有效负载通常是浏览器的数据,但没有要求。
 
 
 
-### GET Method
+### GET 方法
 
-* Passes all request data **within the URL QueryString**.
+* 传递**URL查询字符串**中的所有请求数据。.
 
 ```
 GET /<URL QUERY STRING> HTTP/1.1
@@ -243,9 +243,9 @@ Host: <WESITE>
 <CRLF>
 ```
 
-### POST Method
+### POST 方法
 
-* Passes all request data **within the HTTP request body**.
+* 传递**HTTP请求主体**中的所有请求数据。
 
 ```
 POST /<LINK> HTTP/1.1
@@ -256,13 +256,13 @@ Content-Lenght:16
 name=John&type=2
 ```
 
-### HTTP Status Codes
+### HTTP状态码
 
-* 1xx - informational
-* 2xx - success. Example: 200: 0K.
-* 3xx - redirection. Example: 302: Location.
-* 4xx - client error. Example: 403: Forbidden, 401: Unauthorized, 404: Not found.
-* 5xx - server error. Example: 500: Internal Server Error.
+* 1xx - 信息化。
+* 2xx - 成功。 例如： 200: 0K.
+* 3xx - 重定向。 例如： 302: Location.
+* 4xx - 客户端错误。 例如: 403: Forbidden, 401: Unauthorized, 404: Not found.
+* 5xx - 服务器错误。 例如： 500: Internal Server Error.
 
 
 ### Session IDs
