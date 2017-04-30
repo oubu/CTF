@@ -209,24 +209,22 @@ http://!$^&*()_+`-={}|[]:;@www.google.com
 
 ## HTTP
 
-* HTTP is a stateless protocol based on a series of client requests and web server responses.
+* HTTP是基于一系列的客户端请求和web服务器响应的无状态协议。
 
-* HTTP requests and responses are comprised of Headers, followed by request or response body.
+* HTTP请求和响应由报头、请求或响应的主体组成。
 
+* HTTP请求必须使用特定的请求方法。
 
-* HTTP requests must use a specific request method.
+* HTTP响应包含一个状态码。
 
-* HTTP responses contain a Status Code.
+* HTTP是一个纯文本的协议。
 
-* HTTP is a plain-text protocol.
-
-* The first line of a request is modified to include protocol version information and it's followed by zero or more name:value pairs (headers):
-	- User-Agent: browser version information
-	- Host: URL hostname
-	- Accept: supported MIME documents( such as text/plain or audio/MPEG)
-	- Accept-Language: supported language codes
-	- Referer: originating page for the request
-
+* 请求的第一行修改为包含协议版本信息，以及接下来是零个或多个名称：值对（报头）：
+	- 用户代理(User-Agent):浏览器版本信息
+	- 主机(Host): URL主机名
+	- 接受（Accept）:支持MIME文档(如无格式正文（text/plain）或MPEG格式的音频)
+	- 支持的语言(Accept-Language):支持语言代码
+	- 来源(referer): 原始页面的请求
 * The headers are terminated with a single empty line, which may be followed by any payload the client wishes to pass to the server (the length should be specified with the Content-Length header).
 
 * The  payload is usually browser data, but there is no requirements.
