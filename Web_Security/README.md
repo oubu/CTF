@@ -431,9 +431,9 @@ GET /Vuln.jsp?p1=<script>evil();</script>
 ```
 
 
-### XSS Shell & XSS Tunnel
+### XSS壳（Shell） & XSS隧道（Tunnel）
 
-*  XSS backdoor which allows an attacker to control a victim's browser by sending it commands.
+* XSS backdoor which allows an attacker to control a victim's browser by sending it commands.
 * Attacker requests are proxied through XSS shell to perform requests as the victim.
 * Enables attacker to bypass IP restrictions and all forms of authentication.
 
