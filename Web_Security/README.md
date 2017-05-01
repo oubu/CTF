@@ -293,22 +293,22 @@ Set-Cookie: SID=472ndsw;expires=DATE;path=/;domain=SITE,HttpOnly
 
 ### DOM同源策略
 
-* JavaScript executing in context of one document should not be allowed to access context of another document, unless: **protocol, hostname and port all match**. This defines a document's origin.
+* JavaScript在其中一个文件的环境中执行，它不应该被允许访问另一个文档的环境,除非:**协议、主机名和端口**都匹配。这定义了文档的来源。
 
-* IE doesn't always observer port number.
+* IE不总观测端口号
 
-* Wildcard * policies is ill-advised: explore content on your domain to script access from any/all origins.
+* 通配符 * 策略是不明智的：探索您的域名上的内容，以从任何/所有来源的脚本进行访问。
 
 ### 跨域策略
-* Extend SOP beyond a document's origin.
-* Permit applets originating from another domain access to resources.
-* Permit issuing arbitrary HTTP requests with whitelisted headers.
+* 超越文件的来源扩展SOP。
+* 允许来自另一个域的应用程序访问资源。
+* 允许使用白名单头发行任意HTTP请求。
 
 ### CORS - 跨来源资源共享
 
-* Browser allows XMLHttpRequest's to access response data return from cross-origin requests when:
-	- Response contains Access-Control-Allow -Origin header
-	- Request's Origin value is defined in set
+* 浏览器允许XMLHttpRequest访问从跨源请求中返回的响应数据：
+	- 响应包含Access-Control-Allow起源的头
+	- 请求的源值在集合中定义
 
 
 ----
@@ -330,41 +330,39 @@ Set-Cookie: SID=472ndsw;expires=DATE;path=/;domain=SITE,HttpOnly
 ----
 ## 注入式攻击
 
-* Happens when mixing Code and Input in the same context.
-* Hostile input is parsed as code by the interpreter.
+* 在相同环境的混合代码和输入时就会发生。
+* 敌意输入被解释器解析为代码。
 
 ### SQL 注入
 
-* For example an input text box for username and password. The server-side code can be:
+* 例如，用户名和密码的输入文本框。服务器端代码可以是:
 ```
 String query = "SELECT user_id FROM user_data WHERE name = '  " + input.getValue("userID") + " ' and password = ' " + input.getValue("pwd") + " ' ";
 ```
 
-* The SQL query interpreted by the SQL Server:
+* SQL查询可以被SQL Server解释：
 
 ```
 SELECT user_id FROM user_data  WHERE name='john' and password='password'
 ```
 
-* However, if the attacker inputs **password' OR '1'='1**,  no password is required!
+* 然而，如果攻击者输入**密码'或'1'='1**，不需要密码！
 
-* See subfolder SQLi for more information.
-
+* 有关更多信息,请参见子文件夹SQLi。
 
 ----
 
 ## 跨站点请求伪造（CSRF）
 
-* Tricks victim's browsers into performing unsuspecting actions.
+* 欺骗受害者的浏览器执行不知情的行为。
 
-* Server doesn't verify request was imitated from the expect client-side origin.
+* 服务器不验证请求是否被期望的客户端源所模仿。
 
-* Browser naively submits credentials when attempting to retrieve resources.
+* 浏览器在尝试检索资源时天真地提交凭证。
 
-* Identification and verification manual of CSRF can be done by checking in the website's forms (usually where most often find this vulnerability).
+* 识别和验证CSRF手册可以通过检查网站的形式来完成(通常做经常在这里找到这个漏洞)。
 
-* To check this, you will need to copy an original request (GET / POST) on a form and then make a change in the parameters and re-send the same request modified. If the server does not return an error, it can be considered that it is vulnerable to
-CSRF.
+* 要检查这一点,您将需要在表单上复制一个原始请求(GET / POST),然后做出相同的改变参数和重发请求的修改。如果服务器不返回错误，则可以认为它很容易受到CSRF攻击。
 
 * To perform this task, we can use the tools **csrftester** or **burp** proxy.
 
