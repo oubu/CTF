@@ -165,9 +165,9 @@ $ rpm -q kernel
 * 正在运行的程序被称作**process**（进程）。每个进程都有一个**owner**（所属用户）。（这和我们下面谈到的文件权限一样）
 * 通过**ps**命令你可以知道那些程序在运行。命令的输出也列出**process ID** 或者称 **PID**。这是某个进程的唯一标识（也是长期的）。如果对某个程序进行复制，每个进程将会分的不同的PID。
 
-* To put a job (process) in the background we either run it with **&** or we press CTRL-Z and then type **bg**. To bring back to the foreground, we type **fg**.
+* 为了将一个任务或进程放到后台,我们可以使用**&**来操作或者我们可以按下CTRL-Z然后输入**bg**.输入**fg**可以将其释放到前台.
 
-* To get the list of running jobs in the shell, we type **jobs**. Each job has a **job ID** which can be used with the percent sign **%** to **bg**, **fg** or **kill** (described below).
+* 我们可以输入**jobs**以得到shell中运行的任务列表.每个任务都有一个**job ID**可以和百分号**%**一起在**bg**,**fg**或是**kill**中使用(这些在后文会有详细介绍).
 
 
 ### ps
@@ -516,7 +516,7 @@ $ find <DIRECTORY> -name <FILENAME>
 
 ### which
 
-* 找到二进制文件的路径变量:
+* 查找二进制文件的路径变量:
 
 ```
 $ which ls
@@ -546,7 +546,7 @@ $ test -f <FILENAME>
 
 ---
 ## Modifying Files
-修改文件
+ 修改文件
 
 ### true
 
