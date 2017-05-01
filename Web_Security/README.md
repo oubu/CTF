@@ -499,7 +499,7 @@ GIF89a(...binary data...)
 ```
 
 
-### Identifying File Handling Bugs
+### 识别文件处理错误
 
 * Fuzz and grep response for file system related messages:
 ```
