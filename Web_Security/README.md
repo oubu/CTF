@@ -364,34 +364,34 @@ SELECT user_id FROM user_data  WHERE name='john' and password='password'
 
 * 要检查这一点,您将需要在表单上复制一个原始请求(GET / POST),然后做出相同的改变参数和重发请求的修改。如果服务器不返回错误，则可以认为它很容易受到CSRF攻击。
 
-* To perform this task, we can use the tools **csrftester** or **burp** proxy.
+* 执行这个任务,我们可以使用工具 **csrftester** 或 **burp** 代理。
 
-* Can be used to exploit admin-only vulnerabilities (router admin pages, etc).
+* 可以用来利用admin-only漏洞(路由器管理页面等)。
 
-* A simple mitigation, often hard to implement: include secret user/session specific value with request.
+* 一个简单的缓冲，通常难以实现:包括请求的秘密用户/会话的特定值。
 
 
 ### CSRF示例：
 
-1. User logs into account at bank.com
-2. In another tab, user visit a site that sources an image from:
+1. 用户在bank.com上登录。
+2. 在另一个选项卡中，用户访问一个图片的来源:
 ```
 <img src="http://bank.com/xfer.do?frmACCT=user&toAcct=Attackker&amt=10000"/>
 ```
-3. User's browser sends a GET request from the image.
-4. User just transfered 100k into Joe's account.
+3. 用户的浏览器从图像中发送一个GET请求。
+4. 用户只需将100k转移到Joe的账户中。
 
 
 ----
 
 ## 跨站脚本攻击（XSS）
 
-* Occurs when untrusted data is sent to the web browser without validating or encoding the content.
+* 当不受信任的数据被发送到web浏览器而不验证或编码内容时，就会出现这种情况。
 
-* Allows attackers to inject script code into the web browser under the vulnerable site's domain.
-	- Steal session cookies and any other data in the DOM.
-	- Deface website content or redirect to third party websites.
-	- Exploit unpatched web browser or plugin.
+* 允许攻击者在易受攻击的站点的域内向web浏览器注入脚本代码。
+	- 窃取会话cookie和DOM中的任何其他数据。
+	- 取消网站内容或重定向到第三方网站。
+	- 开发未修补的web浏览器或插件。
 
 * Types:
 	- Reflected (Transient): payload from Request directly echoed back in Response.
