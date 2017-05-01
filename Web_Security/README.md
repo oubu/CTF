@@ -393,39 +393,39 @@ SELECT user_id FROM user_data  WHERE name='john' and password='password'
 	- 取消网站内容或重定向到第三方网站。
 	- 开发未修补的web浏览器或插件。
 
-* Types:
-	- Reflected (Transient): payload from Request directly echoed back in Response.
-	- Persistent: payload is stored and rendered back within another page.
-	- DOM based: occurs Client-Side due to insecure JavaScript
+* 类型：
+	- 反映(瞬态):从响应直接回应的的请求的负载。
+	- 持久:有效载荷被存储并返回到另一个页面中。
+	- DOM基础：由于不安全的JavaScript而出现客户端
 
-### Persistent Payload
+### 持续载荷
 
-1. The Attacker upload to the server:
+1. 攻击者向服务器上传：
 ```
 GET /VulnerablePage.jsp?p1=<script>evil();</script>
 ```
 
-2. The victim request:
+2. 受害人的请求：
 ```
 GET /VulnerablePage.jsp
 ```
 
-3. But she/he gets:
+3. 但她/他得到的：
 ```
 <html><body>(...)evil();</script></body></html>
 ```
 
-### Reflected Payload
+### 反映负载
 
-1. The victim clicks in some malicious link:
+1. 受害者点击了一些恶意链接：
 ```
 <a href="http://website.com/Vuln.jsp?p1=%3cscript%3eevil();%3c/script%3e">Click here!</a>
 ```
-2. The victim's GET request:
+2. 受害者的GET请求：
 ```
 GET /Vuln.jsp?p1=<script>evil();</script>
 ```
-3. Which returns:
+3. 返回的内容：
 ```
 <html><body>(...)<script>evil();</script>(..)
 ```
