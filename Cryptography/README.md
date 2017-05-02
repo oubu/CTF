@@ -4,12 +4,11 @@
 ### 提示：
 
 - 通常，数据以base64或十六进制编码，其他情况下只是被压缩（gzip）:
-
-    - 32个字节 --> md5 hash.
-    - 40个字节 --> SHA1 hash.
-    - 末尾等号 --> base64编码.
-    - 只有字母，没有数字和特殊字符 --> Caesar, Vigenere, 或其他加密算法.
-    - 提示密钥和签名 --> 可能是RSA.
+	- 32个字节 --> md5 hash.
+	- 40个字节 --> SHA1 hash.
+	- 末尾等号 --> base64编码.
+	- 只有字母，没有数字和特殊字符 --> Caesar, Vigenere, 或其他加密算法.
+	- 提示密钥和签名 --> 可能是RSA.
 
 
 ---
@@ -321,20 +320,20 @@ $ ./openssl s_client --no_tls1 --no_ssl3 --connect <WEBSITE>:443
 
 * **对称密钥加密 (共享密钥加密)**：所有方有同样的密钥。在任意一组共享密钥用户中无法验证消息发送者。
 
-* **分组链接模式(CBC)**: operates on blocks of symbols. It's the only appropriate fixed-block cipher in use. If performs an XOR operation with the previous block of data. Most encryption is done by using block ciphers.
+* **密文分组链接模式(CBC)**: 对块进行操作。这是唯一适用的固定块密码。将明文分组与前一个密文分组进行OOR运算。大多数加密使用分组密码。
 
-* **Modes of Operation of a Block Cipher**: there are four modes of operation:
-	1.  **electronic code book** (ECB): The standard mode. It has the disadvantage that for a given key, two identical plaintexts will correspond to identical ciphertexts.
-	2. ** cipherblock chaining ** (CBC): The most commonly used. Agreement on a non-secret **initialization vector** (of same length as the plaintext).
-	3. **cipher feedback** (CFB): if the plaintext is coming in slowly, the ciphertext can be sent as soon as the plaintext comes in.
-	4. **output feedback** (OFB): a way to create a keystream for a stream cipher.
+* **分组密码工作模式**: 有四种：
+	1.  **电子密码本模式**（ECB）：标准模式。缺点：对于给定的密钥，相同的明文会被加密成相同的密文。
+	2. **密文分组链接模式** (CBC)：最常使用。约定一个公开的**初始化向量**（与明文分组长度相同）。
+	3. **密文反馈模式** (CFB): 如果明文输入较慢，明文一输入，就能产生密文。
+	4. **输出反馈模式** (OFB)：一种为流密码创建密钥流的方式
 
-* **The Data Encryption Standard (DES)**: introduced in 1975. It uses a 56 bit key with 8 additional bits for parity check. It operates on blocks of 64 bit plaintexts and gives 64 bit ciphertext. It alternates 16 substitutions with 15 transpositions. In 1997 DES was brute-forced in 24 hours.
+* **数据加密标准(DES)**: introduced in 1975. It uses a 56 bit key with 8 additional bits for parity check. It operates on blocks of 64 bit plaintexts and gives 64 bit ciphertext. It alternates 16 substitutions with 15 transpositions. In 1997 DES was brute-forced in 24 hours.
 
-* **The Advanced Encryption Standard (AES)**: introduced in 2002. It operates on 128 bit strings. AES has 128 bit key and 128 bit ciphertext and plain  text blocks. So when AES is used to encrypt a text message, it encrypts blocks of 128/8 = 16 symbols. It alternates 10 substitutions with 10 transpositions.
+* **高级加密标准(AES)**: introduced in 2002. It operates on 128 bit strings. AES has 128 bit key and 128 bit ciphertext and plain  text blocks. So when AES is used to encrypt a text message, it encrypts blocks of 128/8 = 16 symbols. It alternates 10 substitutions with 10 transpositions.
 
 
-* **Stream Ciphers**: operates symbol-by-symbol. Block ciphers can run in modes that allow them to operate arbitrary size chunks of data. The counter CTR mode cipher is the best choice for a stream cipher. Modern stream ciphers are symmetric key cryptosystems.
+* **流密码**: operates symbol-by-symbol. Block ciphers can run in modes that allow them to operate arbitrary size chunks of data. The counter CTR mode cipher is the best choice for a stream cipher. Modern stream ciphers are symmetric key cryptosystems.
 
 * **Synchronous stream cipher**: when you simply XOR the plaintext with the keystream to get the ciphertext.
 
@@ -346,12 +345,12 @@ $ ./openssl s_client --no_tls1 --no_ssl3 --connect <WEBSITE>:443
 
 * **Initialization Vector**: is a dummy block used to start a block cipher. It's necessary to force the cipher to produce a unique stream of output. It doesn't need to be kept private but it must be different for every new cipher initialization with the same key.
 
-* **One-time pads**: the keystream is never used again. If each bit of the keystream is truly randomly generated, this implies that each bit is independent of the previous bits. So you don't start with a seed/key that is short and generate a keystream from it (ex: flipping a coin).
+* **一次一密（OTP）**: the keystream is never used again. If each bit of the keystream is truly randomly generated, this implies that each bit is independent of the previous bits. So you don't start with a seed/key that is short and generate a keystream from it (ex: flipping a coin).
 
 
 -----
 
-* **Asymmetric encryption (public key encryption)**: each party has a different set of keys for accessing the same encrypted data. Main uses:
+* **非对称密钥加密（公钥密码）**: each party has a different set of keys for accessing the same encrypted data. Main uses:
 	1. Agree on a key for a symmetric cryptosystem.
 	2. Digital signatures.
 	3. Rarely used for message exchange since it is slower than symmetric key cryptosystems.
@@ -380,8 +379,7 @@ You want :
 
 People use n of 1024 bits (n ~ 1e308).
 Corporates use  2048 bits (n ~ 1e617).
-In the early 1990’s, it was common to use 512 bits (n ~ 1e154). An RSA challenge number with n~
-2^768 ≈ 1e232 was factored in 2009.
+In the early 1990’s, it was common to use 512 bits (n ~ 1e154). An RSA challenge number with n~2^768 ≈ 1e232 was factored in 2009.
 
 *  **ElGamal**:  used to exchange a key for a symmetric cryptosystem.
 	1. Bob chooses a finite field and a generator and a private  key.
@@ -443,7 +441,7 @@ replace the known IV with a secret shared key.
 
 ---
 
-* **量子密码技术**: there are two ways of agreeing on a symmetric keys without presence: public key crypto or quantum crypto. It can work up to several kilometers. It can detect eavesdropping.
+* **量子密码技术**: 两种在不见面的情况下共享对称密码的密钥的方式: 公钥密码；量子密码。几千米外有效。可以侦测窃听。
 	- A photon has a polarization that can be measured on any basis in two-space. If you measure in the wrong basis, you get random results and disturbs future measurements.
 	- Alice sends Bob a stream of photons. Each photon is randomly assigned a polarization in for direction (-1, 0, 1, 0).
 	- Bob randomly picks a basis for each photon. Every time he chooses the right basis, he measure the polarization correctly, otherwise, he gets random.
