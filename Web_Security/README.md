@@ -617,23 +617,23 @@ Authorization: Basic YWRtaW46YWRtaW4=
 * 水平:
 	- 访问另一个用户的数据
 
-* Parameter manipulation: insecure direct object reference (DB record id's exposed to user).
+* 参数操作:不安全的直接对象引用(DB记录id的暴露给用户)。
 
-*  Failure to restrict URL access:
-	- protect sensitive functionality by disabling the display of links, buttons, URL, and hidden URL or parameters.
-	- forceful browsing is a common attack technique: typically results in vertical escalation, administrative interfaces.
+*  未能限制URL访问:
+	- 通过禁用链接、按钮、URL和隐藏URL或参数的显示来保护敏感功能。
+	- 强制浏览是一种常见的攻击技术:通常会导致垂直升级，管理界面。
 
 
 ---
 
-## Attacking Web Servers
+## 攻击Web服务器
 
-### XML Web Services
+### XML Web服务
 
-* Facilitate machine to machine interaction:
-	- usually implemented as middleware, though sometimes called directly by the client.
-	- often implemented using **Simple Object Access Protocol (SOAP)**.
-	- request and Response structure defined by *8Web Service Definition language (WSDL).
+* 促进机器与机器的交互:
+	- 通常是作为中间件实现的，尽管有时被客户机直接调用。
+	- 经常实现使用 **简单对象访问协议(SOAP)**.
+	- 用 *8Web服务定义语言(WSDL)*定义请求和响应结构。
 
 ### Attacking web services
 
