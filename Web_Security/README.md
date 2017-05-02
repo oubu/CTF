@@ -632,19 +632,19 @@ Authorization: Basic YWRtaW46YWRtaW4=
 
 * 促进机器与机器的交互:
 	- 通常是作为中间件实现的，尽管有时被客户机直接调用。
-	- 经常实现使用 **简单对象访问协议(SOAP)**.
+	- 经常实现使用 *简单对象访问协议(SOAP)*.
 	- 用 *8Web服务定义语言(WSDL)*定义请求和响应结构。
 
-### Attacking web services
+### 攻击web服务
 
-1. Locate the web service endpoint.
+1. 定位web服务端点。
 
-	* pay attention to proxy logs
-	* look for common web service endpoints: .asmx, .svc, /axis, /axis2
+	* 注意代理日志
+	* 查找常见的web服务端点: .asmx, .svc, /axis, /axis2
 
-2. Obtain metadata.
+2. 获取元数据。
 
-	* Try appending **?	WSDL** or **.wsdl** to endpoint URL.
+	* 尝试添加 **?	WSDL** 或 **.wsdl** 端点URL。
 ```
 <portType>: Operations performed by the web service
 <message>: Messages used by the web service
@@ -652,25 +652,25 @@ Authorization: Basic YWRtaW46YWRtaW4=
 <binding>: protocol used by the web service
 ```
 
-3. Invoke the web service:
+3. 调用web服务:
 
-	* Issue SOAP requests directly to end point (SoapUI)
-	* Fuzz inputs just like any other parameter: same vulnerabilities.
+	* 直接发行SOAP请求结束点(SoapUI)
+	* 模糊的输入和其他参数一样:相同的漏洞。
 
-### Exploiting XML Parsers
+### 利用XML解析器
 
-* Web services often vulnerable to common attacks on XML parsers.
-* Entity expansion attacks:
-	- Denial of service against XML parser.
-	- Infinite recursion occurs during parsing.
-* XML External Entity attacks:
-	- Information disclosure to almost anything.
+* Web服务通常容易受到对XML解析器的常见攻击。
+* 实体扩展攻击:
+	- 拒绝对XML解析器的服务。
+	- 在解析过程中会出现无限的递归。
+* XML外部实体攻击:
+	- 几乎任何事情的信息披露。
 
-### XML External Entity Attacks:
+### XML外部实体攻击:
 
-1. Define an XML entity in the DTD
-2. Reference defined entity in XML body.
-3. Parser will read /etc/passwd contents:
+1. 在DTD中定义XML实体
+2. 引用XML主体中定义的实体。
+3. 解析器会读取 /etc/passwd 内容:
 
 ```
 <!DOCTYPE test [<!ENTITY x3 System "/etc/passwrd">]>
@@ -685,6 +685,6 @@ Authorization: Basic YWRtaW46YWRtaW4=
 
 -----------------
 
-## Other Tools
+## 其他工具
 * [FireBug](http://getfirebug.com/)
 * [Burp Suite](http://portswigger.net/burp/)
