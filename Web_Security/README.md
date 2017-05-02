@@ -501,62 +501,62 @@ GIF89a(...binary data...)
 
 ### 识别文件处理错误
 
-* Fuzz and grep response for file system related messages:
+* 模糊和grep对文件系统相关消息的响应:
 ```
 qr / ((could not|cannot|unable to) (open|find|access|read)|(path|file) not found) /i;
 ```
 
-* Analyze requests for parameters passing paths and filenames.
+* 分析通过路径和文件名的参数的请求。
 
-* Try directory traversal, NULL  bytes, etc.
+* 尝试目录遍历、空字节等。
 ```
 /FileDownload?file=reports/SomeReport.pdf
 /FileDownload?file=../../etc/passwd%00.pdf
 ```
 
 
-###  Meta-character Injection Bugs
+###  元字符注入漏洞
 
-* File Input/Output is a common place where meta-character injection comes into play.
+* 文件输入/输出是一个常见的元字符注入的地方。
 
-* For example if file ="../../../../../etc/passwd" below:
+* 例如,如果文件 ="../../../../../etc/passwd" 如下：
 
 ```
 $file = $_GET['file'];
 $fd = fopen("/var/www/$file");
 ```
-* Even if it had a txt extension it wouldn't matter. The reason is that PHP strings are indiferent to NLL byte, so all  the attacker needs to insert is "../../../../../etc/passwd%00":
+* 即使它有一个txt扩展，也没关系。 原因是PHP字符串对NLL字节没有反应,所以攻击者需要插入 "../../../../../etc/passwd%00":
 
 ```
 $file = $_GET['file'];
 $fd = fopen("/var/www/$file.txt");
 ```
-* PHP NULL byte insertion and directory traversal are common.
+* PHP NULL字节插入和目录遍历是常见的。
 
 
 ---
 
-## Authentication
+## 身份验证
 
-* Applications can verify identity based on:
+* 应用程序可以基于以下条目核对身份:
 
-	- Something the user knows: password, passphrase, pin, etc.
-	- Something the user has: smartcard, security token, mobile device/
-	- Something the user is or does: fingerprint, voice recognition.
+	- 用户知道的东西:密码、密码、借口类型等。
+	- 用户:智能卡安全令牌,移动设备//
+	- 用户是或做的事情:指纹，语音识别。
 
-* Common authentication methods:
-	- HTTP authentication
-	- Form-based
+* 常用的身份验证方法:
+	- HTTP 身份验证
+	- 基于表单的
 	- Kerberos/NTLM
-	- Single Sign-on (SSO)
-	- Certificate based
+	- 单点登录(SSO)
+	- 基于证书的
 
-### Basic Authentication
+### 基本身份验证
 
 * Credentials are Base64 enconded: in the format username:password
-* Each subsequent request includes credentials with the Authorization HTTP request header.
+* 每个后续请求都包含带有授权HTTP请求头的凭证。
 
-* For example, admin:admin is YWRtaW46YWRtaW4=:
+* 例如： admin:admin is YWRtaW46YWRtaW4=:
 
 ```
 GET /home.jsp HTTP/1.1
@@ -565,57 +565,57 @@ User-Agent: Mozilla/4.0
 Authorization: Basic YWRtaW46YWRtaW4=
 ```
 
-* Password brute force: if no lockout, automate: **Hydra, Brutus**.
+* 密码暴力破解: 如果没有破解出来, 自动: **Hydra, Brutus**.
 
 
-### Bypassing Authentication
+### 绕过身份验证
 
-#### Server-Side
+#### 服务器端
 
-* Predicting session tokens: what's the character composition of cookie?
-* Session hijacking via fixation/trapping: same session cookie used pre and post authentication?
-* Exploiting an injection flaw in login routine: SQL Injection.
+* 预测会话令牌:cookie的字符组成是什么?
+* 通过固定/捕获的会话劫持:相同的会话cookie使用前和post身份验证?
+* 利用登录例程中的一个注入缺陷:SQL注入。
 
-#### Client-Side
+#### 客户端
 
-* Does application set persistent authentication cookies: remember me or look for Expires attribute of Set-Cookie header.
+* 应用程序设置持久身份验证cookie:请记住我或查找set-cookie头的过期属性。
 
-* Back button to steal cached credentials (credentials stored in browser memory).
+* 后退按钮以窃取缓存的凭据(存储在浏览器内存中的凭据)。
 
-### Weak Authentication
+### 脆弱的身份验证
 
-* Does application authenticate requests across all resources?
+* 应用程序对所有资源的请求进行身份验证吗?
 
-* Issue direct requests to resources (forceful browsing): guess common file names.
+* 发布资源直接的请求(强制浏览): 猜测常见的文件名。
 
-* Inventory resources authenticated & request anonymously.
-	- Authenticate, crawl through UI, and record requests, responses.
-	- Re-issue those requests unauthenticated and diff responses.
+* 库存资源的身份验证和匿名请求。
+	- 进行身份验证, 从UI中爬取, 并记录请求, 响应。
+	- 补发的那些未经身份验证的请求和有差异的反应。
 
 
 
 -----
 
-## Authorization
+## 授权
 
-* System of determining whether a user is allowed to access a particular resource.
+* 确定是否允许用户访问特定资源的系统。
 
-* Role-based authorization.
+* 基于角色的授权。
 
-* Access decision can be made at:
-	- resource level
-	- function/method-level
-	- record-level
+* 可以在以下情况做出访问决策::
+	- 资源水平
+	- 函数/方法级
+	- 记录水平
 
-### Authorization Attacks
+### 授权攻击
 
-* Vertical:
-	- Elevate to a more privileged user
-	- access restricted functionality
-	- edit records intend to be read only
+* 垂直:
+	- 提升为更有特权的用户
+	- 访问限制功能
+	- 编辑记录应该为只读
 
-* Horizontal:
-	- access another user's data
+* 水平:
+	- 访问另一个用户的数据
 
 * Parameter manipulation: insecure direct object reference (DB record id's exposed to user).
 
