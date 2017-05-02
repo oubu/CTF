@@ -328,24 +328,24 @@ $ ./openssl s_client --no_tls1 --no_ssl3 --connect <WEBSITE>:443
 	3. **密文反馈模式** (CFB): 如果明文输入较慢，明文一输入，就能产生密文。
 	4. **输出反馈模式** (OFB)：一种为流密码创建密钥流的方式
 
-* **数据加密标准(DES)**: introduced in 1975. It uses a 56 bit key with 8 additional bits for parity check. It operates on blocks of 64 bit plaintexts and gives 64 bit ciphertext. It alternates 16 substitutions with 15 transpositions. In 1997 DES was brute-forced in 24 hours.
+* **数据加密标准(DES)**：1975。使用56位加上8位奇偶校验位密钥。加密64位明文并产生64位密文。代替了16次置换变换与15次转置变换。在1997年DES在24小时内被暴力破解了。
 
-* **高级加密标准(AES)**: introduced in 2002. It operates on 128 bit strings. AES has 128 bit key and 128 bit ciphertext and plain  text blocks. So when AES is used to encrypt a text message, it encrypts blocks of 128/8 = 16 symbols. It alternates 10 substitutions with 10 transpositions.
+* **高级加密标准(AES)**：2002。处理128bit字符串。AES有128bit密钥和128bit密文和明文块。所以当AES用于加密，将处理128/8=16个消息块。代替了10次置换变换和10次转置变换。
 
 
-* **流密码**: operates symbol-by-symbol. Block ciphers can run in modes that allow them to operate arbitrary size chunks of data. The counter CTR mode cipher is the best choice for a stream cipher. Modern stream ciphers are symmetric key cryptosystems.
+* **流密码**：块与块的处理。块加密可以在固定块大小的工作模式中运行。CTR模式是流加密的最好选择。现代流加密属于对称密钥密码系统。
 
-* **Synchronous stream cipher**: when you simply XOR the plaintext with the keystream to get the ciphertext.
+* **同步流密码**：简单地将明文与密钥流进行XOR运算。
 
-* **RC4**: the most widely used stream cipher, invented in 1987:
-		1. Chose n, a positive integer, say n=8.
-		2. Let l = (length in bits)/n
-		3. There is a key array K_0...K_{2^n -1} whose entries are n-bit strings (integers from 0 to 2^n -1). You enter the key into that array and then repeat the key as necessary.
-		4. The algorithm consists of permuting the integers from 0 2^n -1.
+* **RC4**：最常用的流加密，1987：
+		1. 选择一个正数n，假设n=8.
+		2. l = (位数)/n
+		3. 密钥数组K_0...K_{2^n -1}的输入是n位字符串（从0到2^n -1的整数）。你把密钥输入进数组并根据需要重复。
+		4. 算法即置换从0到2^n -1的整数。
 
-* **Initialization Vector**: is a dummy block used to start a block cipher. It's necessary to force the cipher to produce a unique stream of output. It doesn't need to be kept private but it must be different for every new cipher initialization with the same key.
+* **初始化向量**：用于开始块加密的假设块。对于产生不同的输出流是必要的。不一定是私密的，但每次新的加密初始化时不能使用同样的密钥。
 
-* **一次一密（OTP）**: the keystream is never used again. If each bit of the keystream is truly randomly generated, this implies that each bit is independent of the previous bits. So you don't start with a seed/key that is short and generate a keystream from it (ex: flipping a coin).
+* **一次一密（OTP）**：不重复使用同一个密钥流。如果密钥流的每一个位都是真正随机产生的，那么意味着每一个位与前一个位之间都是相互独立的。所以你不能使用一个短的初始化种子或密钥，然后用它来产生密钥流。（比如：抛硬币）
 
 
 -----
