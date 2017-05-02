@@ -364,92 +364,91 @@ $ ./openssl s_client --no_tls1 --no_ssl3 --connect <WEBSITE>:443
 	2. 计算n = pq ~ 1e300，f(n)=(p-1)(q-1).
 	3. 利用gcd(e, f(n)) = 1，找到一个e，计算1/e mod f(n) = d.
 	4. 公开(n,e)，保密d, p, q
-	5. Alice wants to send Bob the plaintext M (maybe an AES key) enconded as a number 0<=M<n. If the message is longer than n, she breaks into blocks..
-	6. Alice looks up Bob's n,e and reduces M^e mod n = C, sending C to Bob.
-	7. Bob reduces C^d mod n to get M because C^d = (M^e)^d = M
-	8 如果Eve得到了C，没有Bob的d是不能揭秘信息的.
+	5. Alice想给Bob发送消息M（可能是一个被编码为数字的AES密钥）0<=M < n. 如果消息长于n，那么她将对M进行分组
+	6. Alice找到Bob的n,e，计算M^e mod n = C，把C发送给Bob
+	7. Bob计算C^d mod n得到M，因为C^d = (M^e)^d = M
+	8. 如果Eve得到了C，没有Bob的d是不能揭秘信息的.
 
-You want :
+要求：
 
-	* gcd(p-1, q-1) to be small.
-	* p-1 and q-1 should each have a large prime factor.
-	* p and q shouldn't be too closer (ration ~ 4).
-	* e can be small: 3, 17=2^4 +1, or 65537=2^16 +1: repeated squares fast for e small, e not have many 1's in binary representation.
-
-
-People use n of 1024 bits (n ~ 1e308).
-Corporates use  2048 bits (n ~ 1e617).
-In the early 1990’s, it was common to use 512 bits (n ~ 1e154). An RSA challenge number with n~2^768 ≈ 1e232 was factored in 2009.
-
-*  **ElGamal**:  used to exchange a key for a symmetric cryptosystem.
-	1. Bob chooses a finite field and a generator and a private  key.
-	2. Alice encrypts M to Bob. She chooses a random session  and send with the generator and the message.
+	* gcd(p-1, q-1)很小
+	* p-1和q-1要有一个大的素数公因子
+	* p和q不能相差太近(ration ~ 4).
+	* e可以为一个较小的数：3，17=2^4 +1，或者65537=2^16 +1：不断乘方扩大较小的e，用二进制表示时，e没有很多1。
 
 
-* **Elliptic Curve Cryptography** (ECC): it has much shorter keys (1/6 bits) than RSA with the same security. It's useful in terms of key agreement and minimal storage computations (such as smart cards).
-	- An elliptic curve is a curve described an equation y^2 + a_1 xy + a_3 y = x^3 + a_2 x^2 + a_4 x + a_6.
-	- All cublic curves can be brought to this form by a change of variables. The curve closes off in the infinite or zero point.
+个人使用1024位（n ~ 1e308）。
+公司使用2048位（n ~ 1e617）。
+1990年早期，通常使用512位（n ~ 1e154）。2009年一个RSA数n~2^768 ≈ 1e232被分解。
 
-* **Elliptic Curve Diffie Hellman** (ECDH): chose a finite field, fix some elliptic curve with coefficients in this field , and a pseudo generator point. Each user has a private number and a public key point.
+*  **ElGamal**：用来交换对称加密的密钥
+	1. Bob选择一个有限域，一个生成器和一个私钥。
+	2. Alice加密M后发送给Bob。她选择一个随机的会话并发送生成器和私钥。
 
-* **Elliptic Curve ElGamal Message Exchange**: how to encode a message as a point? Go to infinite fields.
+
+* **椭圆曲线密码** (ECC)：与RSA安全性相同，但拥有密钥极短（1/6 bits）。它在密钥协商和减小存储计算（如智能卡）方面非常有用。
+	- 椭圆曲线是一个满足y^2 + a_1 xy + a_3 y = x^3 + a_2 x^2 + a_4 x + a_6的曲线。
+	- 所有的三次曲线都可以转化为这种形式。曲线在无限大或0点处封闭。
+
+* **椭圆曲线Diffie-Hellman密钥交换** (ECDH)：选择一个有限域，在域中选定一些椭圆曲线和系数，和一个伪随机生成点。每个用户都有一个私密数字和公开密钥点。
+
+* **椭圆曲线ElGamal消息交换**：如何将消息编码为一个点？使用无限域。
 
 ----
 
-* **Hash functions**: accepts a variable-length input and generates a fixed-sized output. It must be non-reversible and should have no collisions. The simplest forms are the cyclic redundancy check (CRC) and the cryptographic hash functions (SHA-1, SHA-256, MD5).
-	- Hashes have an **one-way** property: if given an output  y it is difficult to find any input such as H(x) = y For example, passwords saved as a hash: if you login, it computes the hash and compare (you never calculate back!).
-	- **weakly collision free property**: if, given input x, it is difficult difficult to find any x' ̸= x such that H(x) = H(x'′').
-	- **strongly collision free property**: if it is difficult to find any x and x' with x ̸= x' such that H(x) = H(x').
-	- of all the popular hash functions (MD5, SHA-0, SHA-1, SHA-2): only SHA-2  have the strongly collision free property. In addition, SHA-2 is similar to SHA-1, so it might not either.
+* **散列函数**：接收一个不定长度输入，产生一个固定长度输出。必须是不可逆且无重复的。最简单的是CRC校验和加密哈希函数（SHA-1, SHA-256, MD5）。
+	- **单向**性：给定输出y，很难得到输入，比如求得H(x) = y中的x。比如说，密码通常用散列函数来保存：当你登陆，系统会计算你输入密码的哈希值并与已存储的值进行比对（你无法反向计算）。
+	- **抗弱碰撞性**：给定输入x，很难找到x' ̸= x，使得H(x) = H(x'′')。
+	- **抗强碰撞性**: 很难找到x和x'，且x ̸= x'，使得H(x) = H(x').
+	- 在所有主流的散列函数中(MD5, SHA-0, SHA-1, SHA-2)：只有SHA-2有抗强碰撞性。另外，SHA-2与SHA-1相似，所以可能不是所有SHA-2函数都有抗强碰撞性。
 
-* **MAC**: If a hash algorithm depends on a secret key, it is called a MAC. To do this, we just
-replace the known IV with a secret shared key.
-	- Example: f is AES, so t = m = 128. Break the message into 128 bit blocks. If the message length is not a multiple of 128 bits then add 0’s to the end (padding) so that it is. The key for the first AES is the IV. The key for the second AES is the output of the first AES and so on. The final output is the hash of the message. This is not a secure hash function but it’s OK as a MAC.
+* **MAC**：带密钥的散列函数。我们只需要将已知的初始化向量换成一个共享的密钥。
+	- 例子：f是AES加密, t = m = 128。将消息分成128位的块。如果消息长度不是128的倍数，那么在消息末尾添加相应位数的0。第一轮AES加密的密钥是初始化向量。第二轮AES加密的密钥是第一轮AES的结果，依此类推。最终的输出是消息的散列值。这并不是一个安全的散列函数，但作为消息验证码来说是可以使用的。
 
-* **Hash-based message authentication code (HMAC)**: It's an originator validation, it validates the source of a message by incorporating some form of private key into the hash operation. Same weakness of any shared key system.
+* **基于散列函数的MAC(HMAC)**：它是一个发起者验证，通过将某些形式的私钥加入哈希函数来验证消息的来源。与所有的共享密钥系统有同样的弱点。
 
-* **Bait-and-switch attack**: weakness found in an aging hash function. The attacker takes advantage of a weak hash function's tendency to generate collisions over certain ranges of input. By doing this, an attacker can create two inputs that generate the same value.
+* **诱饵攻击**：在已成熟的散列函数中发现弱点。攻击者利用散列函数趋势，在某些输入范围内制造碰撞。这样，攻击者可以获取两个产生相同散列值的输入。
 
 
-* **MD5 hash algorithm**: The function f takes two inputs: a 128 bit string and a 512 bi  strings and its output is a 128 bit strings. Let X be the 512 bit string. For MD5 we will call a 32 bit string a word. So X consists of 16 words. Let X[0] be the first word, X[1] be the next,..., X[15] be the last word.
+* **MD5散列函数**：函数f读取两个输入：一个128为字符串和一个512位字符串，输出128位字符串。设X为512位字符串。对于MD5，我们可以将一个32位字符串称为一个字。所以X有16个字。设X[0]为第一个字，X[1]是下一个，...， X[15]为最后一个字。
 
-* **SHA3**: chosen by NIST in 2012, it has the strongly collision free property. SHA-3 takes inputs of arbitrary length and gives output of length 256.
+* **SHA3**：在2012年被NIST选中，具有高强度的无碰撞性。SHA-3固定长度输入，输出256位.
 
 
 -----------
 
-* **Internet security**: there are two main  protocols for providing security in the internet  (encryption and authentication): TLS and IPSec.
+* **网络安全**：有两个主要的用于为互联网提供安全的协议（加密和认证）：TLS and IPSec.
 
-* **Transport Layer Security**: the process is called Secure Sockets Layer (SSL) and now being replaced by TLS.  RSA to agree on AES key (which is used to encrypt password for example).
+* **传输层安全协议**: 这个过程被称为安全链路层（SSL），现在被TLS替代。用RSA共享AES的密钥 (比如说用来加密密码）。
 
-* **Internet Protocol Security** (IPSec): a competitor of TLS, it is less efficient than TLS and it is used in VPN.
+* **互联网安全协议** (IPSec)：是TLS的竞争者，不如TLS高效，被用在VPN中。
 
-* **Timestamping**: If Alice signs a message, and later decides that she does not want that message to be signed then she can anonymously publish her private key and say that anyone could have done the signing. This is called repudiation. So if someone receives a signature from Alice, he or she can demand that Alice use a digital timestamping service.
+* **时间戳（timestamping）**：如果Alice想要签名一个消息， 但后来她不希望此消息被签名，那么她可以匿名发布自己的私钥，并且说任何人都可以完成的签名。这称为否认。所以如果有人收到了Alice的签名，他可以要求Alice使用数字时间戳服务。
 
-* **Kerberos**: third part authentication protocol for insecure closed systems. It is used to prove someone's identity (authentication) in a secure manner without a public key crypto. An authentication server  authenticates the client identity with a ticket granting service for a service.
+* **计算机网络授权协议**(Kerberos)：为不安全的封闭系统提供的第三方认证协议。它用来在没有公钥密码的情况下安全地认证第三方的身份。身份认证服务器使用票据授权服务来验证客户端身份。
 
-* **Salt**: random value added to a message so that two messages don't generate the same hash value. It must not be duplicated between messages. It must be stored in addition to the hash so that the digest can be reconstructed. It must be protected. A salt of 23 buts increase of the password pre-computation dictionary by 4 billions of time (2^32).
+* **盐**（Salt）：在消息中加入任意值使得两个消息不产生相同的哈希值。不可以使用相同的盐加密不同消息。除了存储哈希值，还需保存盐，以便复现摘要。必须被保护。一个23位的盐给预先计算字典增加了40亿(2^32)的计算时间。
 
-	- Salt is a string that is concatenated to a password. It should be different for each userid. It is public for non-SSL/TLS applications like KERBEROS and UNIX.
+	- 与密码串接的字符串称为盐。对每个用户账号来说需要使用不同的盐。对于非SSL/TLS应用，比如KERBEROS and UNIX来说，盐是公开的。
 
-	-  If two people have the same password, they will not have the same hash. In Kerberos,  The authentication server keeps the hash secret, protected by a password known only to the authentication server.
+	- 两个人有相同的密码，但他们的密码不会有相同的哈希值。在Kerberos中，认证服务器将哈希值用一个仅自己知道的密码加密。
 
-	- Linux: in the password file, where there was once the salt and the hash of a salted password, there is now a *. A second hidden file called the shadow is the password file. It is encrypted using a password only known to the system admin. The shadow file contains userid, salt, hash(salt,password).
+	- Linux：在密码文件中，以前有一个盐和一个加盐后的密码的哈希值，现在是一个‘*’。第二个隐藏文件是密码文件，被称为影子文件。它使用仅对系统管理员已知的密码加密。影子文件包含userid, salt, hash(salt,password).
 
-* **Rainbow tables**: example of how a lack of  salt value leaves password hashes vulnerable to pre-computation attacks.
+* **彩虹表**（Rainbow Tables）：未加盐，使得密码的哈希值难以抵御预先计算攻击的。
 
 
 ---
 
 * **量子密码技术**: 两种在不见面的情况下共享对称加密密钥的方式: 公钥密码；量子密码。几千米外有效。可以侦测窃听。
-	- A photon has a polarization that can be measured on any basis in two-space. If you measure in the wrong basis, you get random results and disturbs future measurements.
-	- Alice给Bob发送一个光子流。 Each photon is randomly assigned a polarization in for direction (-1, 0, 1, 0).
-	- Bob randomly picks a basis for each photon. Every time he chooses the right basis, he measure the polarization correctly, otherwise, he gets random.
-	- Now Bob contact Alice in clear and tells the basis settings he made. Alice tells him which were correct. The others were thrown out.
-	- When Bob correctly sets the basis, they both have the same polarization, which can be turned into 0 or 1.
-	- On average, if Alice sends 2n bits, they end up with n bits. So to agree on 128 bit key, on average, Alice must send 256 bits.
-	- To detect eavesdropping, Alice and Bob agree to check on some of the bits, which are randomly chosen by Alice.
-	- Eve can perform a MITM attack and impersonate Alice and Bob for each other, so QC needs some authentication.
+	- 一个光子有两对极化状态。如果你使用错误的基态测量，你就得到了随机的结果，并影响以后的测量。
+	- Alice给Bob发送一个光子流。每个光子都被随机分配一个极（-1, 0, 1, 0）。
+	- Bob随机选择每个光子的基态。每次他选择了正确的基态，就可以正确的测量极化，否则就只能使用随机态。
+	- 现在Bob联系Alice并告诉她他所设置的基态。Alice告诉他哪些是正确的的，错误的将被丢弃。
+	- 当Bob正确的设置了基态，他们将拥有同样的极化，即被转换为0或1。
+	- 平均说来，Alice发送2n位，会得到n位。所以为了得到128为，她必须发送256位。、
+	- 为了侦测窃听，Alice和Bob协商检测由Alice随机选择的部分位。
+	- 窃听者Eve可以进行中间人攻击，并假装Alice或Bob，所以量子密码技术需要身份认证。
 
 
 ---
