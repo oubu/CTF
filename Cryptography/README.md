@@ -350,24 +350,24 @@ $ ./openssl s_client --no_tls1 --no_ssl3 --connect <WEBSITE>:443
 
 -----
 
-* **非对称密钥加密（公钥密码）**: each party has a different set of keys for accessing the same encrypted data. Main uses:
-	1. Agree on a key for a symmetric cryptosystem.
-	2. Digital signatures.
-	3. Rarely used for message exchange since it is slower than symmetric key cryptosystems.
+* **非对称密钥加密（公钥密码）**：每一方都有一组用于访问相同密文的密钥。主要用途：
+	1. 对称密码系统中共享密钥
+	2. 数字签名
+	3. 很少用于消息交换因为速度比对称密码慢
 
-* **Standard key exchange protocol**: RSA, Diffie-Hellman, El Gamal.
+* **标准密钥交换协议**：RSA, Diffie-Hellman, El Gamal.
 
-* **Cryptographic signature**: associating a message digest with a specific public key by encrypting the message digest with the sender's public and private key.
+* **加密签名**: 通过用发送者的公钥和私钥加密消息摘要将消息摘要与特定的公钥相联系。
 
-* **RSA**: Recall that if gcd(m,n)=1 and a = 1(mod f(n)), then m^a = m (mod n).
-	1. Bob picks p, q primes around 1e150.
-	2. He computes n = pq ~ 1e300 and f(n)=(p-1)(q-1).
-	3. He finds some number e with gcd(e, f(n)) = 1 and computes 1/e mod f(n) = d.
-	4. He publishes (n,e) and keep d, p, q hidden.
+* **RSA**：如果gcd(m,n)=1，并且a = 1(mod f(n))，那么m^a = m (mod n)。
+	1. Bob选择两个素数p, q（约1e150位）.
+	2. 计算n = pq ~ 1e300，f(n)=(p-1)(q-1).
+	3. 利用gcd(e, f(n)) = 1，找到一个e，计算1/e mod f(n) = d.
+	4. 公开(n,e)，保密d, p, q
 	5. Alice wants to send Bob the plaintext M (maybe an AES key) enconded as a number 0<=M<n. If the message is longer than n, she breaks into blocks..
 	6. Alice looks up Bob's n,e and reduces M^e mod n = C, sending C to Bob.
 	7. Bob reduces C^d mod n to get M because C^d = (M^e)^d = M
-	8 If Eve intercepts C, it's useless without Bob's d.
+	8 如果Eve得到了C，没有Bob的d是不能揭秘信息的.
 
 You want :
 
@@ -441,9 +441,9 @@ replace the known IV with a secret shared key.
 
 ---
 
-* **量子密码技术**: 两种在不见面的情况下共享对称密码的密钥的方式: 公钥密码；量子密码。几千米外有效。可以侦测窃听。
+* **量子密码技术**: 两种在不见面的情况下共享对称加密密钥的方式: 公钥密码；量子密码。几千米外有效。可以侦测窃听。
 	- A photon has a polarization that can be measured on any basis in two-space. If you measure in the wrong basis, you get random results and disturbs future measurements.
-	- Alice sends Bob a stream of photons. Each photon is randomly assigned a polarization in for direction (-1, 0, 1, 0).
+	- Alice给Bob发送一个光子流。 Each photon is randomly assigned a polarization in for direction (-1, 0, 1, 0).
 	- Bob randomly picks a basis for each photon. Every time he chooses the right basis, he measure the polarization correctly, otherwise, he gets random.
 	- Now Bob contact Alice in clear and tells the basis settings he made. Alice tells him which were correct. The others were thrown out.
 	- When Bob correctly sets the basis, they both have the same polarization, which can be turned into 0 or 1.
