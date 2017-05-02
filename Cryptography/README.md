@@ -1,40 +1,40 @@
-# Cryptography
+# 密码学
 
 
-### Some Tips:
+### 提示：
 
-- Often data is just encoded in base64 or hex. Other times it's just compressed (gzip):
-    - Text 32 characters long --> md5 hash.
-    - 40 characters long --> SHA1 hash.
-    - equal signs spread --> base64 encoded string.
-    - text only letters, without numbers or special characters --> Caesar, Vigenere, or other type of cipher.
-    - hints about keys and signing --> likely RSA.
+- 通常，数据以base64或十六进制编码，其他情况下只是被压缩（gzip）:
+    - 32个字节 --> md5 hash.
+    - 40个字节 --> SHA1 hash.
+    - 末尾等号 --> base64编码.
+    - 只有字母，没有数字和特殊字符 --> Caesar, Vigenere, 或其他加密算法.
+    - 提示密钥和签名 --> 可能是RSA.
 
 
 ---
 
 ## MD5
 
-- The [MD5 hashing algorithm](http://www.fastsum.com/support/md5-checksum-utility-faq/md5-hash.php) always returns 128 bit values, so the chance that two randomly chosen objects have the same hash is 1:2**128.
+- [MD5散列算法](http://www.fastsum.com/support/md5-checksum-utility-faq/md5-hash.php)通常返回128bit值，所以两个随意选择的文本拥有相同散列的概率为1:2**128。
 
 
 
-* Command Line:
+* 命令行:
 
 ```
 $ echo -n password | md5sum
 5f4dcc3b5aa765d61d8327deb882cf99
 ```
 
-* Or you can use Python's md5.md5().digest()
+* 或者你可以使用python里的md5.md5().digest()
 
-- md5 hashes: [here](http://hash-killer.com/), [here](http://www.md5this.com/), [here](http://www.hashkiller.co.uk/).
+- md5 hashes: [点击此处](http://hash-killer.com/), [点击此处](http://www.md5this.com/), [点击此处](http://www.hashkiller.co.uk/).
 
 - [md5sum](http://linux.about.com/library/cmd/blcmdl1_md5sum.htm)
 - [md5 creator](http://www.md5-creator.com/)
 
 
-### Scripts Available
+### 可用的脚本
 
 - Hash length extension attack
 - Brute force hex digest chars
@@ -45,15 +45,15 @@ $ echo -n password | md5sum
 
 ## SHA
 
-- SHA-1 has output size of 160 bits, so chances of collisions are 2**160.
+- SHA-1输出160 bits值，所以出现重复的几率是1：2**160。
 
 - [Hash maker](http://ratfactor.com/sha1).
 
-### Scripts
+### 脚本
 - SHA-256 brute force
 
 
-### Command Line
+### 命令行
 
 - Brute force:
 ```
@@ -70,25 +70,25 @@ for a, b, c, d, e, f in itertools.product(ch, ch, ch, ch, ch, ch):
 
 --------
 
-## Rotation Ciphers
+## 移位密码
 
 
-### Scripts
+### 脚本
 - Caesar
 - Brute force rotation
 - Pygenere
 - Frequency analysis
 
 
-### Online tools:
+### 在线工具:
 
-- Frequency analysis: [here](http://www.simonsingh.net/The_Black_Chamber/hintsandtips.html) and [here](http://www.xarg.org/tools/caesar-cipher)
+- 频率分析: [点击此处](http://www.simonsingh.net/The_Black_Chamber/hintsandtips.html) and [点击此处](http://www.xarg.org/tools/caesar-cipher)
 
-- [Cesar Cipher decryption](http://www.xarg.org/tools/caesar-cipher/) and [here](http://tools.zenverse.net/caesar-cipher/).
+- [Cesar解密](http://www.xarg.org/tools/caesar-cipher/) and [点击此处](http://tools.zenverse.net/caesar-cipher/).
 
-- [Vigenere Cipher breaker](http://www.mygeocachingprofile.com/codebreaker.vigenerecipher.aspx) and [here](http://smurfoncrack.com/pygenere/index.php).
+- [Vigenere解密](http://www.mygeocachingprofile.com/codebreaker.vigenerecipher.aspx) and [点击此处](http://smurfoncrack.com/pygenere/index.php).
 
-### In the terminal...
+### 终端
 
 ```sh
 $ VAR=$(cat data.txt)
@@ -96,17 +96,17 @@ $ echo "$VAR"
 $ alias rot13="tr A-Za-z N-ZA-Mn-za-m"
 $ echo "$VAR" | rot13
 ```
-### In Python...
+### Python
 
-In Python [we can use decoding](https://docs.python.org/2/library/codecs.html#codec-base-classes):
+Python中，[我们可以使用](https://docs.python.org/2/library/codecs.html#codec-base-classes):
 
 ```python
 "YRIRY GJB CNFFJBEQ EBGGRA".decode(encoding="ROT13")
 ```
 
-### Readings:
+### 阅读材料:
 
-- [How Vigenere works](http://sharkysoft.com/vigenere/).
+- [Vigenere加密方式](http://sharkysoft.com/vigenere/).
 
 
 
@@ -116,16 +116,16 @@ In Python [we can use decoding](https://docs.python.org/2/library/codecs.html#co
 
 ## RSA
 
-* Public-key cryptosystem which uses a public-private key pair to encrypt and decrypt information securely
+* 公钥密码体制是使用一对公钥和私钥安全地加密和解密信息。
 
 * [RSA Python](https://pypi.python.org/pypi/rsa)
 
 
 ----
 
-## Pailier Cryptosystem
+## Paillier密码系统
 
-### Scripts
+### 脚本
 
 - POC
 - Primes
@@ -133,9 +133,9 @@ In Python [we can use decoding](https://docs.python.org/2/library/codecs.html#co
 ---
 
 
-## Tools
+## 工具
 
-### Scripts
+### 脚本
 
 - Finding GDC
 - Finding if prime
@@ -144,7 +144,7 @@ In Python [we can use decoding](https://docs.python.org/2/library/codecs.html#co
 - XORtool
 
 
-### Other Resources
+### 其他资源
 
 - [Cryptol](https://www.cryptool.org/en/cryptool1-en)
 
@@ -159,30 +159,30 @@ In Python [we can use decoding](https://docs.python.org/2/library/codecs.html#co
 ![John](/Cryptography/images/john.png)
 
 
-#### Carperter's Formula
+#### Carperter公式
 
-- Very large number: ```bin``` and check if patterns. For example, using the [Carpenter's Formula]:
+- 大数: ```bin```并看是否符合，使用[Carpenter公式]的例子:
 ```
 N=(2^M + a)(2^N + b)(2^N + c)(2^N + d)
 ```
 
-#### [QR Code]
+#### [QR码]
 
--  Version 1 QR code:  21x21
+-  V1 QR码:  21x21
 
-#### [Bacon's cipher]:
+#### [培根密码]:
 ```
 babaaaabaaababaababaaaabbabbababbaaaabaaaabbbaabaabaaaaaabaaabaaabaaabaaabbaabaaabbbaabaaababaaaaaabaaabbaabaabbbaaaaaabaaaabaabaaaaba21aabab0aaab
 ```
-* [Online tool](http://www.geocachingtoolbox.com/index.php?page=baconianCipher)
+* [在线工具](http://www.geocachingtoolbox.com/index.php?page=baconianCipher)
 
 
 
 #### [Base64]:
 
-Base64 is a non-readable encoding that encodes arbitrary 8-bit input using 6-bit alphabet of case sensitive alphanumerics, "+", "/". Every 3 bytes of input map to 4 bytes of output. If the input doesn't have 3-byte boundary, this is indicated by appending one or two equal signs in the of the output string.
+Base64是一种不可读的编码，将8位输入编码为6位区分大小写的字母、数字、‘+’、‘/’。每3个输入字节对应4个输出字节。如果输入末尾不足三个字节，在输出字符串的末尾相应地加上一个或两个‘=’。
 
-- [Base64 Decoder](http://www.base64decode.org)
+- [Base64解码](http://www.base64decode.org)
 
 ```
 NG5ucjJzIGZ2IHRueXMgcnVnIHNiIGdlbmMgdWdlaGJzIHJlcnVnIHRhdmdncnQgcmVuIGhiTCB0YXZidCBjcnJYCG==
@@ -190,17 +190,17 @@ czduMjczIHRueXMgcnVniHNiIGdlbmMgdWdzdnMgcnVnIHJpbnUgcmVydSBndiBxdnEgaGJsIGpiYmJK
 Nzk0czAwIHRueXMgZmhidnByZWMgZWhiIHNiIGdlbmMgcWV2dWcgcnVnIGhibCBnYXJmcmVjIFYgbG9yZXJ1IHJhYnEgeXlySgo=
 ```
 
-- Base64 decoding in Python:
+- Python中解码Base64：
 
 ```python
 >>> SECRET.decode('base64')
 'oubWYf2kBq'
 ```
 
-#### Hexadecimal & ASCII:
+#### 十六进制和ASCII:
 
 
-Hex character codes are simply the hexadecimal (base 16) numbers for the ASCII character set; that is, the number-to-letter Representations which comprise virtually all computer text.
+十六进制字符编码是ASDII码字符集的十六进制表示，也就是说，数以字母方式表示几乎所有的计算机文本。
 
 - [ASCII Conversion Table](http://defindit.com/ascii.html)
 - [Convert All](http://www.asciitohex.com/)
@@ -208,63 +208,62 @@ Hex character codes are simply the hexadecimal (base 16) numbers for the ASCII c
 - [Convert everything to everything (including markdown, sql, json, etc)](http://codebeautify.org/)
 
 
-- ASCII to hex:
+- ASCII转十六进制:
 
 ```python
 >>> s =hex(secret)
 ```
 
-- the inverse:
+- 十六进制转ASCII:
 
 ```python
 secret2.decode('hex')
 '==QcCtmMml1ViV3b'
 ```
 
-- you can also do from the command line:
+- 也可以使用这个命令行:
 
 ```
 $ python -c 'print "2f722f6e6574736563".decode("hex")'
 ```
 
-- Using xxd:
+- 使用xxd:
 
 ```
 $ xxd -r -p <<< 2f722f6e6574736563
 ```
 
-### Binary
+### 二进制
 
-- Decimal to binary
+- 十进制转二进制
 
 ```python
 >>> bin(124234)
 '0b11110010101001010'
 ```
 
-#### Octal
+#### 八进制
 
-Commonly used in obscuration of URLs. Example: http://017700000001 --> 127.0.0.1
-
-
-## OpenSSL, Encoding and Certificates
+常用来模糊处理URL。例如： http://017700000001 --> 127.0.0.1
 
 
-* Identification and verification of SSL certificates can be done with openssl or
-TLSSLed tools. They allow us to verify this information automatically SSL.
+## OpenSSL, 编码和证书
 
-To determine the period of validity of licenses:
+
+* 可以使用Opensssl或TLSSLed工具进行SSL证书的识别和验证，允许我们自动验证SSL信息。
+
+确定许可证的有效期：
 
 ```
 $ ./openssl s_client --connect <WEBSITE>:443
 ```
 
-Testing SSLv2:
+测试SSLv2:
 ```
 $ ./openssl s_client --no_tls1 --no_ssl3 --connect <WEBSITE>:443
 ```
 
-* For Identification and verification of encoding supported by the Website we can use  **EcoScan34**.
+* 为了识别和验证浏览器提供的编码，我们可以使用we can use **EcoScan34**。
 
 
 
@@ -272,27 +271,27 @@ $ ./openssl s_client --no_tls1 --no_ssl3 --connect <WEBSITE>:443
 
 ---
 
-## Block Cipher Encryption
+## 块密码（分组密码）
 
-* Electronic code book (ECB) mode.
-* Simplest and default block cipher mode.
-* Message is split into blocks and each is encrypted separately.
-* Disadvantage: identical plaintext block encrypts to identical cipher text block (for example, figures).
+* ECB模式
+* 最简单的和默认的块加密模式
+* 明文信息被分块并分别进行加密
+* 缺点：相同的明文块被加密成相同的密文块（例如，数字）
 
-### Attacking Randomness
+### 随机性攻击
 
-* Good Randomness is vital for cryptographic operations.
+* 良好的随机性对加密至关重要。
 
-* Two common attack against a PRNG :
-	- PRGN state is reconstructed from its output.
-	- Same PRNG is used more than once.
+* 两种常见的对伪随机数生成器的攻击：
+	- 从输出重建伪随机数生成器状态
+	- 多次使用同一个伪随机数生成器
 
-* Statistically random is not secure random!
-	- if a PRNG is seeded with a value the attacker can influence, the state of the PRNG is likely compromised.
+* 统计学上的随机是不安全的！
+	- 如果一个伪随机数生成器是使用攻击者可以改变的值作为种子数，那么他的状态可能会受到损害。
 
-* Seed race condition attacks:
-	- System clock often used to seed PRNG
-	- Submit 10's or 100's of requests at a time. Seed a PRNG with the same system clock and the output will be the same.
+* 种子条件攻击:
+	- 系统始终通常用于初始化伪随机数生成器
+	- 一次提交10个或100个请求。用相同的系统时间初始化伪随机数生成器会得到同样的输出。
 
 
 
@@ -317,11 +316,11 @@ $ ./openssl s_client --no_tls1 --no_ssl3 --connect <WEBSITE>:443
 
 
 
-##  Cryptography Glossary
+##  密码学术语表
 
-* **Symmetric encryption (shared key encryption)**: all authorized parties have the same key. It has no means for verifying the sender of a message among any group of shared key users.
+* **对称密钥加密 (共享密钥加密)**：所有方有同样的密钥。在任意一组共享密钥用户中无法验证消息发送者。
 
-* **Block Chaining (CBC)**: operates on blocks of symbols. It's the only appropriate fixed-block cipher in use. If performs an XOR operation with the previous block of data. Most encryption is done by using block ciphers.
+* **分组链接模式(CBC)**: operates on blocks of symbols. It's the only appropriate fixed-block cipher in use. If performs an XOR operation with the previous block of data. Most encryption is done by using block ciphers.
 
 * **Modes of Operation of a Block Cipher**: there are four modes of operation:
 	1.  **electronic code book** (ECB): The standard mode. It has the disadvantage that for a given key, two identical plaintexts will correspond to identical ciphertexts.
@@ -443,7 +442,7 @@ replace the known IV with a secret shared key.
 
 ---
 
-* **Quantum Cryptography**: there are two ways of agreeing on a symmetric keys without presence: public key crypto or quantum crypto. It can work up to several kilometers. It can detect eavesdropping.
+* **量子密码技术**: there are two ways of agreeing on a symmetric keys without presence: public key crypto or quantum crypto. It can work up to several kilometers. It can detect eavesdropping.
 	- A photon has a polarization that can be measured on any basis in two-space. If you measure in the wrong basis, you get random results and disturbs future measurements.
 	- Alice sends Bob a stream of photons. Each photon is randomly assigned a polarization in for direction (-1, 0, 1, 0).
 	- Bob randomly picks a basis for each photon. Every time he chooses the right basis, he measure the polarization correctly, otherwise, he gets random.
@@ -455,13 +454,12 @@ replace the known IV with a secret shared key.
 
 
 ---
-* **CryptoAnalysis**: there are three types:
-	- **Ciphertext only attack**: enemy intercepted ciphertext but has no matching plaintext. The enemy is aware of the nature of the cryptosystem but does not have the key, or the enemy is not aware of the nature of the cryptosystem (not stable).
-	- **Known plaintext attack**: enemy has some matched ciphertext/plaintext pairs.
-	- **Chosen plaintext attack**: the enemy can choose the plaintext that she wants to put through the system.
-
+* **密码分析**：有三种类型
+	- **唯密文攻击**: 攻击者试图解密密文但没有相应的明文。攻击者知道加密方式但没有密钥，或者攻击者不知道加密方式（或者加密方式不确定）。
+	- **已知明文攻击**: 攻击者已知一些明文/密文对。
+	- **选择明文攻击**: 攻击者可以选择明文并得到相应的密文。
 ---
 
-## References
+## 参考文献
 
 - [Crypto Intro](http://math.scu.edu/~eschaefe/book.pdf)
