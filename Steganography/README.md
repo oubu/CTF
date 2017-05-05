@@ -1,32 +1,32 @@
-# Steganography
+# 隐写术
 
 
-## Images
+## 图片
 
-- Adding two images
-- xor_bytes
-- color crypto
+- 添加两张图片
+- 异或字节（xor_bytes）
+- 颜色加密
 
 ![](http://i.imgur.com/5IBxKbF.png)
 
 ___
 
-## Command Line:
+## 命令行:
 
-- Pull out the audio with ffmpeg:
+- 退出ffmpeg的音频:
 
 ```
 $ ffmpeg -i windows.mp4 windows.wav
 ```
 
 
-- Make a gif from video using [ffmpeg](https://www.ffmpeg.org/download.html)
+- 从视频中制作gif动画，使用 [ffmpeg](https://www.ffmpeg.org/download.html)
 
 ```sh
 $ ffmpeg -i windows.mp4 windows.gif
 ```
 
-- Online tool for images: 
+- 处理图片的在线工具:
 	* [utilitymill](http://utilitymill.com/utility/Steganography_Decode)
 	* [pngcheck](http://www.libpng.org/pub/png/apps/pngcheck.html)
 	* [Paranoid.jar](https://ccrma.stanford.edu/~eberdahl/Projects/Paranoia/)
@@ -34,27 +34,27 @@ $ ffmpeg -i windows.mp4 windows.gif
 
 ____
 
-### Metadata
+### 元数据
 
 
 [Image metadata](http://regex.info/exif.cgi)
 
-- To find information inside a picture, we can use package [pnginfo] or [pngcheck].
+- 想要在一张图片中寻找信息，我们可以使用包 [pnginfo] 或 [pngcheck].
 
-- If we need [base64 decoding] (for example a PGP key with a picture).
+- 如果我们需要 [base64 解码] (例如一个带有图片的PGP键)。
 
-- Weird pieces of bytes may need to be XORed.
+- 奇怪的字块可能需要被XOR.
 
-- If we have a decrypted message and a key:
-    1. Import the private key to use it to decrypt the message with ```gpg --allow-secret-key-import --import private.key```
-    2. Decrypt with ```gpg --decrypt message.pgp```.
+- 如果我们有一个解密的消息和一个密钥:
+    1. 导入私钥以使用它来解密消息，使用：```gpg --allow-secret-key-import --import private.key```
+    2. 解密，使用 ```gpg --decrypt message.pgp```.
 
 - [ExifTool](http://www.sno.phy.queensu.ca/~phil/exiftool/index.html)
 
 
 ---
 
-## Other Tools
+## 其他工具
 
 - OpenStego
 - OutGuess
