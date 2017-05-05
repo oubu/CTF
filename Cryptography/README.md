@@ -263,7 +263,7 @@ $ ./openssl s_client --connect <WEBSITE>:443
 $ ./openssl s_client --no_tls1 --no_ssl3 --connect <WEBSITE>:443
 ```
 
-* 为了识别和验证浏览器提供的编码，我们可以使用we can use **EcoScan34**。
+* 为了识别和验证浏览器提供的编码，我们可以使用**EcoScan34**。
 
 
 
