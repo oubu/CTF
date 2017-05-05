@@ -1,55 +1,55 @@
 # Pen-Testing
 
-## Auditing Code
+## 审计代码
 
-* Initial value assigments (failure to asign initial values can lead to vulnerabilities).
+* 指定初始值(未能给初始值会导致漏洞)。
 
-* Memory corruption (see Memory_Exploits folder).
+* 内存损坏(见Memory_Exploits文件夹)。
 
-* Static analysis tools:
-    - commercial: Fortify, Klockwork, Coverity
-    - free: LLVM Clang Static Analyzer, FindBugs (Java), RATS
+* 静态分析工具:
+    - 营利性的: Fortify, Klockwork, Coverity
+    - 免费的: LLVM Clang Static Analyzer, FindBugs (Java), RATS
 
 
 ----
 
-## Threat Modeling (Design Review)
+## 威胁建模(设计评审)
 
-1. Information Collection:
-    * Assets
-    * Entry points
-    * External entities
-    * External trust levels
-    * Major components
-    * User Scenarios
+1. 信息收集:
+    * 资产
+    * 入口点
+    * 外部实体
+    * 外部信任水平
+    * 主要组件
+    * 用户场景
 
-    - Developer interviews
-    - Developer documentation
-    - Standards documentation
-    - Sources profiling
-    - System profiling: File system layout, code reuse, import/exports, sandboxing, scanning.
+    - 开发人员面试
+    - 开发人员文档
+    - 标准文档
+    - 来源分析
+    - 系统分析:文件系统布局、代码重用、进口/出口，沙盒、扫描。
 
-2. Application architecture modeling:
+2. 应用程序体系结构建模:
     - UML
-    - Data flow diagrams (DFD)
+    - 数据流图 (DFD)
 
-3. Threat identification:
-    - Attack trees: each subnode states an attack methodology that could be used to achieve the goal in the root node. Arc between nodes are AND connectors. Circular nodes are mitigation. Dashed lines indicated unlikely attack vector.
-    - Textual representation.
+3. 威胁识别:
+    - 攻击树:每个子节点都有一种攻击方法，可以用于在根节点中实现目标。节点之间的弧是AND（与）连接器。循环节点是缓和的。虚线表示不太可能攻击的向量。
+    - 文本表示。
 
-4. Documentation of findings:
-    - Thread, Affected Component, Description, Result, Mitigation strategy.
-    - DREAD Risk Ratings (damage potential, reproducibility, exploitability, affected users, discoverability), with scores from 1 to 10.
-
-
-5. Prioritizing the implementation review
+4. 研究结果:
+    - 线程、受影响的组件、描述、结果和缓解策略。
+    - DREAD风险等级（破坏潜力,再现性,可利用性,受影响的用户,可发现性），分数从1到10分。
 
 
-### Application access:
-* Source only (static analysis)
-* Binary only (live analysis and reverse engineering)
-* Both source and binary access
-* Checked build: an binary with no source code but with debugging information.
-* Source black box: black box and fuzz testing (example: web applications). Example: auditing a web server with entry point at TCP port 80, you use a HTTP protocol fuzzer.
+5. 优先考虑实现审查
+
+
+### 应用程序访问:
+* 只有来源 (静态分析)
+* 只有二进制(现场分析和逆向工程)
+* 源和二进制访问
+* 检查构建:一个没有源代码但有调试信息的二进制文件。
+* 源黑盒:黑盒和模糊测试(例如:web应用程序)。示例:通过TCP端口80上的入口点审核web服务器，使用HTTP协议模糊。
 
 ----
