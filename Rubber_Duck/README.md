@@ -1,50 +1,48 @@
-Introduction
+介绍
 ============
 
-The [USB Rubber Ducky](https://hakshop.myshopify.com/products/usb-rubber-ducky-deluxe) is an open source Penetration Testing tool for authorized network auditing and security analysis purposes only where permitted subject local and international laws where applicable
+ [USB Rubber Ducky](https://hakshop.myshopify.com/products/usb-rubber-ducky-deluxe) 是一个开源授权网络审计和安全渗透测试工具，只在允许接受本地及国际法律适用的地方，以对授权的网络进行审计和安全分析为目的。 
+ 
+这是一个包含我创建的所有技巧的存储库。
 
-This is a repository with all the hacks I have created.
+在HAK文件夹中，我留下了Hak5中的原始存储库。
 
-In the folder HAK I left the original repository from Hak5.
+在bt3gl文件夹中骂我留下了我的技巧hacks。
 
-In the folder bt3gl I left my hacks.
-
-The Duck
+鸭子
 ---------
 
-The duck usb consist of a 60 MHz 32-bit CPU under the form of a USB stick. The input
-is given by a loaded Micro SD storage.
+这款鸭子usb接口由一个60 MHz的32位CPU组成，它的形式是usb接口。输入是由一个装载的微SD存储所提供的。
+黑客入侵包括:
 
-The hacking consists in:
+1) 在微型SD存储（从你的电脑）中下载有效载荷（本文件）。很多有效载荷在这里都可以得到，并且其他的可以在这里组合 [这里](http://ducktoolkit-411.rhcloud.com/Home.jsp).
 
-1) Download the payload (a bin file) in the micro SD storage (from your computer). Many payloads are available here, and other can be composed [here](http://ducktoolkit-411.rhcloud.com/Home.jsp).
+2) 将微型SD插入USB-CPU。
 
-2) Plug the micro SD into the USB-CPU.
+3) 把USB插入电脑，然后被黑客入侵。
 
-3) Insert the USB in the computer to be hacked.
+4) 当您看到命令提示窗口关闭时，您可以删除该条。
 
-4) When you see the command prompt window be closed, you may remove the stick.
-
-Quack!!!!
+嘎嘎嘎!!!!
 
 
-Disclaimer
+免责声明
 ----------
 
-I am a computer scientist, i.e., I study the science of computers. Everything in this tutorial is part of this study and I DO NOT APPROVE, SUPPORT, OR ENDORSE ILLEGAL ACTIONS.
+我是一名计算机科学家，也就是，我学习计算机科学。本教程中的所有内容都是该研究的一部分，我不赞成、支持或支持非法行为。
 
 
-Enjoy and Be Social!
+享受社交吧！
 --------------------
 
-Drop me a line at byt3g1rl@gmail.com
+通过 byt3g1rl@gmail.com 给我写信
 
 
-Hak5's Introduction
+Hak5 的介绍
 --------------------
 
       _      _      _                _      _      _
    __(.)< __(.)> __(.)=   Rubber   >(.)__ <(.)__ =(.)__
    \___)  \___)  \___)    Ducky!    (___/  (___/  (___/
 
-The USB Rubber Ducky is a Human Interface Device programmable with a simple scripting language allowing penetration testers to quickly and easily craft and deploy security auditing payloads that mimic human keyboard input. The source is written in C and requires the AVR Studio 5 IDE from atmel.com/avrstudio. Hardware is commercially available at hakshop.com. Tools and payloads can be found at usbrubberducky.com. Quack!
+USB橡胶鸭是一种人类接口设备，可以通过简单的脚本语言编程，允许渗透测试人员快速、轻松地编写和部署模拟人类键盘输入的安全审计的有效载荷。源是用C编写的,需要从atmel.com/avrstudio.下载 AVR Studio 5 IDE。硬件是商用的，可以在 hakshop.com 上获取。工具和有效载荷可以在 usbrubberducky.com 上找到。嘎嘎嘎!
