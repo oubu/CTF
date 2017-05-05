@@ -1,13 +1,13 @@
-# Reverse Engineering
+# 逆向工程
 
-* Objective: turn a x86 binary executable back into C source code.
-* Understand how the compiler turns C into assembly code.
-* Low-level OS structures and executable file format.
+* 目标:将一个x86二进制可执行文件转换为C源代码。
+* 理解编译器如何将C转换为汇编代码。
+* 底层操作系统结构和可执行文件格式。
 
 ---
-##Assembly 101
+## 101汇编
 
-### Arithmetic Instructions
+### 算术指令
 
 ```
 mov eax,2   ; eax = 2
@@ -16,7 +16,7 @@ add eax,ebx ; eax = eax + ebx
 sub ebx, 2  ; ebx = ebx - 2
 ```
 
-### Accessing Memory
+### 访问内存
 
 ```
 mox eax, [1234]     ; eax = *(int*)1234
@@ -25,7 +25,7 @@ mov eax, [ebx]      ; eax = *ebx
 mov [ebx], eax      ; *ebx = eax
 ```
 
-### Conditional Branches
+### 条件分支
 
 ```
 cmp eax, 2  ; compare eax with 2
@@ -37,19 +37,19 @@ jne label5  ; if(eax!=2) goto label5
 jmp label6  ; unconditional goto label6
 ```
 
-### Function calls
+### 函数调用
 
-First calling a function:
+首先调用一个函数:
 
 ```
 call func   ; store return address on the stack and jump to func
 ```
-The first operations is to save the return pointer:
+第一个操作是保存返回指针:
 ```
 pop esi     ; save esi
 ```
 
-Right before leaving the function:
+在离开函数之前
 ```
 pop esi     ; restore esi
 ret         ; read return address from the stack and jump to it
@@ -57,49 +57,49 @@ ret         ; read return address from the stack and jump to it
 ---
 
 
-## Modern Compiler Architecture
+## 现代编译器架构
 
-**C code** --> Parsing --> **Intermediate representation** --> optimization --> **Low-level intermediate representation** --> register allocation --> **x86 assembly**
+**C代码** -->  分析 --> **中间表示** --> 优化 --> **低级中间表示** --> 寄存器分配 --> **x86汇编**
 
-### High-level Optimizations
+### 高级优化
 
 
 
-#### Inlining
+#### 内联
 
-For example, the function c:
+例如，函数c:
 ```
 int foo(int a, int b){
     return a+b
 }
 c = foo(a, b+1)
 ```
-translates to  c = a+b+1
+转换为  c = a+b+1
 
 
-#### Loop unrolling
+#### 循环展开
 
-The loop:
+循环:
 ```
 for(i=0; i<2; i++){
     a[i]=0;
 }
 ```
-becomes
+变成
 ```
 a[0]=0;
 a[1]=0;
 ```
 
-#### Loop-invariant code motion
+#### 循环不变式代码移动
 
-The loop:
+循环:
 ```
 for (i = 0; i < 2; i++) {
     a[i] = p + q;
 }
 ```
-becomes:
+变成:
 ```
 temp = p + q;
 for (i = 0; i < 2; i++) {
@@ -107,37 +107,37 @@ for (i = 0; i < 2; i++) {
 }
 ```
 
-#### Common subexpression elimination
+#### 公共子表达式消除
 
-The variable attributions:
+变量归因:
 ```
 a = b + (z + 1)
 p = q + (z + 1)
 ```
 
-becomes
+变成
 ````
 temp = z + 1
 a = b + z
 p = q + z
 ```
 
-#### Constant folding and propagation
-The assignments:
+#### 常量翻译和传递
+任务:
 ```
 a = 3 + 5
 b = a + 1
 func(b)
 ```
 
-Becomes:
+变成:
 ```
 func(9)
 ```
 
-#### Dead code elimination
+#### 死代码消除
 
-Delete unnecessary code:
+删除不必要的代码:
 ```
 a = 1
 if (a < 0) {
@@ -149,24 +149,24 @@ to
 a = 1
 ```
 
-### Low-Level Optimizations
+### 低级优化
 
-####  Strength reduction
+####  强度降低
 
-Codes such as:
+代码如:
 ```
 y = x * 2
 y = x * 15
 ```
 
-Becomes:
+变成:
 ```
 y = x + x
 y = (x << 4) - x
 ```
-#### Code block reordering
+#### 代码块重新排序
 
-Codes such as :
+代码如:
 
 ```
 if (a < 10) goto l1
@@ -177,7 +177,7 @@ l1:
 l2:
     return;
 ```
-Becomes:
+变成:
 ```
 if (a > 10) goto l1
 printf(“OK”)
@@ -189,22 +189,22 @@ goto l2
 ```
 
 
-#### Register allocation
+#### 寄存器分配
 
-* Memory access is slower than registers.
-* Try to fit as many as local variables as possible in registers.
-* The mapping of local variables to stack  location and registers is not constant.
+* 内存访问比寄存器要慢。
+* 尽量在寄存器中尽可能多地容纳本地变量。
+* 将局部变量映射到堆栈位置和寄存器的映射不是常量。
 
-#### Instruction scheduling
+#### 指令调度
 
-Assembly code like:
+汇编代码:
 ```
 mov eax, [esi]
 add eax, 1
 mov ebx, [edi]
 add ebx, 1
 ```
-Becomes:
+变成:
 ```
 mov eax, [esi]
 mov ebx, [edi]
@@ -214,7 +214,7 @@ add ebx, 1
 
 
 ---
-## Tools Folder
+## 工具文件夹
 
 - X86 Win32 Cheat sheet
 - Intro X86
@@ -223,7 +223,7 @@ add ebx, 1
 
 
 ----
-## Other Tools
+## 其他工具
 
 - gdb
 - IDA Pro
@@ -241,7 +241,7 @@ add ebx, 1
 - unpackers, hex editors, compilers
 
 ---
-## Encondings/ Binaries
+## 编码/ 二进制文件
 
 ```
 file f1
@@ -265,16 +265,16 @@ binutils
 
 
 ---
-## Online References
+## 在线参考资料
 
-[Reverse Engineering, the Book]: http://beginners.re/
-[Intel x86 Assembler Instruction Set Opcode Table]: http://sparksandflames.com/files/x86InstructionChart.html
+[逆向工程，这本书]: http://beginners.re/
+[英特尔x86汇编指令集操作码表]: http://sparksandflames.com/files/x86InstructionChart.html
 
 
 ---
-## IDA
+## 单程（IDA）
 
-- Cheat sheet
+- 备忘单
 - [IDA PRO](https://www.hex-rays.com/products/ida/support/download_freeware.shtml)
 
 
@@ -282,7 +282,7 @@ binutils
 ---
 ## gdb
 
-- Commands and cheat sheet
+- 命令和备忘单
 
 
 ```sh
@@ -290,12 +290,12 @@ $ gcc -ggdb -o <filename> <filename>.c
 
 ```
 
-Starting with some commands:
+从一些命令开始:
 ```sh
 $ gdb <program name> -x <command file>
 ```
 
-For example:
+例如:
 ```sh
 $ cat command.txt
 set disassembly-flavor intel
@@ -303,25 +303,24 @@ disas main
 ```
 
 ---
-## objdump
+## 展开目标文件（objdump）
 
-Display information from object files: Where object file can be an intermediate file
-created during compilation but before linking, or a fully linked executable
+显示来自对象文件的信息:对象文件可以是一个中间文件
+在编译过程中创建，但在链接或完全链接的可执行文件之前创建
 
 ```sh
 $ objdump -d  <bin>
 ```
 
 ----
-## hexdump & xxd
-
-For canonical hex & ASCII view:
+## （十六进制和二位数）hexdump & xxd
+为规范十六进制和ASCII视图:
 ```
 $hexdump -C
 ```
 ----
 ## xxd
-Make a hexdump or do the reverse:
+做一个十六进制转换或者做相反的工作:
 ```
 xxd hello > hello.dump
 xxd -r hello.dump > hello
@@ -329,6 +328,6 @@ xxd -r hello.dump > hello
 
 ----
 
-# Relevant Talks
+# 相关话题
 
 * [Patrick Wardle: Writing OS X Malware](https://vimeo.com/129435995)
