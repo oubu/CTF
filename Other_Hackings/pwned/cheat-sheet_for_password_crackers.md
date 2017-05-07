@@ -159,29 +159,28 @@ AMEX
 ```
 
 ## WordList Manipulation
-
-Remove the space character with sed
+使用sed删除空格
 
 ```
 # sed -i 's/ //g' file.txt
 ```
 
-OR
+或者
 ```
 # egrep -v "^[[:space:]]*$" file.txt
 ```
 
-Remove the last space character with sed
+使用sed删除最后一个空格
 ```
 # sed -i s/.$// file.txt
 ```
 
-Sorting Wordlists by Length
+根据长度排序词汇表
 ```
 # awk '{print length, $0}' rockyou.txt | sort -n | cut -d " " -f2- > rockyou_length-list.txt
 ```
 
-Convert uppercase to lowercase and the opposite
+将大写字母转换为小写字母或者进行相反的转换
 ```
 # cat file.txt | tr [A-Z] [a-z] > lower-case.txt
 ```
@@ -189,46 +188,46 @@ Convert uppercase to lowercase and the opposite
 # cat file.txt | tr [a-z] [A-Z] > upper-case.txt
 ```
 
-Remove blank lines with sed
+使用sed删除空行
 ```
 # sed -i '/^$/d' List.txt
 ```
 
-Remove defined character with sed
+使用sed删除特定字符
 ```
 # sed -i "s/'//" file.txt
 ```
 
-Delete a string with sed
+使用sed删除某一字符串
 ```
 # echo 'This is a foo test' | sed -e 's/<foo>//g'
 ```
 
-Replace characters with tr
+使用tr完成字符的替换
 ```
 # cat emails.txt | tr '@' '#'
 ```
-OR
+或者
 ```
 # sed 's/@/#' file.txt
 ```
 
-Print specific columns with awk
+使用awk输出特定列
 ```
 # awk -F "," '{print $3}' infile.csv > outfile.csv
 ```
-OR
+或者
 
 ```
 # cut -d "," -f 3 infile.csv > outfile.csv
 ```
 
-Note: if you want to isolate all columns after column 3 use
+Note: 如果你想要分隔第三列之后的所有列，使用
 ```
 # cut -d "," -f 3- infile.csv > outfile.csv
 ```
 
-Generate Random Passwords with urandom
+使用urandom生成随机密码
 ```
 # cat /dev/urandom | tr -dc 'a-zA-Z0-9._!@#$%^&*()' | fold -w 8 | head -n 500000 > wordlist.txt
 ```
@@ -251,32 +250,32 @@ Generate Random Passwords with urandom
 # tr -cd '[:alnum:]' < /dev/urandom | fold -w30 | head -n2
 ```
 
-Remove Parenthesis with tr
+使用tr删除括号
 ```
 # cat in_file | tr -d '()' > out_file
 ```
 
-Generate wordlists from your file-names
+查看你的文件夹中的所有文件
 ```
 # ls -A | sed 's/regexp/& /g'
 ```
 
-Process text files when cat is unable to handle strange characters
+当cat无法处理特殊字符时，处理文本文件
 ```
 # sed 's/([[:alnum:]]*)[[:space:]]*(.)(..*)/12/' *.txt
 ```
 
-Generate length based wordlists with awk
+使用awk产生固定长度的字串
 ```
 # awk 'length == 10' file.txt > 10-length.txt
 ```
 
-Merge two different txt files
+合并两个不同的txt文件
 ```
 # paste -d' ' file1.txt file2.txt > new-file.txt
 ```
 
-Faster sorting
+更快的排序、
 ```
 # export alias sort='sort --parallel=<number_of_cpu_cores> -S <amount_of_memory>G ' && export LC_ALL='C' && cat file.txt | sort -u > new-file.txt
 ```
@@ -296,28 +295,28 @@ Unix to Dos
 # unix2dos file.txt
 ```
 
-Remove from one file what is in another file
+将另一个文件中有的东西从这个文件中删除
 ```
 # grep -F -v -f file1.txt -w file2.txt > file3.txt
 ```
 
-Isolate specific line numbers with sed
+使用sed分割特定行
 ```
 # sed -n '1,100p' test.file > file.out
 ```
 
-Create Wordlists from PDF files
+从PDF文件中创建特定词串
 ```
 # pdftotext file.pdf file.txt
 ```
 
-Find the line number of a string inside a file
+找到一个文件中某个字符串所在行的行号
 ```
 # awk '{ print NR, $0 }' file.txt | grep "string-to-grep"
 ```
 
 
-For faster grepping use all the above grep regular expressions with the command ag. The following is a proof of concept of its speed:
+使用ag命令使以上的grep的常规表达完成得更快。下面的例子证明了它的速度：
 
 ```
 # time cat *.txt | ack-grep -o "[a-zA-Z0-9.#?$*_-]+@[a-zA-Z0-9.#?$*_-]+.[a-zA-Z0-9.-]+" > /dev/null
