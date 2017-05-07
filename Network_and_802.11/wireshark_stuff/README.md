@@ -1,87 +1,87 @@
-# [Wireshark Guide (by bt3)](http://bt3gl.github.io/wiresharking-for-fun-or-profit.html)
+# [Wireshark指南(by bt3)](http://bt3gl.github.io/wiresharking-for-fun-or-profit.html)
 
 
-[Wireshark](https://www.wireshark.org/) is an open source **network packet analyzer** that allows live  traffic analysis, with support to several  protocols.
+[Wireshark](https://www.wireshark.org/)是一个开源的**网络封包分析**软件，允许实时流量分析并支持多种协议。
 
-Wireshark also allows **network forensic**, being very useful for CTFs for example (check my writeups for the  [D-CTF Quals 2014](http://bt3gl.github.io/exploring-d-ctf-quals-2014s-exploits.html) and for the CSAW Quals 2014 in [Networking](http://bt3gl.github.io/csaw-ctf-2014-networking-100-big-data.html) and [Forensics](http://bt3gl.github.io/csaw-ctf-2014-forensics-200-why-not-sftp.html)).
+Wireshark也允许**网络取证**，对CTF比赛非常有用，比如说(看我的writeup，[D-CTF Quals 2014](http://bt3gl.github.io/exploring-d-ctf-quals-2014s-exploits.html)，CSAW Quals 2014 在 [Networking](http://bt3gl.github.io/csaw-ctf-2014-networking-100-big-data.html) 和 [Forensics](http://bt3gl.github.io/csaw-ctf-2014-forensics-200-why-not-sftp.html)).
 
 
 
 ------------------------------------------------------
-# The Network Architecture
+# 网络架构
 
-Before we are able to understand and analyze network traffic packets, we must have an insight of how the network stack works.
+在我们理解并分析网络流量包之前，我们必须理解网络栈是如何工作的。
 
 
-## The OSI Model
+## OSI模型
 
-The [Open Systems Interconnection](http://en.wikipedia.org/wiki/OSI_model) (OSI) model  was published in 1983 and is a conceptual model that characterizes and standardizes the internal functions of a communication system by partitioning it into abstraction layers.
+[开放系统互联](http://en.wikipedia.org/wiki/OSI_model) (OSI)模型于1983年发布，是一种概念模型，通过将通信系统内部功能划分为抽象层来表示和标准化内部功能层。
 
 ![](http://i.imgur.com/dZyiOTX.png)
 
-Protocols are separated according to their function and the hierarchy makes it easier to understand network communication:
+协议根据自身功能分离，层次结构使网络通信更加易于理解：
 
 
 
-### Layer 1: Physical Layer
+### 第1层: 物理层
 
-Represents the physical and electrical medium through which the network data is transferred.
+表示传输网络数据的物理和电路媒介。
 
-It comprehends all hardware, hubs, network adapters, cable, etc.
+它包括了所有的硬件，集线器，网络适配器，电缆。
 
-### Layer 2: Data Link Layer
+### 第2层: 数据链路层
 
-Provides the means of *transporting data* across a physical network. Bridges and switches are the physical devices in this layer.
+提供了通过物理网络*传输数据*的方法。网桥和交换机是这一层的物理设备。
 
-It is responsible for providing an addressing scheme that can be used to identify physical devices: the [MAC address](http://en.wikipedia.org/wiki/MAC_address).
+它负责提供可用于识别物理设备的寻址方案：[MAC地址](http://en.wikipedia.org/wiki/MAC_address)。
 
-Examples of protocols in this layer are: [Ethernet](http://en.wikipedia.org/wiki/Ethernet), [Token Ring](http://en.wikipedia.org/wiki/Token_ring), [AppleTalk](http://en.wikipedia.org/wiki/AppleTalk),  and [Fiber Distributed Data Interface](http://en.wikipedia.org/wiki/Fiber_Distributed_Data_Interface) (FDDI).
+举例来说，这一层的协议有：[Ethernet](http://en.wikipedia.org/wiki/Ethernet)，[Token Ring](http://en.wikipedia.org/wiki/Token_ring)，[AppleTalk](http://en.wikipedia.org/wiki/AppleTalk)，和[Fiber Distributed Data Interface](http://en.wikipedia.org/wiki/Fiber_Distributed_Data_Interface) (FDDI)。
 
-### Layer 3: Network Layer
+### 第3层: 网络层
 
-Responsible for routing data between physical networks, assigning the *logical addressing* of network hosts. It also handles *packet fragmentation* and *error detection*.
+它负责在物理网络之间路由数据，分配网络主机的*逻辑寻址*。它也负责处理*数据包碎片*和*错误检测*。
 
-Routers and its *routing tables* belong to this layer. Examples of protocols are: [Internet Protocol](http://en.wikipedia.org/wiki/Internet_Protocol) (IP), [Internetwork Packet Exchange](http://en.wikipedia.org/wiki/Internetwork_Packet_Exchange), and the [Internet Control Message Protocol](http://en.wikipedia.org/wiki/Internet_Control_Message_Protocol) (ICMP).
+路由器和*路由表*属于这一层。这一层的协议有，比如：[Internet Protocol](http://en.wikipedia.org/wiki/Internet_Protocol) (IP)，[Internetwork Packet Exchange](http://en.wikipedia.org/wiki/Internetwork_Packet_Exchange)，和[Internet Control Message Protocol](http://en.wikipedia.org/wiki/Internet_Control_Message_Protocol) (ICMP)。
 
 
-### Layer 4: Transport Layer
+### 第4层: 传输层
 
-Provides the *flow control* of data between two hosts.  Many firewalls and proxy servers operate at this layer.
+提供两个主机之间的数据流量控制。许多防火墙和配置协议都在这一层工作。
 
-Examples of protocol are: [UDP](http://en.wikipedia.org/wiki/User_Datagram_Protocol) and [TCP](http://en.wikipedia.org/wiki/Transmission_Control_Protocol).
+这一层的协议有，比如：[UDP](http://en.wikipedia.org/wiki/User_Datagram_Protocol)和[TCP](http://en.wikipedia.org/wiki/Transmission_Control_Protocol)。
 
-### Layer 5: Session Layer
-Responsible for the *session* between two computers, managing operations such as gracefully terminating  connections. It can also  establish whether a connection is [duplex or half-duplex](http://en.wikipedia.org/wiki/Duplex_%28telecommunications%29).
+### 第5层: 会话层
+负责两台计算机之间的*会话*，管理诸如正常终止连接的操作。它还可以确定连接是[双工或半双工](http://en.wikipedia.org/wiki/Duplex_%28telecommunications%29)。
 
-Examples of Protocols are: [NetBIOS](http://en.wikipedia.org/wiki/NetBIOS) and [NWLink](http://en.wikipedia.org/wiki/NWLink).
+这一层的协议有，比如：[NetBIOS](http://en.wikipedia.org/wiki/NetBIOS)和[NWLink](http://en.wikipedia.org/wiki/NWLink)。
 
-### Layer 6: Presentation Layer
+### 第6层: 表示层
 
-Transforms the received data into a format that can be read by the application layer, such as enconding/decoding and several forms of encryption/decryption for securing the data.
+将接受的数据转换为应用层可以读取的格式，例如编码/解码和几种用于保护数据的加密/解密形式。
 
-Examples of protocols are: [ASCII](http://en.wikipedia.org/wiki/ASCII), [MPEG](http://en.wikipedia.org/wiki/Moving_Picture_Experts_Group), [JPEG](http://en.wikipedia.org/wiki/JPEG), and [MIDI](http://en.wikipedia.org/wiki/MIDI).
+这一层的协议有，比如：[ASCII](http://en.wikipedia.org/wiki/ASCII)，[MPEG](http://en.wikipedia.org/wiki/Moving_Picture_Experts_Group)，[JPEG](http://en.wikipedia.org/wiki/JPEG)，和[MIDI](http://en.wikipedia.org/wiki/MIDI).
 
-### Layer 7: Application Layer
+### 第7层: 应用层
 
-Provides the details for end users to access network resources.
+为最终用户提供访问网络资源的详细信息。
 
-Examples of protocols are: [HTTP](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol), [SMTP](http://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol), [FTP](http://en.wikipedia.org/wiki/File_Transfer_Protocol), and [Telnet](http://en.wikipedia.org/wiki/Telnet).
-
----
-
-## Data Encapsulation
-
-The way the protocols on different layers of the OSI model communicate is by the *data encapsulation*, where each layer in the stack adds a header or footer to the packet.
-
-The encapsulation protocol creates a [protocol data unit](http://en.wikipedia.org/wiki/Protocol_data_unit) (PDU),  including the data with all header and footer information added to it. What we call *packet* is the complete PDU.
-
-For instance, in Wireshark we can track the sequence number where a higher layer PDU starts and stops. This allows us to  measure how long it took to transfer a PDU (the *display filter* is **tcp.pdu.time**).
-
+这一层的协议有，比如：[HTTP](http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol)，[SMTP](http://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol)，[FTP](http://en.wikipedia.org/wiki/File_Transfer_Protocol)，和[Telnet](http://en.wikipedia.org/wiki/Telnet).
 
 ---
 
+## 数据封装
 
-## Switches and Routers
+OSI模型不同层上的协议通过*数据封装*的方式，堆栈中的每个层都向报文添加一个头或者尾。
+
+封装协议创建了一个[协议数据单元](http://en.wikipedia.org/wiki/Protocol_data_unit) (PDU)，包括添加了头和尾信息的数据。我们所说的*包*是完整的协议数据单元。
+
+例如，在Wireshark中，我们可以跟踪更高层的PDU启动和停止的序列号。这允许我们测量传输PDU所需的时间(*显示过滤器*是**tcp.pdu.time**)。
+
+
+---
+
+
+## 交换机和路由器
 There are four primary ways to capture traffic from a target device on a
 **switched** network: using a **hub**, using a **tap**, by port mirroring, or by ARP spoofing/cache poisoning. The first two obviously require a hub or a tap. Port mirroring requires forwarding capability from the switch. A great way to decide which method to use was borrowed by the reference [1]:
 
@@ -792,7 +792,7 @@ $ iwconfig eth` channel 4
 
 
 -------
-## Further References:
+## 更多相关资料：
 
 - [Wireshark wiki](http://wiki.wireshark.org/)
 - [Practical Packet Analysis, ](http://wiki.wireshark.org/)
