@@ -82,21 +82,19 @@ OSI模型不同层上的协议通过*数据封装*的方式，堆栈中的每个
 
 
 ## 交换机和路由器
-There are four primary ways to capture traffic from a target device on a
-**switched** network: using a **hub**, using a **tap**, by port mirroring, or by ARP spoofing/cache poisoning. The first two obviously require a hub or a tap. Port mirroring requires forwarding capability from the switch. A great way to decide which method to use was borrowed by the reference [1]:
+捕获来自在**交换**网络上的目标设备的流量主要有四种方法：使用**集线器**，使用**tap**,通过端口镜像，或者通过ARP欺骗/缓存投毒。前两个方法显然需要一个集线器或者一个tap。端口镜像需要交换机的转发功能。参考资料[1]借鉴了一种决定使用哪种方法的比较好的途径：
 
 ![](http://i.imgur.com/aRUfmsp.png)
 
 
-All of the techniques for switched network are available on **routed** networks as well. However, for routers the sniffer placement becomes more relevant since a device's broadcast domain extends only until it reaches a
-router.
+所有用于交换网络的技术也可以在**路由**网络中使用。但是，对于路由器，嗅探器的放置位置显得更加重要，因为设备的广播域仅在到达路由器之前扩展。
 
 ---
-## Types of Traffic Packets
+## 数据包的类型
 
-There are three types of traffic packets within a network:
+在网络中有三种类型的数据包：
 
-* **Broadcast packet**: sent to all ports on the network segment. Broadcast MAC address is  *ff:ff:ff:ff:ff:ff* (layer 2) or the highest possible IP address (layer 3).
+* **广播包**: sent to all ports on the network segment. Broadcast MAC address is  *ff:ff:ff:ff:ff:ff* (layer 2) or the highest possible IP address (layer 3).
 
 * **Multicast packet**: sent from a single source to multiple destinations, to simplify the process using as little as bandwidth as possible.
 
