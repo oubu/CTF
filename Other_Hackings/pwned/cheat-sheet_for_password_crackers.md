@@ -76,12 +76,12 @@
 # cat *.txt | grep -E '(((https|ftp|gopher)|mailto)[.:][^ >"  ]*|www.[-a-z0-9.]+)[^ .,;   >">):]' > urls.txt
 ```
 
-Note: if grep returns "Binary file (standard input) matches" use the following approaches
+Note: 如果grep返回"Binary file (standard input) matches"那么使用下面这种方法
 
 ```
 # cat *.log | tr '[00-1113-37177-377]' '.' | grep -E "Your_Regex"
 ```
-OR
+或者
 
 ```
 # cat -v *.log | egrep -o "Your_Regex"
@@ -175,7 +175,7 @@ AMEX
 # sed -i s/.$// file.txt
 ```
 
-根据长度排序词汇表
+根据长度排序字典
 ```
 # awk '{print length, $0}' rockyou.txt | sort -n | cut -d " " -f2- > rockyou_length-list.txt
 ```
@@ -275,7 +275,7 @@ Note: 如果你想要分隔第三列之后的所有列，使用
 # paste -d' ' file1.txt file2.txt > new-file.txt
 ```
 
-更快的排序、
+更快的排序
 ```
 # export alias sort='sort --parallel=<number_of_cpu_cores> -S <amount_of_memory>G ' && export LC_ALL='C' && cat file.txt | sort -u > new-file.txt
 ```
@@ -305,7 +305,7 @@ Unix to Dos
 # sed -n '1,100p' test.file > file.out
 ```
 
-从PDF文件中创建特定词串
+从PDF文件中创建特定字典
 ```
 # pdftotext file.pdf file.txt
 ```
