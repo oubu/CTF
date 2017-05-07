@@ -2,7 +2,7 @@
 
 My resources in networking and wireless hacking.
 
-## Packages:
+## 包:
 
 ### 802.11
 
@@ -27,19 +27,19 @@ My resources in networking and wireless hacking.
 
 ### netaddr
 
-- Several scripts using the **netaddr** module:
+- 一些使用了python中**netaddr**模块的脚本:
     * testing subnet
     * sending mail to the local network
-- A comprehensive guide
+- 一个综合指导
 
 ### Port Knocking
 
-- Several scripts
+- 一些脚本
 
 ### socket
 
-- Several scripts with Python's **socket** module:
-    * A very simple netcat client
+- 一些使用了python中**socket**模块的脚本：
+    * A very simple netcat client
     * A full netcat client and server
     * Cracking linksys
     * Reading socket
@@ -47,19 +47,19 @@ My resources in networking and wireless hacking.
     * TCP Server
     * UDP Client
     * TCP Proxy
-- A comprehensive guide
+- 一个综合指导
 
 
 ### telnetlib
 
-- Example of a script to create a telnet connection with Python's **telnetlib** module.
+- 一个使用python中**telnetlib**模块创建telnet连接的例子。
 
 
 
 ### scapy
 
-- Several scripts with Python's **scapy** module:
-    * traceroute
+- 一些使用了python中**scapy**模块的脚本：
+    * traceroute
     * arp_cache_poisoning.py  _
     * ssid.py
     * check_if_rogue_dhcp.py
@@ -80,22 +80,22 @@ My resources in networking and wireless hacking.
     * plotting.py
     * sniff_simple.py
 
-- A comprehensive guide
+- 一个综合指导
 
 
 ### paramiko
 
-- Several scripts for SSH connections:
+- 几个SSH连接的脚本:
     * ssh client
     * ssh client for reverse shell
     * ssh server
     * ssh tunneling
-- A comprehensive guide
+- 一个综合指导
 
 
 ---
 
-## Useful Tools in General
+## 有用的工具
 
 - [Wireshark](http://bt3gl.github.io/wiresharking-for-fun-or-profit.html)
 - tshark
