@@ -1,6 +1,6 @@
-# Network and 802.11
+# 网络和802.11
 
-My resources in networking and wireless hacking.
+网络和无线攻击方面的资源：
 
 ## 包:
 
