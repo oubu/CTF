@@ -14,21 +14,27 @@
 - The Linux Environment File Descriptors 张祎
 - (the remaining part) 杨慧茹
 
-### Web Exploits 曾令仪
+### Memory exploits 张雅琪
+### Network and 802.11 张雅琪
+### Other Hackings 张雅琪
+### Pen-Testing 曾令仪
+### Reverse Engineering 曾令仪
+### Rubber duck 曾令仪
+### Steganography 曾令仪
+### Vulnerabilities and Exploits 杨慧茹
+### Web Security 曾令仪
 
 
-Memory exploits
 
-Vulnerabilities and exploits
 
-Network and 802.11
 
-Reverse Engineering
 
-Steganography
 
-Rubber duck
 
-Other Hackings
 
-Pen-Testing
+
+
+
+
+
+
