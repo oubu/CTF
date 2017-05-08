@@ -94,32 +94,32 @@ OSI模型不同层上的协议通过*数据封装*的方式，堆栈中的每个
 
 在网络中有三种类型的数据包：
 
-* **广播包**: sent to all ports on the network segment. Broadcast MAC address is  *ff:ff:ff:ff:ff:ff* (layer 2) or the highest possible IP address (layer 3).
+* **广播包**: 发送到网段上的所有端口。广播MAC地址是*ff:ff:ff:ff:ff:ff*（第二层）或者可能性最大的IP地址（第三层）。
 
-* **Multicast packet**: sent from a single source to multiple destinations, to simplify the process using as little as bandwidth as possible.
+* **组播包**: 从单源发送到多个目的端，以简化并尽可能少地使用带宽。
 
-* **Unicast packet**: transmitted from one computer to another.
+* **单播包**: 从一个端系统到另一个。
 
 
 ---
-## Common Protocols by Layer
+## 各层通用协议
 
-### The Address Resolution Protocol   (Layer 2)
+### 地址解析协议（ARP） (第2层)
 
-Both **logical** and **physical addresses** are used for communication on a network. Logical addresses allows communication between multiple networks (indirectly connected devices). Physical addresses allows communication on a single network (devices that are  connected to each other with a switch for example).
+**逻辑地址**和**物理地址**都用于网络通信。逻辑地址用于多个网络（间接连接的设备）之间的通信。物理地址用于单个网络（如使用交换机彼此连接的设备）之间的通信。
 
 
-[ARP](http://en.wikipedia.org/wiki/Address_Resolution_Protocol) is the protocol used to determine which [MAC address](http://en.wikipedia.org/wiki/MAC_address) (physical address such as 00:09:5B:01:02:03 and belonging to layer 2) corresponds to a particular IP address (logical addresses such as 10.100.20.1, belonging to layer 3).
+[ARP](http://en.wikipedia.org/wiki/Address_Resolution_Protocol)是用于确定[MAC地址](http://en.wikipedia.org/wiki/MAC_address) (如物理地址为00:09:5B:01:02:03，属于第2层)对应一个特定的IP地址（如逻辑地址为10.100.20.1，属于第3层）的协议。
 
-The ARP resolution process uses two packets (*ARP request* and  *ARP response*) to find the matching MAC address, sending a **broadcast** packet to every device in the domain, and waiting for the response of the  correct client. This works because  a switch uses a MAC table to know through which port to send the traffic.
+ARP解析过程使用两个包（*ARP请求*和*ARP响应*）来查找匹配的MAC地址，向域中的每个设备发送一个**广播包**，等待正确的客户端的响应。这样做是基于交换机使用一个MAC表来确定向哪个端口发送流量。
 
-In Wireshark, ARP is easily spotted with sentences such as **"Who has 192.168.11/ Tell 192.168.1.1"**. Additionally, you can see the ARP table in your device with:
+在Wireshark中，用这样的语句可以很容易获得ARP：**"Who has 192.168.11/ Tell 192.168.1.1"**。另外，你可以使用这种方法查询你的设备的ARP表：
 
 ```
 $ arp -a
 ```
 
-### The Internet Protocol (Layer 3)
+### Internet协议(第3层)
 
 Every interface on an Internet must have a unique Internet address. An IP has the task of delivering packets between hosts based on the IP addresses in the packet headers.
 
