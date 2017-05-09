@@ -133,31 +133,31 @@ $ arp -a
 
 此外，IP包头包含以下信息：
 
-* **Version**: version of IP used.
+* **版本号**: 使用的IP版本
 
-* **Header Length**:  length of the IP header.
+* **头长度**: IP头部长度
 
-* **Type of Service**: flag used by routers to prioritize traffic.
+* **服务类型**: 路由器使用的优先处理流量的标识
 
-* **Total length**:  length of the IP header and the data in the packet.
+* **总长度**: 包含IP头部的数据报的总长度
 
-* **Identification**: identification of a packet or sequence of fragmented packets.
+* **标识位**: 标识包或者分段分组序列
 
-* **Fragment offset**:  identification of whether a packet is a fragment.
+* **分段偏移**: 识别分组是否是段
 
-* **Time to Live**: definition of the lifetime of the packet, measured in hops/seconds through routers. A TTL is defined when a packet is created, and generally is decremented by 1 every time the packet is forwarded by a router.
+* **生存时间**: 定义数据包的生命周期，计算通过路由器的速度（跳数/秒）。当一个数据包被创建时，会定义一个TTL，每当数据包被路由器转发是，TTL会减一。
 
-* **Protocol**: identification of the type of packet coming next in the sequence.
+* **协议**: 识别序列中下一个数据包的类型
 
-* **Header checksum**: error-detection mechanism.
+* **头部校验和**: 错误侦测机制
 
-* **Source IP Address**.
+* **源IP地址**.
 
-* **Destination IP address**.
+* **目的IP地址**.
 
-* **Options**: for routing and timestamps.
+* **选项**: 路由和时间戳
 
-* **Data**.
+* **数据**.
 
 
 
@@ -239,25 +239,23 @@ PS: 看这篇Julia Evans的文章，学习如何创建一个简单的[*在15行�
 * **选项**: 可选字段
 
 
-### The User Datagram Protocol (Layer 4)
+### 用户数据报协议(第4层)
 
-While TCP is designed for reliable data delivery, UDP focus on speed. UDP sends packets of data called **datagrams** from one host to another, with no guarantee that they reach the other end.
+TCP被设计用于可靠的数据传输，UDP专注于速度。UDP从一个主机向另一个主机发送**数据报**的数据包，但不保证它们到达另一端。
 
-Unlike TCP, UDP does not formally establish and terminate a connection between hosts. For this reason, it usually relies on built-in reliability services (for example protocols such as DNS and DHCP).
+与TCP不同，UDP不正式建立和终止主机之间的连接。因此，它通常依赖于内置的可靠性服务（如DNS和DHCP等协议）。
 
-The UDP header  has fewer fields than TCP:
+UDP报头的字段比TCP少：
 
-* **Source Port**.
-* **Destination Port**.
-* **Packet Length**.
-* **Checksum**.
-
-
-###  The Dynamic Host Configuration Protocol (Layer 7)
+* **源端口**.
+* **目的端口**.
+* **包长度**.
+* **确认号**.
 
 
-In the beginning of the Internet, when a device needed to communicate over
-a network, it would be assigned an address by hand.
+###  动态主机配置协议 (第7层)
+
+In the beginning of the Internet, when a device needed to communicate over a network, it would be assigned an address by hand.
 
 As the Internet grown, the **Bootstrap Protocol** (BOOTP) was created,   automatically assigning addresses to  devices. Later, BOOTP was replaced by DHCP.
 
