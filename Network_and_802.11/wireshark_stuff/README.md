@@ -121,17 +121,17 @@ $ arp -a
 
 ### Internet协议(第3层)
 
-Every interface on an Internet must have a unique Internet address. An IP has the task of delivering packets between hosts based on the IP addresses in the packet headers.
+互联网上的每个接口必须拥有唯一的网络地址。Internet协议基于分组报头中的IP地址，在主机之间传递分组。
 
-[IPv4](http://en.wikipedia.org/wiki/IPv4) addresses are 32-bit addresses used to uniquely identify devices connected in a network. They are represented by the dotted-quad notation with four sets of 8 bits, represented by  decimal numbers between 0 and 255.
+[IPv4](http://en.wikipedia.org/wiki/IPv4)地址是用于唯一标识网络中连接的设备的32位地址。它们由4组8个bit的，使用点分十进制表示法表示0~255之间十进制数。
 
-In addition, an IP address consists of two parts: a **network address** and a **host address**. The network address identifies the *local area network* (LAN), and the host address identifies the device on that network.
+此外，IP地址由两部分组成：**网络地址**和**主机地址**。网络地址表示*局域网*（LAN），主机地址标识该网络中的设备。
 
-The determination of these two parts is given by another set of addressing information, the **network mask** (netmask or subnet mask), which is also 32 bit longs. In the netmask, every bit set to 1 identifies the portion of the IP address that belongs to the network address. Remaining bits set to 0 identify the host address:
+这两个部分的确定由另一组寻址信息给出，即**网络掩码**（网络掩码或子网掩码），也是32位长。子网掩码中，标识为1的位属于IP地址中的网络号，剩余位标识了主机号：
 
 ![](http://i.imgur.com/a7Evq9z.png)
 
-Additionally, the IP packet header contain informations such as:
+此外，IP包头包含以下信息：
 
 * **Version**: version of IP used.
 
@@ -161,11 +161,11 @@ Additionally, the IP packet header contain informations such as:
 
 
 
-### The Internet Control Message Protocol (Layer 3)
+### 互联网控制信息协议（ICMP） (第3层)
 
-ICMP is the utility protocol of TCP/IP responsible for providing information about the availability of devices, services, or routes on a network.
+ICMP是TCP/IP的一个效用协议，负责提供有关设备，服务，或网络上的路由的可用性信息。
 
-Examples of services that use ICMP are  **ping**:
+使用ICMP的服务有，如：**ping**:
 
 ```
 $ ping www.google.com
@@ -176,7 +176,7 @@ PING www.google.com (74.125.228.210) 56(84) bytes of data.
 ```
 
 
-and **traceroute** (Windows sends ICMP packets,  Linux sends UDP):
+还有**traceroute** (Windows发送ICMP数据包，Linux发送UDP):
 
 ```
 $ traceroute www.google.com
@@ -195,49 +195,48 @@ traceroute to www.google.com (173.194.46.84), 30 hops max, 60 byte packets
 12  ord08s11-in-f20.1e100.net (173.194.46.84)  43.184 ms  39.770 ms  45.095 ms
 ```
 
-The way traceroute works is by sending an echo request that has a particular feature in the IP header: **the TTL is 1**. This means that the packet will be dropped at the first hop. The second packet goes through the first hop and then is dropped in the second hop (TTL is 2), and so on.
+traceroute的工作方式是通过发送IP头中有特定功能的回显请求：**the TTL is 1**。这意味着数据包在第一跳后被丢弃。第二个数据包经过第一跳，在第二跳被丢弃(TTL is 2)，依此类推。
 
-To make this work, the router replies response with a *double-headed packet*, containing a copy of the IP header and the data that was sent in the original echo request.
+为了进行这个工作，路由器用*double-headed packet*来回复响应，包含IP头的副本和在原始回显请求中发送的数据。
 
-PS: Check out  this post from Julia Evans on how to create a simple [*Traceroute in 15 lines of code using Python's Scapy*](http://jvns.ca/blog/2013/10/31/day-20-scapy-and-traceroute/).
-
-
-### The Transmission Control Protocol (Layer 4)
-
-Provides a reliable flow of data between two hosts with a **three-way handshake**. The purpose is to allow the transmitting host to ensure that the destination host is up, and let the transmitting host check the availability of the port as well.
-
-This handshake works as the follow:
-
-1. Host A sends an initial packet with no data but with the synchronize (SYN) flag and the initial sequence number and [maximum segment size](http://en.wikipedia.org/wiki/Maximum_segment_size) (MSS) for the communication process.
-2. Host B responds with a synchronize and acknowledge (SYN + ACK) flag, with its initial sequence number.
-3. Host A sends an acknowledge (ACK) packet.
-
-When the communication is done, a **TCP teardown** process is used to gracefully end a connection between two devices. The process involves four packets:
-
-1. Host A sends a packet with FIN and ACK flags.
-2. Host B sends an ACK packet and then a FIN/ACK packet.
-4. Host A sends an ACK packet.
+PS: 看这篇Julia Evans的文章，学习如何创建一个简单的[*在15行代码内使用python的scapy实现的Traceroute*](http://jvns.ca/blog/2013/10/31/day-20-scapy-and-traceroute/).
 
 
-Sometimes, however, connections can end abruptly (for example due to a potential attacker issuing a port scan or due a misconfigured host). In these cases, TCP resets packets with a RST flag are used. This indicate that a connection was closed abruptly or a connection attempt was refused.
+### 传输控制协议(第4层)
 
-Furthermore, when communicating with TCP, 65,535 ports are available. We typically divide them into two groups:
+通过**三次握手**在两个主机之间提供可靠的数据流。目的是使发送主机能够确保目的主机已经启动，并且让发送主机能够检查端口的可用性。
 
-* **standard port group**: from 1 to 1023, used by specific services.
+握手是这样进行的：
 
-* **ephemeral port group**: from 1024 through 65535, randomly chosen by services.
+1. 主机A发送初始的无数据包，发送SYN标识和初始同步序列编号以及双方交互的[最大段长度](http://en.wikipedia.org/wiki/Maximum_segment_size) (MSS)。
+2. 主机B返回一个SYN请求和ACK确认标识，及它的初始序列编号。
+3. 主机A发送(ACK)确认包。
 
-Finally, the TCP header contains information such as:
+当通信完成之后，**TCP teardown**进程将开始运行，正常地结束两个设备间的连接。这个过程包含4个包：
+1. 主机A发送有FIN+ACK标识的包。
+2. 主机B发送一个ACK确认包，再发送一个FIN/ACK包。
+4. 主机A发送ACK确认包。
 
-* **Source Port**.
-* **Destination Port**.
-* **Sequence number**: identify a TCP segment.
-* **Acknowledgment Number**: sequence number to be expected in the next packet from the other device.
-* **Flags**: URG, ACK, PSH, RST, SYN, FIN flags for identifying the type of TCP packet being transmitted.
-* **Windows size**:  size of the TCP receiver buffer in bytes.
-* **Checksum**: ensure the contents of the TCP header.
-* **Urgent Pointer**:  examined for additional instructions where the CPU should be reading the data within the packet.
-* **Options**: optional fields.
+
+但有时，连接可能会突然终端（比如由于潜在的攻击者发出端口扫描或者由于一个错误配置的主机）。在这些情况下，TCP使用RST标识重置数据包。这表明一个连接突然被关闭了或者连接请求被拒绝了。
+
+还有，在使用TCP协议通信的时候，有65,535个端口可供使用，我们经常把他们分成两组：
+
+* **标准端口**: 1到1023，提供给特定服务使用
+
+* **临时端口**: 1024到65535，由服务随机选择。
+
+最后，TCP头部包含以下信息：
+
+* **源端口**.
+* **目的端口**.
+* **序列号**: 标识TCP报文段
+* **确认号**: 另一个设备返回的包的序列号
+* **Flags**: URG, ACK, PSH, RST, SYN, FIN标识，确认正在传输的TCP包的类型
+* **窗口大小**: TCP收到的数据包的大小（字节为单位）
+* **校验**: 确保TCP头部信息有效性
+* **紧急数据点**: CPU应当读取的包中的附加指示信息
+* **选项**: 可选字段
 
 
 ### The User Datagram Protocol (Layer 4)
