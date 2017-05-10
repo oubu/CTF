@@ -3,7 +3,7 @@
 All in one big bag. Educational purposes.
 
 
-## * [CTFs and WARGAMES](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/CTFs_and_WarGames)
+## * [CTFs和WARGAMES](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/CTFs_and_WarGames)
 ## * [密码学](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Cryptography)
 ## * [取证](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Forensics)
 ## * [LINUX攻击](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Linux_Hacking)
@@ -16,8 +16,8 @@ All in one big bag. Educational purposes.
 ## * [WEB利用](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Web_Security)
 ## * [其他攻击](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Other_Hackings)
 ## * [渗透测试](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Pen_Testing)
-## * [MOBILE](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Mobile)
-## * [BOTNETS](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Botnets)
+## * [移动端系统](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Mobile)
+## * [僵尸网络(BOTNETS)](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Botnets)
 
 ----
 
