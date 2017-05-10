@@ -3,21 +3,21 @@
 All in one big bag. Educational purposes.
 
 
-## * [CTFs and WARGAMES](https://github.com/bt3gl/My-Gray-Hacker-Resources/tree/master/CTFs_and_WarGames)
-## * [CRYPTOGRAPHY](https://github.com/bt3gl/My-Gray-Hacker-Resources/tree/master/Cryptography)
-## * [FORENSICS](https://github.com/bt3gl/My-Gray-Hacker-Resources/tree/master/Forensics)
-## * [LINUX HACKING](https://github.com/bt3gl/My-Gray-Hacker-Resources/tree/master/Linux_Hacking)
-## * [MEMORY EXPLOITS](https://github.com/bt3gl/My-Gray-Hacker-Resources/tree/master/Memory_Exploits)
-## * [VULNERABILITIES AND EXPLOITS](https://github.com/bt3gl/My-Gray-Hacker-Resources/tree/master/Vulnerabilities_and_Exploits)
-## * [NETWORK and 802.11](https://github.com/bt3gl/My-Gray-Hacker-Resources/tree/master/Network_and_802.11)
-## * [REVERSE ENGINEERING](https://github.com/bt3gl/My-Gray-Hacker-Resources/tree/master/Reverse_Engineering)
-## * [RUBBER DUCK](https://github.com/bt3gl/My-Gray-Hacker-Resources/tree/master/Rubber_Duck)
-## * [STEGANOGRAPHY](https://github.com/bt3gl/My-Gray-Hacker-Resources/tree/master/Steganography)
-## * [WEB EXPLOITS](https://github.com/bt3gl/My-Gray-Hacker-Resources/tree/master/Web_Security)
-## * [OTHER HACKINGS](https://github.com/bt3gl/My-Gray-Hacker-Resources/tree/master/Other_Hackings)
-## * [PEN TESTING](https://github.com/bt3gl/My-Gray-Hacker-Resources/tree/master/Pen_Testing)
-## * [MOBILE](https://github.com/bt3gl/My-Gray-Hacker-Resources/tree/master/Mobile)
-## * [BOTNETS](https://github.com/bt3gl/My-Gray-Hacker-Resources/tree/master/Botnets)
+## * [CTFs and WARGAMES](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/CTFs_and_WarGames)
+## * [密码学](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Cryptography)
+## * [取证](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Forensics)
+## * [LINUX攻击](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Linux_Hacking)
+## * [内存利用](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Memory_Exploits)
+## * [VULNERABILITIES AND EXPLOITS](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Vulnerabilities_and_Exploits)
+## * [网络和802.11](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Network_and_802.11)
+## * [逆向工程](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Reverse_Engineering)
+## * [RUBBER DUCK](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Rubber_Duck)
+## * [隐写术](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Steganography)
+## * [WEB利用](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Web_Security)
+## * [其他攻击](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Other_Hackings)
+## * [渗透测试](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Pen_Testing)
+## * [MOBILE](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Mobile)
+## * [BOTNETS](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Botnets)
 
 ----
 
