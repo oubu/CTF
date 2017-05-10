@@ -255,57 +255,56 @@ UDP报头的字段比TCP少：
 
 ###  动态主机配置协议 (第7层)
 
-In the beginning of the Internet, when a device needed to communicate over a network, it would be assigned an address by hand.
+在互联网发展初期，但设备需要通过网络通信时，它将被手动分配一个地址。
 
-As the Internet grown, the **Bootstrap Protocol** (BOOTP) was created,   automatically assigning addresses to  devices. Later, BOOTP was replaced by DHCP.
+随着互联网的发展，**引导程序协议**（BOOTP）出现，为设备自动分配地址。后来，BOOOTP被DHCP代替。
 
 
-### The Hypertext Transfer Protocol (Layer 7)
+### 超文本传输协议 (第7层)
 
-HTTP is the mechanism that allows browsers to connect to web servers to view web pages.  HTTP packets are built on the top of TCP and they are identified by one of the eight different request methods.
+HTTP是允许浏览器连接到Web服务器以查看网页的机制。HTTP数据包建立在TCP的顶部，使用八种不同的请求方法中的一个来识别。
 
 
 ------------------------------------------------------
 
 
-#  Analyzing Packets in Wireshark
+#  在Wireshark中分析数据包
 
-In Wireshark, the entire process of network sniffing can be divided into three steps:
+在Wireshark中，整个的网络嗅探过程可以被分为三步：
 
-1.  **Collection**:   transferring the selected network interface into promiscuous mode so it can capture raw binary data.
+1.  **收集**:  将选中的网络接口转换为混杂模式，这样可以捕捉到源二进制数据。
 
-2.  **Conversion**:  chunks of collected binary are converted into readable form.
+2.  **转化**:  收集起来的二进制块被转化成可读的形式。
 
-3. **Analysis**: processing of the protocol type, communication channel, port number, protocol headers, etc.
+3.  **分析**: 处理协议类型，通信通道，端口号，协议头。
 
-## Collecting Packets
-Network traffic sniffing is only possible if the ** network interface** (NIC) is transfered to **promiscuous mode**. This allows the transfer of all received traffic  to the CPU (instead of processing frames that the interface was intended to receive). If the NIC is not set to promiscuous mode, packets that are not destined to that controller are discarded.
+## 收集数据包
+只有当**网络接口**（NIC）被转换为**混杂模式**时，网络流量嗅探是可行的。这允许将所有接收到的流量传输到CPU（而不是处理打算接收的帧）。如果NIC未设置为混杂模式，那么不发送到控制器的数据包将会被丢弃。
 
-##  Wireshark main's GUI
-The Wireshark main's GUI is composed of four parts:
+##  Wireshark主要的GUI
+Wireshark主要的GUI包含四个部分：
 
-* **Capture's options**.
-* **Packet List**: list all packets in the capture file. It can be edited to display packet number, relative time, source, destination, protocol, etc.
-* **Packet details**: hierarchal display of information about a single packet.
-* **Packet Bytes**: a packet in its raw, unprocessed form.
+* **捕捉中的选项**.
+* **数据包列表**: 列出抓取的文件中的所有包。可以编辑以显示包的标号，时间，源，目的，协议，等等。
+* **数据包细节**: 层次化的显示单个数据包的信息。
+* **Packet Bytes**: 数据包未经处理的形式
 
-To start capturing packets, all you need to do is to choose the network interface. You may also edit a *capture filter* prior to the packet collection.
+为了开始抓包，你所需要做的就是选择网络接口。你也可以在在收集包之前设置*捕捉过滤器*。
 
 
+## 配色方案
 
-## Color Scheme
+数据包列表面板通过不同的颜色（可设置）显示不同类型的流量。比如：
 
-The packet list panel displays  several type of traffic by (configurable) colors. For instance:
+* 绿色是TCP (于是是HTTP),
+* 深蓝是DNS,
+* 浅蓝是UDP,
+* 浅黄是ARP,
+* 黑色标识有问题的TCP数据包。
 
-* green is TCP (and consequently HTTP),
-* dark blue is DNS,
-* light blue is UDP,
-* light yellow is for ARP,
-* black identifies TCP packets with problems.
+##  数据包的可视化和统计
 
-##  Packet Visualization and Statistics
-
-Wireshark has several tools to learn about packets and networks:
+Wireshark有几个可以用来学习包和网络的工具：
 
 * **Statistics -> IO Graphs**: Allows to graph throughput of data. For instance, you can use graphs to find peaks in the data, discover performance bottlenecks in individual protocols, and compare data streams. Filtering is available in this interface (for example, to show ARP and DHCP traffic).
 
@@ -338,7 +337,7 @@ tcp.stream eq <number>
 
 
 ---
-##  Filters
+##  过滤器
 
 ### The Berkeley Packet Filter Syntax
 Wireshark's filtering is a very powerful feature. It uses the [Berkeley Packet Filter](http://en.wikipedia.org/wiki/Berkeley_Packet_Filter) (BFP) syntax.  The syntax corresponds to an **expression** which is made of one more **primitives**. These primitives can have  one or more **qualifier**, which are defined below:
