@@ -8,7 +8,7 @@ All in one big bag. Educational purposes.
 ## * [取证](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Forensics)
 ## * [LINUX攻击](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Linux_Hacking)
 ## * [内存利用](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Memory_Exploits)
-## * [VULNERABILITIES AND EXPLOITS](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Vulnerabilities_and_Exploits)
+## * [漏洞和利用](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Vulnerabilities_and_Exploits)
 ## * [网络和802.11](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Network_and_802.11)
 ## * [逆向工程](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Reverse_Engineering)
 ## * [RUBBER DUCK](https://github.com/CST-CTF/My-Gray-Hacker-Resources/tree/master/Rubber_Duck)
