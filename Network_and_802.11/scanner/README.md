@@ -1,21 +1,20 @@
-# Building a UDP Scanner (by bt3)
+# 构建一个UDP端口扫描工具(by bt3)
 
-When it comes to the reconnaissance of some target network, the start point is undoubtedly on host discovering. This task might come together with the ability to sniff and parse the packets flying in the network.
+当涉及侦察目标网络时，第一步无疑是发现主机。这个任务需要同时拥有嗅探和解析网络中的包的能力。
 
-A few weeks ago, I talked about [how to use Wireshark](http://bt3gl.github.io/wiresharking-for-fun-or-profit.html) for packet sniffing, but what if you don't have Wireshark available to monitor a network traffic?
+几个星期以前，我提到[如何使用Wireshark](http://bt3gl.github.io/wiresharking-for-fun-or-profit.html)来抓包，但是如果没有Wireshark可用来监听网络流量呢？
 
-Again, Python comes with several solutions and today I'm going  through the steps to build a **UDP Host discovery tool**. First, we are going to see how we deal with [raw sockets](http://en.wikipedia.org/wiki/Raw_socket) to  write a simple sniffer, which is able to view and decode network packets. Then we are going to multithread this process within a subnet, which will result in our scanner.
+同样的，Python提供了几种解决方法，我今天将经过一些步骤来构建一个**UDP主机发现工具**。首先，我们将看到我们如何使用[原始套接字](http://en.wikipedia.org/wiki/Raw_socket)来写一个简单的嗅探器，可以用来观测并解码网络数据包。 to  write a simple sniffer, which is able to view and decode network packets.接下来，我们要在一个子网中多线程运行这个过程，这将形成我们的扫描仪。
 
-The cool thing about **raw sockets** is that they allow access to low-level networking information. For example, we can use it to check IP and ICMP headers, which are in the layer 3 of the OSI model (the network layer).
+关于**原始套接字**的一个很棒的事情就是他们允许底层的网络信息。比如说，我们可以使用它来检测IP和ICMP的头部，它们在OSI模型的第三层（网络层）。
 
-The cool thing about using **UDP datagrams** is that, differently from TCP, they do not bring much overhead when sent across an entire subnet (remember the TCP [handshaking](http://www.inetdaemon.com/tutorials/internet/tcp/3-way_handshake.shtml)). All we need to do is wait for the ICMP responses saying whether the hosts are available or closed (unreachable).
-
+使用**UDP数据报**的比较棒的事情是，和TCP不同，它们被向整个子网发送时不会带来很多开销(记住TCP的[握手](http://www.inetdaemon.com/tutorials/internet/tcp/3-way_handshake.shtml))。我们所需要做的就是等待ICMP的应答，主机是可到达的还是关闭的（不可到达的）。
 
 ----
 
-##  Writing a Packet Sniffing
+##  写一个数据包的嗅探器
 
-We start with a  very simple task: with Python's  [socket](http://bt3gl.github.io/black-hat-python-networking-the-socket-module.html) library, we will write a very simple packet sniffer.
+我们可以从一个简单的任务开始：使用python的[socket](http://bt3gl.github.io/black-hat-python-networking-the-socket-module.html)库，我们可以写一个很简单的数据包嗅探器。
 
 In this sniffer we create a raw socket and then we bind it to the public interface. The interface should be in **promiscuous mode**, which means that every packet that the network card sees are captured, even those that are not destined to the host.
 
@@ -56,12 +55,13 @@ if __name__ == '__main__':
     main(HOST)
 ```
 
-To test this script, we run the following command in one terminal window:
+为了测试这个脚本，我们可以在一个终端窗口中运行下面的命令：
+
 ```sh
 $ sudo python sniffer.py
 ```
 
-Then, in a second  window, we can  [ping](http://en.wikipedia.org/wiki/Ping_(networking_utility)) or [traceroute](http://en.wikipedia.org/wiki/Traceroute) some address, for example www.google.com. The results will look like this:
+接着，在另一个窗口中，我们可以[ping](http://en.wikipedia.org/wiki/Ping_(networking_utility))或者[traceroute](http://en.wikipedia.org/wiki/Traceroute)一些地址，比如www.google.com。 结果大概像这样：
 
 ```sh
 $ sudo python raw_socket.py
