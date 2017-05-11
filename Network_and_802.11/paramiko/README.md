@@ -1,25 +1,25 @@
-# The Paramiko Module (by bt3)
+# Paramiko模块(by bt3)
 
-**Paramiko** is awesome!!! It uses my dear [PyCrypto](https://www.dlitz.net/software/pycrypto/) to give us access to the [SSH2 protocol](http://en.wikipedia.org/wiki/SSH2), and it has a flexible and easy to use API.
+**Paramiko**非常棒!!!它使用了我最喜欢的[PyCrypto](https://www.dlitz.net/software/pycrypto/)，使我们能够使用[SSH2协议](http://en.wikipedia.org/wiki/SSH2)，它可以是我们自由而轻易地使用API。
 
-You are going to see it with your own eyes: in this post we will see code for SSH clients and servers, reverse shells, and tunnel connections, and it will be smooth and fun!
+你将亲眼看到这些内容：在这篇文章中你将看到使用SSH连接客户端和服务器的代码，反弹shell，以及隧道连接，并且，它将是顺利而有趣的！
 
-Shall we start?
+我们可以开始了吗？
 
 ---
 
-## A Simple SSH Client
+## 一个简单的SSH客户端
 
-The first program we are going to write is a SSH client that makes a connection to some available SSH server, and then runs a single command that we send to it.
+我们要写的第一个程序是一个SSH客户端，它需要和一个可用的SSH服务器连接，然后执行接收到的简单的命令。
 
-But before we start, make sure you have  **paramiko** installed in our environment:
+但是在我们开始之前，确保**paramiko**已经安装在了环境中：
 
 ```sh
 $ sudo pip install paramiko
 ```
 
-###  Writing the SSH  Client Script
-Now we are ready to create our script. We start with a **usage** function. Since **paramiko** supports authentication with both a password and/or an identity file (a key), our usage function shows how to send these arguments when we run the script (plus the port, username, and the command we want to run):
+###  写SSH客户端脚本
+现在我们要开始写脚本了。我们将从一个**usage**函数开始。 function. 由于**paramiko**支持使用密码和/或身份文件（密钥）进行身份验证，我们的usage函数将表示出当运行这个脚本时，我们将如何发送这些变量（还包括端口号，用户名，以及我们想要运行的命令）：
 
 ```python
 def usage():
@@ -35,7 +35,7 @@ def usage():
     sys.exit()
 ```
 
-Moving to the **main** function, we are going to use **getopt** module to parse the arguments. That's basically what the main function does: parse the arguments, sending them to the **ssh_client** function:
+现在来看**main**函数，我们将使用**getopt**模块来解析参数。主函数基本有以下功能：解析参数，将它们发送给**ssh_client**函数：
 
 ```python
 import paramiko
@@ -99,14 +99,14 @@ if __name__ == '__main__':
     main()
 ```
 
-The magic happens in the **ssh_client** function, which performs the following steps:
+奇迹发生在**ssh_client**函数中，它将按照如下步骤运行：
 
-1. Creates a paramiko ssh client object.
-2. Checks if the key variable is not empty, and in this case,  loads it. If the key is not found, the program sets the policy to accept the SSH key for the SSH server (if we don't do this, an exception is raised saying that the server is not found in known_hosts).
-3. Makes the connection and creates a session.
-4. Checks whether this section is active and runs the command we sent.
+1. 创建一个paramiko的ssh连接的client对象。
+2. 检测密钥变量是否非空，如果非空，加载它。如果没有找到密钥，程序将接收SSH服务器的SSH密钥（如果不这样做，我们会发现在known_hosts中找不到服务器）。
+3. 建立连接并创建会话。
+4. 检测会话是否可用并运行我们发送的命令。
 
-Let's see how this works in the code:
+我们来看如何用代码实现这个过程：
 
 ```python
 def ssh_client(ip, port, user, passwd, key, command):
@@ -126,12 +126,11 @@ def ssh_client(ip, port, user, passwd, key, command):
         print ssh_session.recv(4096)
 ```
 
-Easy, huh?
+很简单，对吧？
 
-### Running the Script
+### 运行这个脚本
 
-We are ready to run our script. If we use the example in the usage function (and supposing the account exists in that host), we will see the following:
-
+我们已经可以运行脚本了。如果我们使用usage函数中的例子（假设这个帐户存在与主机中），我们将会看到下面的结果：
 ```sh
 $ ssh_client.py 129.49.76.26 -u buffy -p 22 -a killvampires  -c pwd
 [*] Initializing connection to 129.49.76.26
@@ -145,17 +144,17 @@ $ ssh_client.py 129.49.76.26 -u buffy -p 22 -a killvampires  -c pwd
 
 -----
 
-## A SSH Server to Reverse a Client Shell
+## 一个SSH服务器来反弹客户端shell
 
-What if we also control the SSH server and we are able to send commands to our SSH client? This is exactly what we are going to do now: we are going to write a **class** for this server (with a little help of the **socket** module) and then we will be able to **reverse the shell**!
-
-
-As a note, this script is based in some of the [paramiko demos](https://github.com/paramiko/paramiko/blob/master/demo) and we specifically use the key from their demo files ([download here](https://github.com/paramiko/paramiko/blob/master/demos/test_rsa.key)).
+要是我们可以控制SSH服务器向SSH客户端发送信息呢？这就是我们即将要做的：我们将要为这个服务器写一个**类**（简单利用一下**socket**模块，然后我们就可以**反弹shell**！
 
 
-### The SSH Server
+提示一下，这个脚本基于一些[paramiko示例](https://github.com/paramiko/paramiko/blob/master/demo)，并且我们将使用他们的样本文件中的密钥([点此下载](https://github.com/paramiko/paramiko/blob/master/demos/test_rsa.key)).
 
-In our server script, we first  create a class **Server** that issues a new thread event, checking whether the session is valid, and performing authentication. Notice that for simplicity we are hard-coding the values for username, password and host key, which is never a good practice:
+
+### SSH服务器
+
+在我们的服务器脚本中，我们将创建一个**Server**类来开启一个新的线程，以检测会话是否有效，进行认证。注意为了简便我们将硬编码用户名，密码和主机密钥，这不是一个好的做法：
 
 ```python
 HOST_KEY = paramiko.RSAKey(filename='test_rsa.key')
@@ -175,13 +174,13 @@ class Server(paramiko.ServerInterface):
         return paramiko.AUTH_FAILED
 ```
 
-Now, let's take a look at the **main** function, which does the following:
+现在，让我们看一下**main**函数，它将完成以下步骤：
 
-1. Creates a socket object to bind the host and port, so it can listen for incoming connections.
-2. Once a connection is established (the client tried to connect to the server and the socket accepted the connection), it creates a **paramiko** Transport object for this socket (in paramiko there are two main communication methods: *transport*, which makes and maintains the encrypted connection, and *channel*, which is like a sock for sending/receiving data over the encrypted session).-
-3. The program instantiates a **Server** object and starts the paramiko session with it.
-4. Authentication is attempted. If it is successful, we get a **ClientConnected** message.
-5. The server starts a loop where it will keep getting  input commands from the user and issuing it in the client. This is our reversed  shell!
+1. 创建一个socket的对象来连接主机和端口，这样它可以监听即将进行的连接。
+2. 一旦连接建立（客户端想要与服务器连接，socket接受这个连接），它将为这个socket建立一个**paramiko**传输对象(在paramiko中有两种主要的通信方式：*transport*，建立并维持这个加密连接；*channel*，为加密会话提供发送/接受数据的通道）。
+3. 这个程序初始化一个**Server**对象，并且使用它开启一个paramiko会话。
+4. 尝试认证。如果认证成功，我们将得到**ClientConnected**信息。
+5. 服务器开始一个循环，重复的接受输入命令，并在客户端中运行。这就是我们的反弹shell！
 
 ```python
 import paramiko
@@ -251,11 +250,11 @@ if __name__ == '__main__':
 
 
 
-### The SSH Client
+### SSH客户端
 
-The last piece for our reversed shell is to make the SSH client to be able to receive commands from the server.
+得到我们的反弹shell的最后一个步骤就是使得SSH客户端可以接收来自服务器端的命令。
 
-We are going to adapt the previous client script to receive these commands. All we need to do is to add a loop inside the session:
+我们将要调整原来的客户端脚本以接收命令。我们所需要做的就是在会话中添加一个循环：
 
 ```python
 import paramiko
@@ -326,14 +325,14 @@ if __name__ == '__main__':
     main()
 ```
 
-### Running both Scripts
-Let's run each script in a different terminal. First, the server:
+### 运行这两个脚本
+让我们分别在不同的终端中运行这两个脚本，首先运行服务器脚本：
 ```bash
 $ ssh_server.py localhost 22
 [+] Listening for connection ...
 ```
 
-Then the client:
+然后运行客户端脚本：
 ```sh
 $ ssh_client_reverse.py localhost -p 22 -u buffy -a killvampires
 [*] Initializing connection to localhost
@@ -343,7 +342,7 @@ $ ssh_client_reverse.py localhost -p 22 -u buffy -a killvampires
 Welcome to Buffy's SSH
 ```
 
-Now we can send any command from the server side to run  in the client: we have a reversed shell!
+现在我们可以从服务器端向客户端发送需要执行的命令：我们得到了一个反弹shell！
 
 ```sh
 [+] Listening for connection ...
@@ -361,11 +360,11 @@ Enter command:
 
 **Awesomesauce!**
 
- Ah, by the way, all these scripts work not only in Linux but in Windows and Mac as well (so next time you are in a lame Windows machine, no need to install [Putty](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html) anymore =p ).
+ 啊，顺便说一下，这些脚本不仅在Linux中可以运行，在Windows和Mac中也可以（因此，下次当你使用一个没用的windows环境时，不需要安装[Putty](http://www.chiark.greenend.org.uk/~sgtatham/putty/download.html) anymore =p ).
 
 ---
 
-## Further References:
+## 更多相关资料：
 
 - [Paramikos reverse SSH tunneling](https://github.com/paramiko/paramiko/blob/master/demos/rforward.py).
 - [Black Hat Python](http://www.nostarch.com/blackhatpython).
