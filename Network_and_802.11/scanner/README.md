@@ -16,9 +16,9 @@
 
 我们可以从一个简单的任务开始：使用python的[socket](http://bt3gl.github.io/black-hat-python-networking-the-socket-module.html)库，我们可以写一个很简单的数据包嗅探器。
 
-In this sniffer we create a raw socket and then we bind it to the public interface. The interface should be in **promiscuous mode**, which means that every packet that the network card sees are captured, even those that are not destined to the host.
+在这个嗅探器中，我们创建一个原始套接字，然后将他与一个公共接口连接。这个接口应该为**混杂模式**，这意味着网卡所能看到的所有的包将被捕捉，即使它不是要发送到主机。
 
-One detail to remember is that things are slightly different if we are using Windows: in this case we need to send a [IOCTL](http://en.wikipedia.org/wiki/Ioctl) package to set the interface to **promiscuous mode**. In addition, while Linux needs to use ICMP, Windows allow us to sniff the incoming packets independently of the protocol:
+要记住的一个小细节是，当我们使用Windows的时候，会有些不同：这里我们需要向接口发送一个[IOCTL](http://en.wikipedia.org/wiki/Ioctl)包，来设置接口为**混杂模式**。另外，尽管Linux需要使用ICMP，Windows允许独立于协议来嗅探即将被接收的包。
 
 
 ```python
@@ -69,26 +69,26 @@ $ sudo python raw_socket.py
 ('E\x00\x00T\xb4\x1b\x00\x005\x01\xe3\xe4J}\xe1\x11\xc0\xa8\x01r\x00\x00~\xd7x\xa2\x00\x02tr\x98T\x00\x00\x00\x00/\xea\r\x00\x00\x00\x00\x00\x10\x11\x12\x13\x14\x15\x16\x17\x18\x19\x1a\x1b\x1c\x1d\x1e\x1f !"#$%&\'()*+,-./01234567', ('74.125.225.17', 0))
 ```
 
-Now it's pretty obvious that we need to decode these headers.
+现在，非常显然我们需要解码这些头部信息。
 
 ----
 
-## Decoding the IP and ICMP Layers
+## 解码IP和ICMP层
 
-A typical IP header has the following structure, where each field belongs to a variable (this header is originally [written in C](http://minirighi.sourceforge.net/html/structip.html)):
+一个典型的IP头部有着这样的结构，所有的部分都属于一个变量（这个头部本来是[用C写的](http://minirighi.sourceforge.net/html/structip.html)):
 
 ![](http://i.imgur.com/3fmVLJS.jpg)
 
 
-In the same way, ICMP can vary in its content but each message contains three elements that are consistent: **type** and **code** (tells the receiving host what type of ICMP message is arriving for decoding) and **checksum** fields.
+同样，ICMP头部的内容也不相同，但每个消息都有着相同的三个部分：**类型**和**编码** (告诉接收主机需要解码ICMP消息的类型)和**校验和**。
 
 ![](http://i.imgur.com/gsUPKRa.gif)
 
 
-For our scanner, we are looking for a **type value of 3** and a **code value of 3**, which are the **Destination Unreachable** class and **Port Unreachable** [error in ICMP messages](http://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages).
+对于我们的嗅探器来说，我们在寻找**类型值为3t**和**编码值为3**的**不可到达的目的**和**端点**的[ICMP消息错误](http://en.wikipedia.org/wiki/Internet_Control_Message_Protocol#Control_messages).
 
 
-To represent this header, we create a class, with the help of Python's [ctypes](https://docs.python.org/2/library/ctypes.html) library:
+为了表示这个头部，我们使用python的[ctypes](https://docs.python.org/2/library/ctypes.html)库创建了一个类：
 
 ```python
 import ctypes
@@ -109,9 +109,9 @@ class ICMP(ctypes.Structure):
         pass
 ```
 
-Now we are ready to write our IP/ICMP header decoder. The script below creates a sniffer socket (just as we did before) and then it runs a loop to continually read in packets and decode their information.
+现在我们要开始写IP/ICMP头解码程序了。下面的这个脚本创建了一个嗅探器套接字（就像我们之前做的那样），然后它将执行一个循环连续地读入包并解码信息。 
 
-Notice that for the IP header, the code reads the packet, unpacks the first 20 bytes to the raw buffer, and then prints the header variables. The ICMP header data comes right after it:
+注意对于IP头部来说，代码读入数据包，将前20个字节压缩到原始缓冲区，然后打印头部变量。ICMP的头部信息紧随其后：
 
 ```python
 import socket
@@ -158,7 +158,7 @@ if __name__ == '__main__':
     main()
 ```
 
-Running the script in one terminal and sending a **ping**  in other will return something like this (notice the ICMP type 0):
+在一个终端中运行这个脚本，然后在另一个终端中发送**ping**命令，会返回如下信息（注意ICMP类型值为0）：
 
 ```sh
 $ ping www.google.com
@@ -177,7 +177,8 @@ ICMP -> Type:0, Code:0
 (...)
 ```
 
-In the other hand, if we run **traceroute** instead:
+另一方面，如果我们执行**traceroute**：
+
 ```sh
 $ traceroute www.google.com
 traceroute to www.google.com (74.125.226.50), 30 hops max, 60 byte packets
@@ -192,7 +193,8 @@ traceroute to www.google.com (74.125.226.50), 30 hops max, 60 byte packets
  9  lga15s43-in-f18.1e100.net (74.125.226.50)  45.997 ms  19.507 ms  16.607 ms
 
 ```
-We get something like this (notice the several types of ICMP responses):
+我们会得到如下结果（注意ICMP的应答有多种类型):
+
 ```sh
 sudo python ip_header_decode.py
 IP -> Version:4, Header Length:5, TTL:252, Protocol:1, Source:65.19.99.117, Destination:192.168.1.114
@@ -213,17 +215,18 @@ ICMP -> Type:3, Code:3
 
 
 ------
-## Writing the Scanner
+## 写一个扫描程序
 
-### Installing netaddr
+### netaddr
 
-We are ready to write our full scanner. First, let's install [netaddr](https://pypi.python.org/pypi/netaddr). This library allows to use a subnet mask such as 192.168.1.0/24:
+我们现在来写全扫描程序。首先，让我们安装[netaddr](https://pypi.python.org/pypi/netaddr)。这个库允许我们使用像192.168.1.0/24这样的子网掩码：
 
 ```sh
 $ sudo pip install netaddr
 ```
 
-We can quickly test this library with the following snippet (which should print "OK"):
+我们可以使用下面这个小代码片测试这个库（它应该会输出“OK”）：
+
 ```python
 import netaddr
 
@@ -232,11 +235,11 @@ if ip in netaddr.IPNetwork('192.168.1.0/24'):
     print('OK!')
 ```
 
-### Writing the Scanner
+### 写扫描程序
 
-To write our scanner we are going to put together everything we have, and then add a loop to spray UDP datagrams with a string signature to all the address within our target subnet.
+为了写扫描程序我们将集合我们所有的东西，然后添加一个循环将带有一个字符特征码的UDP数据报广播到目标子网中的所有地址。
 
-To make this work, each packet will be sent in a separated thread, to make sure that we are not interfering with the sniff responses:
+为了执行这样的过程，每个包将会分别从不同的线程中被发送，以确保不被其他的嗅探应答干扰：
 
 ```python
 import threading
@@ -300,14 +303,15 @@ if __name__ == '__main__':
     main()
 ```
 
-Finally, running the scanner  gives a result similar to this:
+最后运行这个扫描程序，将会得到类似下面这样的结果：
+
 ```sh
 $ sudo python scanner.py
 Host up: 192.168.1.114
 (...)
 ```
 
-Pretty neat!
+非常简洁！
 
-By the way, the results from our scanner can be checked against the values of the IP addresses in your router's **DHCP table**. They should match!
+顺便说一下，我们扫描的结果可以和你的路由器中的**DHCP表**中的IP地址值进行校验。它们应该是匹配的！They should match!
 
