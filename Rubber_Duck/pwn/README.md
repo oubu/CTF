@@ -52,31 +52,32 @@ FireFox配置文件副本
 极好的语法
 ============
 
-* Each command resides on a new line
+* 每个命令都位于一条新行中
 
-* Commands are ALL CAPS
+* 命令都是大写的
 
-* Lines beginning with REM will not be processed
+* 以REM开始的行不会被处理。
 
-* DEFAULT_DELAY or DEFAULTDELAY is used to define how long (in milliseconds * 10) to wait between each subsequent command. DEFAULT_DELAY must be issued at the beginning of the ducky script and is optional.
+* DEFAULT_DELAY 或 DEFAULTDELAY 用于定义在每个后续命令序列之间等待多长时间(以毫秒为单位* 10)。
+  DEFAULT_DELAY *必须在小鸭脚本的开头发行，并且是可选择的。
   DEFAULT_DELAY 100
-  REM delays 100ms between each subsequent command sequence
+  在随后的命令序列之间，REM延迟了100ms
 
-* DELAY creates a momentary pause in the ducky script.
-  DELAY 500
-  REM will wait 500ms before continuing to the next command.
+* 延迟在鸭子的脚本中造成短暂的停顿
+  延迟 500
+  REM会等500毫秒，然后再继续下一个命令。
 
-* STRING processes the text following taking special care to auto-shift.
-  GUI r
-  DELAY 500ms
+* 字符串处理文本后，对自动移位进行特殊处理。
+  GUI r
+  延迟500毫秒
   STRING notepad.exe
-  ENTER
-  DELAY 1000
-  STRING Hello World!
+  输入
+  延迟1000
+  字符串Hello World！
 
-* WINDOWS or GUI emulates the Windows-Key:
+* 窗户或GUI模拟Windows-Key:
   GUI r
-  REM will hold the Windows-key and press r
+  REM 将会持有 Windows-key 并按 r
 
 * MENU or APP emulates the App key, sometimes referred to as the menu key or context menu key. On Windows systems this is similar to the SHIFT F10 key combo.
   GUI d
