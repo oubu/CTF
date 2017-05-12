@@ -3,14 +3,14 @@
 
 
 
-### Searching the Internets
+### 网络搜索
 
-The recon problems usually give you someone/something's name and a task or a hint to find some specific information about it. So the first thing is of course google it.
+Recon问题通常是给你某人/某物的名字和一个任务或者一个按时让你找一些具体信息。所以第一件事当然是Google它。
 
-Google anything using keywords such as ```filetype:cgi inurl:cgi-bin```
+使用这样的关键字Google搜索：```filetype:cgi inurl:cgi-bin```
 
 
-### In addition we can look at:
+### 另外我们也可以看:
 
 - Facebook, Twitter, Linkedin, Google+, reddit,  /r/netsec.
 - IRC: with **/whois **.
@@ -18,7 +18,7 @@ Google anything using keywords such as ```filetype:cgi inurl:cgi-bin```
 - Github: check in the commit history.
 
 
-### Finding pictures:
+### 寻找图像:
 
 - [karmadecay]
 - [tineye]
