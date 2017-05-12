@@ -1,54 +1,55 @@
-The Payloads
+有效载荷
 ============
 
-The scripts are written in PowerShell (only work against target machines with PowerShell installed, i.e. Windows 7/8, Windows Server 2008. Administrative access is also required.
+在PowerShell脚本编写(只针对安装了PowerShell的工作目标机器,例如Windows 7/8,Windows Server 2008。还需要管理访问权限。
 
 
-The payloads are from three categories:
+有效载荷来自三个类别:
 
-* Reconnaissance (reports are generated with information about the target computer):
-Computer Information
-User Information
-USB Information
-Shared Drive Information
-Program Information
-Installed Updates
-User Document List
-Basic Network Information
-Network Scan
-Port Scan
-Copy Wireless Profile
-Take Screen Captures
-Copy FireFox Profile
-Extract SAM File
+* 侦察(报告由与目标计算机有关的信息生成):
 
-
-* Exploitation:
-Find and Upload File (FTP)
-Disable Firewall
-Add User
-Open Firewall Port
-Start Wi-Fi Access Point
-Share C:\ Drive
-Enable RDP
-Create a Reverse Shell
-Local DNS Poisoning
-Delete a Windows Update
+计算机信息
+用户信息
+USB信息
+共享驱动器的信息
+程序信息
+安装更新
+用户文档列表
+基本网络信息
+网络扫描
+端口扫描
+无线配置文件副本
+把屏幕截图
+FireFox配置文件副本
+提取SAM文件
 
 
-* Reporting (always together with the above items):
-Save Report to Target Machine
-FTP Report to External Host
-Email Report to GMAIL Account
-Save Files to USB Drive
+* 开发
+找到和上传文件(FTP)
+禁用防火墙
+添加用户
+打开防火墙端口
+启动无线接入点
+分享C:\开车
+使RDP
+创建一个反向Shell
+本地DNS中毒
+删除Windows更新
 
-We will use the last one in our payloads.
 
-Note that we use the name QUACK for the usb stick.
+* 报告(总是连同上面的项目):
+将报告保存到目标机
+外部主机的FTP报告
+电子邮件报告到GMAIL帐户
+将文件保存到USB驱动器
+
+我们将在有效载荷中使用最后一个。
+
+请注意，我们使用QUACK作为u盘的名字。
 
 
 
-Ducky Syntax
+极好的语法
 ============
 
 * Each command resides on a new line
