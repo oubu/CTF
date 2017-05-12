@@ -534,13 +534,13 @@ Scapy也有像[arpcachepoison和srpflood](http://www.secdev.org/projects/scapy/d
 
 ### 很好的第三方模块
 
-[Fingerprinting](http://nmap.org/book/osdetect-fingerprint-format.html) can be made with the **nmap_fp()** module (which comes from [Nmap](http://nmap.org) prior to v4.23):
+[Fingerprinting](http://nmap.org/book/osdetect-fingerprint-format.html) 可以使用 **nmap_fp()** 模块(来自[Nmap](http://nmap.org)v4.23之前的版本):
 
 ```python
 >>> load_module("nmap")
 >>> nmap_fp("192.168.0.114")
 ```
-[Passive OS fingerprinting](http://www.netresec.com/?page=Blog&month=2011-11&post=Passive-OS-Fingerprinting) can be made with the **p0f** module:
+[Passive OS fingerprinting](http://www.netresec.com/?page=Blog&month=2011-11&post=Passive-OS-Fingerprinting)可以使用 **p0f** 模块:
 
 ```python
 >>>> load_module('p0f')
@@ -569,7 +569,7 @@ def packet_callback(packet):
 sniff(filter="tcp port 110 or tcp port 25 or tcp port 143", prn=packet_callback, store=0)
 ```
 
-Running this script when loading  some mail client (such as [Thunderbird](https://www.mozilla.org/en-US/thunderbird/)) will allow us to see the login information (useful if they are sent to the server as plain text).
+当加载一些邮件客户端(比如[Thunderbird](https://www.mozilla.org/en-US/thunderbird/)）时运行这个脚本，我们可以看见登录信息(如果它们明文发送给服务器，就是有用的)。
 
 
 
