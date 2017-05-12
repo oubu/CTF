@@ -1,5 +1,5 @@
       _      _      _      USB       _      _      _
-   __(.)< __(.)> __(.)=   Rubber   >(.)__ <(.)__ =(.)__
-   \___)  \___)  \___)    Ducky!    (___/  (___/  (___/ 
+   __(.)< __(.)> __(.)=    橡胶    >(.)__ <(.)__ =(.)__
+   \___)  \___)  \___)     鸭子！   (___/  (___/  (___/ 
 
-The USB Rubber Ducky is a Human Interface Device programmable with a simple scripting language allowing penetration testers to quickly and easily craft and deploy security auditing payloads that mimic human keyboard input. The source is written in C and requires the AVR Studio 5 IDE from atmel.com/avrstudio. Hardware is commercially available at hakshop.com. Tools and payloads can be found at usbrubberducky.com. Quack!
+USB橡胶鸭是一种人机接口设备，可以通过简单的脚本语言编程，允许模糊测试人员快速、轻松地编写和部署模拟人类键盘输入的安全审计有效载荷。源是用C编写的,需要从atmel.com/avrstudio 下载 AVR Studio 5 IDE。硬件是商用的，可以在 hakshop.com 中下载。 工具和有效载荷可以在 usbrubberducky.com 上找到。嘎嘎嘎！
