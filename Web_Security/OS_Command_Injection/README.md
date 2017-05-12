@@ -1,86 +1,86 @@
-# OS Command Injection
+# OS命令注入攻击
 
 
-* Methodology:
-	- Identify data entry points
-	- Inject data (payloads)
-	- Detect anomalies from the response.
-	- Automate
+* 方法论:
+	- 识别数据入口点
+	- 注入数据(有效载荷)
+	- 检测到异常响应.
+	- 自动化
 
 
 
-* For example for snippet:
+* 例如片段:
 
 ```
 String cmd = new String("cmd.exe /K processReports.bat clientId=" + input.getValue("ClientId"));
 Process proc = Runtime.getRuntime().exec(cmd);
 ```
 
-For a client id equal **444**, we would have the following string:
+当客户机响应**444**,我们会有以下字符串:
 
 ```
 cmd.exe /K processReports.bat clientId=444
 ```
 
-However, an attacker could run use the client id equal **444 && net user hacked hackerd/add**. In this case, we have the following string:
+但是, 攻击者可以使用客户机id等于运行 **444 && net user hacked hackerd/add**. 如果这样, 我们有以下字符串:
 
 ```
 cmd.exe /K processReports.bat clientId=444 && net user hacked hacked /add
 ```
 
-## Examples of Injection Payloads:
+## 注入有效载荷的例子:
 
-* Control characters and common attack strings:
+* 控制字符字符串和普通攻击:
 	- '-- SQL injection
 	- && | OS Command Injection
 	- <> XSS
 
-* Long strings (AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA)
+* 长字符串(AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA)
 
-* Binary or Null data
+* 二进制或Null数据
 
 
-## Fuzz Testing Web Applications
+## 模糊测试Web应用程序
 
-* Focus on the relevant attack surface of the web application.
-* Typically HTTP request parameters:
-	- QueryString
-	- POST data
+* 关注相关的web应用程序的攻击表面.
+* 典型的HTTP请求参数:
+	- QueryString查询字符串
+	- POST dataPOST数据
 	- Cookies
-	- Other HTTP headers (User-Agent, Referer)
+	- 其他HTTP标头(用户代理, Referer)
 
-* Other entry points with request structures:
-	- XML web services
+* 其他入口点请求结构:
+	- XML web services XML Web服务
 	- WCF, GWT, AMF
-	- Remote Method Invocation (RMI)
+	- 远程方法调用 (RMI)
 
-* Fixing injection flaws:
-	- Comprehensive, consistent server-side input validation
-	- User Safe command APIs
-	- Avoid concatenating strings passed to an interpreter
-	- Use strong data types in favor of strings
+* 解决注入缺陷:
+	- 全面的、一致的服务器端输入验证
+	- 用户安全命令APIs
+	- 避免将连接字符串传递给译员
+	- 使用强大的数据类型的字符串
 
-### Whitelist input validation
-- Input validated against known GOOD values.
+### 输入验证白名单
+- 输入已知良好的值进行验证.
 
-- Exact match:
-		* A specific list of exact values is defined
-		* Difficult when large set of values is expected
-- Pattern matching:
-		* Values are matched against known good input patterns.
-		* Data type, regular expressions, etc.
+- 准确匹配:
+		* 定义一个特定的确切值列表
+		* 有大量的预计值时显得困难
+- 模式匹配:
+		* 已知值与良好的输入模式匹配.
+		* 数据类型,正则表达式, 等等.
 
-### Blacklist input validation
+### 输入验证黑名单
 
-- Input validated against known BAD values.
-- Not as effective as whitelist validation.
-		* Susceptible to bypass via encoding
-		* Global protection and therefore often not aware of context.
-- Constantly changing given dynamic of application attacks.
+- 输入验证已知的差值.
+- 不像白名单验证有效一样.
+		* 通过编码容易绕过
+		* 全球保护,因此往往不知道上下文.
+- 不断变化的动态应用程序的攻击.
 
-#### Evading Blacklist filters
+#### 逃避黑名单过滤器
 
-Exploit payloads:
+利用载荷:
 
 ```
 ';exec xp_cmdshell 'dir';--
