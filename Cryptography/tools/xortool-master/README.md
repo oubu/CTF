@@ -1,15 +1,15 @@
 xortool.py
 ====================
 
-A tool to do some xor analysis:
+一个用来分析xor的工具:
 
-  - guess the key length (based on count of equal chars)
-  - guess the key (base on knowledge of most frequent char)
+  - 猜测密钥长度（基于相同的字符）
+  - 猜测密钥（基于频率最高的字符）
 
-Usage
+密钥
 ---------------------
 
-! *python3 is not supported, use python 2.x*
+! *python3不可用，请使用python 2.x*
 
 <pre>
   xortool [-h|--help] [OPTIONS] [&lt;filename&gt;]
@@ -23,7 +23,7 @@ Options:
                         characters for keys
 </pre>
 
-Example
+例子
 ---------------------
 
 <pre>
@@ -58,7 +58,7 @@ tests $ md5sum xortool_out/0_secret_key /bin/ls
 29942e290876703169e1b614d0b4340a  /bin/ls
 </pre>
 
-The most common use is to pass just the encrypted file and the most frequent character (usually 00 for binaries and 20 for text files) - length will be automatically chosen:
+最常见的用途就是破解加密文件和找到频率最高的字母（对于二进制通常是00，对于文本文件通常是20）——长度会被自动选择：
 
 <pre>
 tests $ xortool tool_xored -c 20
@@ -78,7 +78,7 @@ Key-length can be 5*n
 an0ther s3cret \xdd key
 </pre>
 
-Here, the key is longer then default 32 limit:
+这里，密钥比默认的32位限度更长：
 
 <pre>
 tests $ xortool ls_xored -c 00 -m 64
@@ -98,7 +98,7 @@ Key-length can be 3*n
 really long s3cr3t k3y... PADDING
 </pre>
 
-So, if automated decryption fails, you can calibrate:
+所以，如果自动解密失败了，你可以这样验证：
 
 - (-m) max length to try longer keys
 - (-l) selected length to see some interesting keys
