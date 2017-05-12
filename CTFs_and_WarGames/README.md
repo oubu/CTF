@@ -25,12 +25,11 @@ CTFs 与 Wargames 整理
 ---
 # Recon-侦察
 
-### 互联网浏览 
+### 网络搜索
 
+Recon问题通常是给你某人/某物的名字和一个任务或者一个按时让你找一些具体信息。所以第一件事当然是Google它。
 
-The recon problems usually give you someone/something's name and a task or a hint to find some specific information about it. So the first thing is of course google it.
-
-Google anything using keywords such as ```filetype:cgi inurl:cgi-bin```
+使用这样的关键字Google搜索：```filetype:cgi inurl:cgi-bin```
 
 >译者注：此法即为Goole Hacking。可以使用火狐浏览器的hack search插件方便地进行Google Hacking。
 
