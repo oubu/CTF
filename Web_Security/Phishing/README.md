@@ -1,20 +1,20 @@
-# Phishing
+# 网络钓鱼欺诈
 
-* Way of deceiving your victim by making him/her login through one of your webpages which is the clone of the original.
+* 通过让他/她登录你的某个克隆出的网页欺骗你的受害者.
 
-* Fake login/scamming pages which are often to hack identification information.
+* 假登录/欺诈网页通常被用于盗取个人身份证明信息.
 
-## Tools
+## 工具
 
 
 
-### Cloning a Login Page
+### 克隆一个登录页面
 
 ```
 $ wget -U "Mozilla/5.0" -mkL http://facebook.com
 ```
 
-### Free Hostings:
+### 免费托管:
 
 - http://www.my3gb.com/
 - http://110mb.com/
