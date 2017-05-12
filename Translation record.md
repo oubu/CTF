@@ -3,6 +3,7 @@
 
 ### CTFs&Wargames Archives
 - README.txt 张祎
+- (the remaining part) 张雅琪
 
 ### Cryptography 张雅琪
 
@@ -19,10 +20,12 @@
 ### Other Hackings 张雅琪
 ### Pen-Testing 曾令仪
 ### Reverse Engineering 曾令仪
-### Rubber duck 曾令仪
+### Rubber duck
+- (main) README.md 曾令仪
 ### Steganography 曾令仪
 ### Vulnerabilities and Exploits 杨慧茹
-### Web Security 曾令仪
+### Web Security 
+- (main) README.md 曾令仪
 
 
 
