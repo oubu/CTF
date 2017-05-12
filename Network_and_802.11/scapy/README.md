@@ -1,15 +1,16 @@
-# The Scapy Module (by bt3)
+# Scapy模块 (by bt3)
 
 
-[Scapy](http://www.secdev.org/projects/scapy/)  is able to send and capture packets of several protocols, forging and decoding them to be used to most network tasks such as scanning, tracerouting, probing, attacks, and network discovery.
+[Scapy](http://www.secdev.org/projects/scapy/)能够发现和捕捉几个不同协议的数据包，进行伪造和解码，以用于大多数的网络任务，比如扫描，示踪，探测，攻击和网络发现。
 
-In this post I will talk about some of my favorite scripts. But, before we start, make sure you have Scapy in your machine:
+在这篇文章中，我将和你们讨论几个我最喜欢的脚本。但是，在我们开始之前，确保你的机器已经安装了Scapy模块。
 
 ```sh
 $ pip install scapy
 ```
 
-You can test the installation firing up Scapy iteratively. These are some useful functions:
+你可以通过反复启动Scapy来测试你的安装是否成功。这些是几个比较有用的函数：
+
 ```sh
 $ scapy
 Welcome to Scapy (2.2.0)
@@ -19,26 +20,25 @@ Welcome to Scapy (2.2.0)
 >>> help(sniff)     --> Help for a specific command
 ```
 
-### Contents:
+### 目录:
 
-* [Scapy 101 (including sniffing, scanning, fuzzing,...)](#intro)
-* [Stealing Plain Text Email Data](#email)
-* [ARP Poisoning a Machine](#arp)
-* [Processing PCAP Files](#pcap)
+* [Scapy 101 (包括嗅探，扫描，模糊……)](#intro)
+* [窃取明文邮件数据](#email)
+* [ARP缓存感染](#arp)
+* [加载PCAP文件](#pcap)
 
 
 -----------------------------------------------
 
-#<a name="intro"></a> Scapy 101
+#<a name="intro"></a> Scapy 101 (包括嗅探，扫描，模糊……)
 
-## A Simple Packet and its Headers
+## 一个简单的包和它的头部
 
-The basic unit in a  network communication is the *packet*.  So let's create one!
+网络通信的一个基本单元是*包*。所以让我们创建一个！
 
+Scapy通过*层*，然后通过每层的*字段*在构建包。每一层都被它的父层包裹，使用**<**和**>**表示。
 
-Scapy builds packets by the *layers* and then by the *fields* in each layer. Each layer is nested inside the parent layer, represented by the **<** and **>** brackets.
-
-Let's start by specifying the packet's source IP and then its destination IP. This type of information goes in the **IP header**, which is a *layer 3 protocol* in the [0SI model](http://bt3gl.github.io/wiresharking-for-fun-or-profit.html):
+让我们从指定数据包的源IP和目的IP开始。这种类型的信息将进入**IP头部**，IP属于[0SI模型](http://bt3gl.github.io/wiresharking-for-fun-or-profit.html)中的*第3层协议*:
 
 ```python
 >>> ip = IP(src="192.168.1.114")
@@ -47,7 +47,7 @@ Let's start by specifying the packet's source IP and then its destination IP. Th
 <IP  src=192.168.1.114 dst=192.168.1.25 |>
 ```
 
-Now let's add  a *layer 4 protocol*, such as  **TCP** or **UDP**. To attach this header to the previous, we use the the operator **/** (which is used as a composition operator between layers):
+现在让我们加上*第4层协议*，比如**TCP**或者**UDP**。为了，我们使用**/**运算符(它被用作协议间的组合运算符)把这个头部和之前的相连接:
 
 ```python
 >>> ip/TCP()
@@ -78,7 +78,7 @@ Now let's add  a *layer 4 protocol*, such as  **TCP** or **UDP**. To attach this
 (...)
 ```
 
-We could even go further, adding *layer 2 protocols* such as **Ethernet** or **IEEE 802.11**:
+我们甚至可以做更多，加上*第二层协议*，比如**Ethernet**或者**IEEE 802.11**：
 
 ```
 >>> Ether()/Dot1Q()/IP()
@@ -89,11 +89,11 @@ We could even go further, adding *layer 2 protocols* such as **Ethernet** or **I
 
 
 
-### Sending a Packet: Layer 2 vs. Layer 3
+### 发送一个数据包: 第2层 vs. 第3层
 
-Now that we have a (very simple) packet, we can send it over the wire.
+既然我们已经有了一个(非常简单的)数据包，我们可以通过网络发送它。
 
-Scapy's method [send](http://www.secdev.org/projects/scapy/doc/usage.html#sending-packets)  is used to send a single packet to the IP destination. This is a *layer 3* operation, so  the route is based on the local table:
+Scapy'的[send方法](http://www.secdev.org/projects/scapy/doc/usage.html#sending-packets)被用来向目标IP发送一个简单的数据包。这是一个*第3层*的操作，所以路由是基于本地表： 
 
 ```
 >>> send(ip/tcp)
@@ -102,7 +102,7 @@ Sent 1 packets.
 ```
 
 
-In another hand, Scapy's method [sendp](http://www.secdev.org/projects/scapy/doc/usage.html#sending-packets) works in the *layer 2*:
+但Scapy[sendp方法](http://www.secdev.org/projects/scapy/doc/usage.html#sending-packets)是在*第2层*工作的:
 
 ```
 >>> sendp(Ether()/ip/tcp)
@@ -111,9 +111,10 @@ Sent 1 packets.
 ```
 
 
-### Sending an ICMP Packet
+### 发送一个ICMP包
 
-Now let's add some content to our packet. An ICMP packet with a message is created like this:
+现在让我们给我们的包加上一些内容。一个带消息的ICMP包是这样的：
+
 ```python
 from scapy.all import *
 packet = IP(dst="192.168.1.114")/ICMP()/"Helloooo!"
@@ -121,7 +122,8 @@ send(packet)
 packet.show()
 ```
 
-Notice that the method **show()** displays details about the packet. Running the snippet above gives:
+注意 **show()** 方法给出了这个包的细节。运行上面的代码会得到如下结果：
+
 ```sh
 $ sudo python send_packet.py
 .
@@ -151,36 +153,36 @@ Sent 1 packets.
 ```
 
 
-This  is how this packet looks like in [Wireshark]():
+这就是在[Wireshark]()中的包:
 ![](http://i.imgur.com/jjuWHaZ.png)
 
-To send a packet over several times we add the **loop=1** argument within the **send** method:
+为了多次发送一个包，我们在 **send** 方法中加上了 **loop=1** 参数：
 
 ```python
 send(packet, loop=1)
 ```
 
-Which looks like this in Wireshark:
+在Wireshark中:
 
 ![](http://i.imgur.com/lv89lc3.png)
 
 
-###  Sending & Receiving a Packet
+###  发送并接收一个包
 
-Scapy also has the ability to listen for responses to packets it sends (for example, ICMP ping requests).
+Scapy还可以侦听发送包的相应（比如，ICMPping请求）。
 
-As in the send method, Scapy has two types of packet sending & receiving depending on the network layer.
+在send中，根据网络层的不同，Scapy有两种发送包和接收包的类型。
 
-In the *layer 3*, the methods are [sr and sr1](http://www.secdev.org/projects/scapy/doc/usage.html#send-and-receive-packets-sr). The former returns the answered and unanswered packets, while the last only returns answered and sent packets.
+在*第3层* ，方法是[sr和sr1](http://www.secdev.org/projects/scapy/doc/usage.html#send-and-receive-packets-sr)。前一个会返回已应答和未应答的包，后面一个只返回应答包和发送包。
 
-In the *layer 2*, the methods are [srp and srp1](http://www.secdev.org/projects/scapy/doc/usage.html#discussion). The former returns the answered and unanswered packets, while the last only returns answered and sent packets.
+在*第2层*，方法是[srp和srp1](http://www.secdev.org/projects/scapy/doc/usage.html#discussion)。前一个会返回已应答和未应答的包，后面一个只返回应答包和发送包。
 
-A good way to remember their differences is to keep in mind that functions with a **1**  are designed to send the specified packet and **end after receiving 1 answer/response** (instead of **continuing to listen for answers/responses**).
+一个很好的记住它们之间的区别的方法就是函数名中带**1**是用来发送特定包的，并且会**接收到一个回复/响应之后终**(而不是**持续地侦听回复/响应**）。
 
 
-### Sending & Receiving a ICMP Packet
+### 发送并接收一个ICMP包
 
-Let's   build an IP packet carrying an ICMP header  (which has a default type of echo request),  and use the **sr()** function to transmit the packet and record any response:
+让我们构建一个带有ICMP头的IP包(有默认类型的回升请求)，并使用 **sr()** 函数来传递包并记录任何应答：
 
 ```python
 from scapy.all import *
@@ -190,7 +192,8 @@ result, unanswered=output
 print '\nResult is:' + result
 ```
 
-Running this  snippet results in:
+运行这个代码会得到如下结果：
+
 ```sh
 $ sudo python receive_packet.py
 Begin emission:
@@ -206,9 +209,9 @@ Result is:
 ```
 
 
-### Sending and Receiving in a Loop
+### 循环发送和接收
 
-What if we want to send and listen for responses to multiple copies of the same packet? This can be done with the [srloop()](http://www.secdev.org/projects/scapy/doc/usage.html#send-and-receive-in-a-loop) method and a **count** value:
+要是我们想要发送同一个包的多个副本并侦听应答呢？我们可以使用[srloop()方法](http://www.secdev.org/projects/scapy/doc/usage.html#send-and-receive-in-a-loop)和一个 **count** 值来完成：
 
 ```sh
 >>> srloop(IP(dst="www.goog")/ICMP(), count=3)
@@ -220,45 +223,45 @@ Sent 3 packets, received 3 packets. 100.0% hits.
 ```
 
 ----
-## A TCP Three-way Handshake
+## TCP三次握手
 
-Scapy allows you to craft SYN request and match the corresponding returned [SYN/ACK](http://en.wikipedia.org/wiki/Transmission_Control_Protocol) segment.
+Scapy允许你建立SYN请求并匹配相应的返回[SYN/ACK](http://en.wikipedia.org/wiki/Transmission_Control_Protocol)段。
 
-This is how it works:
+它是这样运作的：
 
-1) we create an instance of an IP header:
+1) 创建一个IP头部实例：
 
 ```
 ip = IP(src='192.168.1.114', dst='192.168.1.25')
 ```
 
-2) we define a SYN instance of the TCP header:
+2) 定义一个TCP头部的SYN实例：
 
 ```
 tcp_syn = TCP(sport=1024, dport=80, flags='S', seq=12345)
 ```
 
-3) we send this and capture the server's response with  **sr1**:
+3) 发送这个并且使用**sr1**捕捉服务器的应答：
 
 ```
 packet = ip/tcp_syn
 SYNACK = sr1(packet)
 ```
 
-4) we extract the server's TCP sequence number from the server, with **SYNACK.seq**, and  increment it by 1:
+4) 使用**SYNACK.seq**，提取服务器的TCP序列号，并加上1：
 
 ```
 ack = SYNACK.seq + 1
 ```
 
-5) we create a new instance of the TCP header **ACK**, which now has the flag **A** (placing the acknowledgment  value for the server) and  we send everything out:
+5) 创建一个TCP头**ACK**的新实例，有标识**A** （赋给它服务器的确认值），然后发送所有东西：
 
 ```
 tcp_ack = TCP(sport=1024, dport=80, flags='A', seq=12346, ack=ack)
 send(ip/tcp_ack)
 ```
 
-6)  Finally, we create the segment with no TCP flags or payload and send it back:
+6) 最后，我们发送一个没有TCP标识或payload的段并将他发送回去：
 
 ```python
 tcp_push = TCP(sport=1024, dport=80, flags='', seq=12346, ack=ack)
@@ -267,52 +270,54 @@ send(ip/tcp_push/data)
 ```
 
 
-However, running the snippet above will not work!
+但是，运行上面的代码并不能成功！
 
-The reason is that crafting TCP sessions with Scapy circumvents the native TCP/IP stack. Since the host is unaware that Scapy is sending packets, the native host would receive an unsolicited SYN/ACK that is not associated with any known open session/socket. This would result in the host reseting the connection when receiving the SYN/ACK.
+原因在于使用Scapy创建TCP会话绕过了本机TCP/IP堆栈。既然主机并没有意识到Scapy正在发送包，本地主机将会收到一个自发的，没有和任何已知开放的会话/套接字相连接的SYN/ACK。这将会导致主机在接收到SYN/ACK之后重置连接。
 
-
-One solution is to use the host's firewall with [iptables](http://en.wikipedia.org/wiki/Iptables) to block the outbound resets. For example, to drop all outbound packets that are TCP and destined to IP 192.168.1.25 from 192.168.1.114, destination port 80, we  run:
+一种解决方法是通过[iptables](http://en.wikipedia.org/wiki/Iptables)使用主机的防火墙来防止向外的重置。比如说，为了丢弃所有TCP和从192.168.1.114发往192.168.1.25，端口号为80的向外发送的包，我们执行：
 
 ```sh
 $ sudo iptables -A OUTPUT -p tcp -d 192.168.1.25 -s 192.168.1.114 --dport 80 --tcp-flags RST -j DROP
 ```
-This does not prevent the source host from generating a reset each time it receives a packet from the session, however it does block it from silencing the resets.
+
+这并不会阻止每当源主机收到一个来自会话的包时的重置，但它会阻止它进行重置。
 
 
 
 ---
-##  Network Scanning and Sniffing
+##  网络扫描和嗅探
 
-Let's learn how to perform a simple **port scanning**.  This can be crafted by sending a TCP/IP packet with the TCP flag set to SYM to every port in the range 1-1024 (this will take a couple of minutes to scan):
+让我们学习如何进行一个简单的**端口扫描**。这可以通过向1-1024范围内的所有端口发送一个TCP标识设置为SYM的TCP/IP包来构建(这将花费几分钟来扫描):
 
 ```python
 res, unans = sr( IP(dst='192.168.1.114')/TCP(flags='S', dport=(1, 1024)))
 ```
 
-We can check the output with:
+我们可以这样检查输出：
+
 ```python
 res.summary()
 ```
 
-For more advanced stuff, check out [my script for scanning subnet in selected ports](https://github.com/bt3gl/My-Gray-Hacker-Resources/blob/master/Network_and_802.11/scapy/super_scanner.py).
+想知道更多的内容，查看[在选定的端口中扫描子网的脚本](https://github.com/bt3gl/My-Gray-Hacker-Resources/blob/master/Network_and_802.11/scapy/super_scanner.py).
 
-### The Sniff() Method
+### Sniff()方法
 
 
-In Scapy, packet sniffing can be done with the function [sniff()](http://www.secdev.org/projects/scapy/doc/usage.html#sniffing).  The **iface** parameter tells the sniffer which network interface to sniff on. The **count** parameter specifies how many packet we want to sniff (where a blank value is infinite). The **timeout** parameter stop sniffing after a given time:
+在Scapy中，数据包的嗅探可以使用函数[sniff()](http://www.secdev.org/projects/scapy/doc/usage.html#sniffing)来完成。**iface**参数告诉嗅探器要嗅探哪个网络接口。**count**参数指明我们需要嗅探多少个包(空值表示无限多个)。 **timeout** 参数在给定时间够停止嗅探：
 
 ```python
 >>>> p = sniff(iface='eth1', timeout=10, count=5)
 >>>> print p.summary()
 ```
 
-We can specify filters too:
+我们也可以指定过滤器：
+
 ```
 >>>> p = sniff(filter="tcp and (port 25 or port 110)")
 ```
 
-We can also use **sniff** with a  customized callback function to every packet that matches the filter, with the **prn** parameter:
+我们也可以对每个包使用**sniff**加上一个特定的callback函数来匹配过滤器，使用 **prn** 参数：
 
 ```python--
 def packet_callback(packet):
@@ -321,7 +326,7 @@ def packet_callback(packet):
 sniff(filter='icmp', iface='eth1', prn=packet_callback, count=1)
 ```
 
-To see the output in real time and dump the data into a file, we use the **lambda function** with **summary** and the **wrpcap** method:
+为了实时查看输出并将数据放入一个文件中，我们使用带有  **summary** 和 **wrpcap** 方法的 **lambda函数** ：
 
 ```python
 >>>> p = sniff(filter='icmp', iface='eth1', timeout=10, count=5,  prn = lambda x:x.summary())
@@ -331,9 +336,10 @@ To see the output in real time and dump the data into a file, we use the **lambd
 
 
 ----
-## Changing a Routing Table
+## 更改路由表
 
-To look at the routing table of our machine we use the Scapy's command **conf.route**:
+我们使用Scapy的 **conf.route** 命令来查看我们的机器的路由表command :
+
 ```
 Network         Netmask         Gateway         Iface           Output IP
 127.0.0.0       255.0.0.0       0.0.0.0         lo              127.0.0.1
@@ -341,7 +347,7 @@ Network         Netmask         Gateway         Iface           Output IP
 192.168.1.0     255.255.255.0   0.0.0.0         wlp1s0          192.168.1.114
 ```
 
-Scapy allows us to include a specified route to this table, so any packet intended to some specified host would go through the specified gateway:
+Scapy允许我们将指定的路由放在这个表中，因此任何发往指定主机的包将通过指定的网关：
 
 ```python
 >>>> conf.route.add(host='192.168.118.2', gw='192.168.1.114')
@@ -352,16 +358,16 @@ Network         Netmask         Gateway         Iface           Output IP
 192.168.118.2   255.255.255.255 192.168.1.114   lo              192.168.1.114
 ```
 
-Finally, to return to the original configuration, we use ```conf.route.resync()```.
+最后，要恢复原始配置，使用 ```conf.route.resync()```.
 
 
 ---
 
-## Other Useful Stuff
+## 其他有用的东西
 
-### Dumping Binary data in Hex form
+### 以十六进制形式转储二进制数据
 
-A very useful function  is [hexdump()](https://pypi.python.org/pypi/hexdump), which can be used to display one or more packets using classic hexdump format:
+一个非常有用的函数是[hexdump()](https://pypi.python.org/pypi/hexdump)，它可以用来显示一个或多个使用hexdump格式的数据包：
 
 ```
 from scapy.all import *
@@ -370,7 +376,8 @@ a = Ether()/IP(dst="www.google.com")/TCP()/"GET /index.html HTTP/1.1"
 hexdump(a)
 ```
 
-Running this snippet gives:
+运行这个代码会得到：
+
 ```sh
 $ sudo python example_hexdump.py
 WARNING: No route found for IPv6 destination :: (no default route?)
@@ -383,11 +390,11 @@ WARNING: No route found for IPv6 destination :: (no default route?)
 
 
 
-###  Fuzzing
+###  fuzzing
 
-Scapy's [fuzz()](http://www.secdev.org/projects/scapy/doc/usage.html#fuzzing) method allows one to craft fuzzing templates (by changing default values by random ones) and send them in a loop.
+Scapy的[fuzz()](http://www.secdev.org/projects/scapy/doc/usage.html#fuzzing)方法允许我们建立fuzzing模板(通过随机变更默认值并循环发送）。
 
-For example, we can have a standard IP layer with the UDP and NTP layers being fuzzed (but with the correct checksums). Below, the UDP destination port is overloaded by NTP and the NTP version is forced to be 4:
+比如说，我们有一个标准的IP层和被fuzz的UDP和NTP层。下面的程序中，UDP目的端口被版本号为4的NTP重载。
 
 ```python
 >>> send(IP(dst="192.168.1.114")/fuzz(UDP()/NTP(version=4)), loop=1)
@@ -395,13 +402,13 @@ For example, we can have a standard IP layer with the UDP and NTP layers being f
 Sent 16 packets.
 ```
 
-Here is a DNS fuzzer:
+这是一个DNS fuzzer:
 
 ```python
 >>> send(IP(dst='192.168.1.114')/UDP()/fuzz(DNS()), inter=1,loop=1)
 ```
 
-We can use fuzzers for something more interesting. For example to craft a [DDOS](http://en.wikipedia.org/wiki/Denial-of-service_attack) script. This is a very simple example I have in my repository:
+我们可以使用fuzzer来做一些更加有趣的事情。比如说，构建一个[DDOS](http://en.wikipedia.org/wiki/Denial-of-service_attack)脚本。这是我的respository里面的一个非常简单的例子：
 
 ```python
 import threading
@@ -461,9 +468,9 @@ if __name__ == '__main__':
     option(int(count), op, ip, port)
 ```
 
-### Pinging the Network
+### Ping网络
 
-We can perform  **ping** operations with several protocols using Scapy. The fastest way to discover hosts on a local Ethernet network is to use ARP:
+使用Scapy，我们可以使用不同的协议执行 **ping** 命令。最快的发现本地以太网中的主机的方法是使用ARP：
 
 ```python
 def arp_ping(host):
@@ -471,7 +478,7 @@ def arp_ping(host):
     ans.summary(lambda (s, r): r.sprintf("%Ether.src% %ARP.psrc%"))
 ```
 
-In other cases we can use ICMP ping:
+在其他情况下，我们可以使用ICMP ping:
 
 ```python
 def icmp_ping(host):
@@ -479,7 +486,7 @@ def icmp_ping(host):
     ans.summary(lambda (s, r): r.sprintf("%IP.src% is alive"))
 ```
 
-In case when  ICMP echo requests are blocked, we can still use TCP:
+当ICMP回应请求被阻止时，我们仍然可以使用TCP:
 
 ```python
 def tcp_ping(host, port):
@@ -487,7 +494,7 @@ def tcp_ping(host, port):
     ans.summary(lambda(s, r): r.sprintf("%IP.src% is alive"))
 ```
 
-Or even  UDP  (which produces ICMP port unreachable errors from live hosts). We can pick any port which is most likely to be closed,  such as port 0:
+或者甚至是UDP(从实时主机发出ICMP端口不可达的错误)。我们可以选择最有可能被关闭的端口，比如端口0：
 
 ```python
 def udp_ping(host, port=0):
@@ -499,32 +506,33 @@ def udp_ping(host, port=0):
 
 ### More Networking
 
-Scapy can perform simple networking functions such as  [traceroute](http://www.secdev.org/projects/scapy/doc/usage.html#tcp-traceroute-2):
+Scapy可以执行简单的网络功能，比如[traceroute](http://www.secdev.org/projects/scapy/doc/usage.html#tcp-traceroute-2):
 
 ```python
 >>>> print scapy.traceroute('www.google.com')
 ```
 
-Or be used to discover hosts on the local Ethernet, with [arping](http://www.secdev.org/projects/scapy/doc/usage.html#arp-ping):
+或者使用[arping](http://www.secdev.org/projects/scapy/doc/usage.html#arp-ping)在本地以太网中发现主机:
+
 ```python
 >>>> print arping('192.168.1.114')
 ```
 
-Scapy also has  commands for network-based attack such as [arpcachepoison  and srpflood](http://www.secdev.org/projects/scapy/doc/usage.html#tcp-traceroute).
+Scapy也有像[arpcachepoison和srpflood](http://www.secdev.org/projects/scapy/doc/usage.html#tcp-traceroute)这样基于网络的攻击的命令行。
 
 
-Additionally, we can use Scapy to re-create a packet that has been sniffed or received. The method **command()** returns a string of the commands necessary for this task. Its output is similar to the command **show()**.
+另外，我们可以使用Scapy来重建已被嗅探或接收的包。 **command()** 方法会返回此任务所需的命令行字符串。它的结果和 **show()** 命令相同。
 
 
-### Plotting
-If you have [GnuPlot](http://www.gnuplot.info/) installed, you can use the plot functionality with Scapy. It's pretty neat.
+### 绘图
+
+如果你安装了[GnuPlot](http://www.gnuplot.info/)，你可以使用Scapy的绘图功能。它非常简洁。
+
+同样，我们也可以使用**plot()** 和 **graph()** 函数来绘图，我们可以使用**trace3D()**生成3D的图。
 
 
-We also can plot  graphs with the function **plot()** and **graph()**,  and we can generate 3D  plots with **trace3D()**.
 
-
-
-### Nice Third Party Modules
+### 很好的第三方模块
 
 [Fingerprinting](http://nmap.org/book/osdetect-fingerprint-format.html) can be made with the **nmap_fp()** module (which comes from [Nmap](http://nmap.org) prior to v4.23):
 
@@ -543,7 +551,7 @@ We also can plot  graphs with the function **plot()** and **graph()**,  and we c
 
 
 -----------
-## <a name="email"></a> Stealing Email Data
+## <a name="email"></a> 窃取明文邮件数据
 
 The idea of this script is to build a sniffer to capture [SMTP](http://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol), [POP3](http://en.wikipedia.org/wiki/Post_Office_Protocol), and [IMAP](http://en.wikipedia.org/wiki/Internet_Message_Access_Protocol) credentials. Once we couple this sniffer with some [MITM](http://en.wikipedia.org/wiki/Man-in-the-middle_attack) attack (such as **ARP poisoning**), we can steal credentials from other machines in the network.
 
@@ -566,7 +574,7 @@ Running this script when loading  some mail client (such as [Thunderbird](https:
 
 
 -----------
-## <a name="arp"></a> ARP Cache Poisoning
+## <a name="arp"></a> ARP缓存感染
 
 I talked about [ARP cache poisoning using command line arpspoof](http://bt3gl.github.io/wiresharking-for-fun-or-profit.html) in my guide about Wireshark. Here we are going to see how to implement similar tool using Scapy.
 
@@ -711,7 +719,7 @@ Once you are done,  open the PCAP file resulting from the script. BAM! The entir
 
 
 ------
-## <a name="pcap"></a> PCAP Processing to Find Images
+## <a name="pcap"></a> 加载PCAP文件
 
 We have learned how to steal credentials from some email protocols, now let us extend this to all the traffic in the network!
 
@@ -742,11 +750,11 @@ $ sudo yum install opencv-python
 We are going to go through a script that tries to detect image with human faces. But, first, either create or download a PCAP file with these images. For instance, these are some PCAP dump online sources:
 [here](http://wiki.wireshark.org/SampleCaptures), [here](http://www.netresec.com/?page=PcapFiles), [here](http://www.pcapr.net/home), and [here](http://www.pcapr.net/browse?q=facebook+AND+png).
 
-### Analyzing PCAP Files
+### 分析PCAP文件
 
-Now we are ready to automatically find human faces from HTTP traffic dump. Our  script basically does the following:
+现在我们准备从HTTP流量转储中识别人脸。我们的脚本大概完成以下步骤：
 
-1) The function **http_assembler** takes a PCAP and separates each TCP session in a dictionary. Then it loops in these sections using the HTTP filter (which is the same as *Follow the TCP stream* in Wireshark). After the HTTP data is assembled, the headers are parsed with the **get_http_headers** function and sent to the **extract_image** function. If  image headers are returned, they are saved and sent to the function **face_detect**.
+1) **http_assembler** takes a PCAP and separates each TCP session in a dictionary. Then it loops in these sections using the HTTP filter (which is the same as *Follow the TCP stream* in Wireshark). After the HTTP data is assembled, the headers are parsed with the **get_http_headers** function and sent to the **extract_image** function. If  image headers are returned, they are saved and sent to the function **face_detect**.
 
 ```python
 def http_assembler(PCAP):
@@ -834,7 +842,7 @@ def face_detect(path, file_name):
 ```
 
 
-Running the script results in an output like this:
+运行这个代码会得到如下结果：
 
 ```sh
 Extracted: 165 images
@@ -850,7 +858,7 @@ Detected: 16 faces
 -----
 
 
-## Further References:
+## 更多参考资料:
 
 - [Scapy Documentation](http://www.secdev.org/projects/scapy/doc/).
 - [Scapy Advanced Usage](http://www.secdev.org/projects/scapy/doc/advanced_usage.html)
