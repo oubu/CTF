@@ -17,6 +17,7 @@
 
 ### Memory exploits
 - (main) README.md 张雅琪
+- Buffer_overflows stack_overflow_narnia.md 杨慧茹
 ### Network and 802.11 张雅琪
 ### Other Hackings 张雅琪
 
@@ -24,14 +25,14 @@
 
 ### Reverse Engineering 曾令仪
 
-### Rubber duck
-- (main) README.md 曾令仪
+### Rubber duck 曾令仪
 ### Steganography 曾令仪
 
 ### Vulnerabilities and Exploits 杨慧茹
 
 ### Web Security 
-- (main) README.md 曾令仪
+- (main) + SQLi + Scanners + urllib2 README.md 曾令仪
+- OS_Command_Injection + Phishing README.md 杨慧茹
 
 
 
