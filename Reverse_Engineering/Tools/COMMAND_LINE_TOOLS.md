@@ -1,13 +1,13 @@
-COMMAND LINE TOOLS
+命令行工具
 ==================
 
 
-### Tricks:
+### 小技巧:
 
-- Files with spaces in the name + symbolinc links.
+- 文件的文件名带有空格和有符号链接的文件
 
 
-### Searching
+### 查找
 
 
 ```
@@ -21,7 +21,7 @@ find -size f1
 ```
 
 
-### Encondings/ Binaries
+### 编码/二进制
 
 ```
 file f1
@@ -37,7 +37,7 @@ xxd -r
 
 
 
-### Compressed Files
+### 压缩文件
 
 
 ```
@@ -52,7 +52,7 @@ tar -xvf file
 
 
 
-### Connecting to a Server/Port
+### 连接服务器/端口
 
 ```
 echo 4wcYUJFw0k0XLShlDzztnTBHiqxU3b3e | nc localhost 30000
