@@ -553,9 +553,9 @@ Scapy也有像[arpcachepoison和srpflood](http://www.secdev.org/projects/scapy/d
 -----------
 ## <a name="email"></a> 窃取明文邮件数据
 
-The idea of this script is to build a sniffer to capture [SMTP](http://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol), [POP3](http://en.wikipedia.org/wiki/Post_Office_Protocol), and [IMAP](http://en.wikipedia.org/wiki/Internet_Message_Access_Protocol) credentials. Once we couple this sniffer with some [MITM](http://en.wikipedia.org/wiki/Man-in-the-middle_attack) attack (such as **ARP poisoning**), we can steal credentials from other machines in the network.
+这个脚本的想法是构建一个嗅探器来捕获[SMTP](http://en.wikipedia.org/wiki/Simple_Mail_Transfer_Protocol)，[POP3](http://en.wikipedia.org/wiki/Post_Office_Protocol)，和[IMAP](http://en.wikipedia.org/wiki/Internet_Message_Access_Protocol)凭据。一旦我们将这个嗅探器和一些[MITM](http://en.wikipedia.org/wiki/Man-in-the-middle_attack)攻击(例如**ARP感染**)相结合，我们就可以从其他机器里面窃取凭据。
 
-With this in mind, we write a script that runs a sniffer on all the interfaces, with no filtering. The **sniff**'s **store=0** attribute ensures that the packets are not kept in memory (so we can leave it running):
+知道了这一点，我们编写了一个在所有接口上运行的，没有过滤器的嗅探器。**Sniff**的**store=0**属性确保数据包不保存在内存中（所以我们可以运行它）：
 
 ```python
 from scapy.all import *
@@ -576,27 +576,27 @@ sniff(filter="tcp port 110 or tcp port 25 or tcp port 143", prn=packet_callback,
 -----------
 ## <a name="arp"></a> ARP缓存感染
 
-I talked about [ARP cache poisoning using command line arpspoof](http://bt3gl.github.io/wiresharking-for-fun-or-profit.html) in my guide about Wireshark. Here we are going to see how to implement similar tool using Scapy.
+我在Wireshark指南中谈到了[使用命令行arpspoof造成ARP缓存感染](http://bt3gl.github.io/wiresharking-for-fun-or-profit.html)。这里我们来看一下如何使用Scapy来实现同样的工具。
 
-ARP cache poisoning works by convincing a target machine that we are the gateway, and then convincing the gateway that all traffic should pass through our machine.
+ARP缓存感染的主要机制就是向目标机器证明我们是网管，然后向网关证明所有的流量应该从我们的机器经过。
 
-Every machine in a network maintains an ARP cache that stores the recent MAC addresses that match to IP addresses on the local network. All we need to do is to poison this cache with controlled entries.
+网络中的每一个机器都会有一个ARP缓存，用于存储最近的与本地网络上的IP地址匹配的MAC地址。我们需要做的就是用受控制的内容来“感染”这个缓存。
 
-The best way to test this is using a Windows virtual machine (take a look at [this guide I wrote](http://bt3gl.github.io/setting-up-a-playing-environment-with-virtual-machines.html)).
+最好的测试方法就是使用一个Windows的虚拟机(看一下[我写的这个指南](http://bt3gl.github.io/setting-up-a-playing-environment-with-virtual-machines.html)).
 
-Before the attack, go to the Windows box, open the terminal (```cmd```) and check the IP and gateway IP address with```ipconfig```. Then check the associated  ARP cache entry MAC address with ```arp -a```:
+在攻击之前，进入windows窗口，打开终端(```cmd```)，并使用```ipconfig```检查IP和网关IP地址。然后使用```arp -a```检查关联的ARP缓存条目的MAC地址：
 
 ![](http://i.imgur.com/ME069uS.png)
 
-Our ARP poisoning script (based on [Black Hat Python](http://www.nostarch.com/blackhatpython)) will perform the following steps:
+我们的ARP缓存感染脚本会按照如下步骤实现(基于[Black Hat Python](http://www.nostarch.com/blackhatpython))：
 
-1. Define constant values, set our interface card, and turn off output.
+1. 定义常量，设置接口卡，然后关闭输出。
 
-2. Resolve the gateway and target MAC address. The function **get_mac** use the **srp** method to emit an ARP request to an IP address to resolve the MAC address.
+2. 解析网关和目标MAC地址。**get_mac**函数的**srp**方法向IP地址发出ARP请求来解析MAC地址。
 
-3. Start the poison thread to perform the ARP poisoning attack. This will start the sniffer that captures the packets. The function **poison_target** builds ARP requests for poisoning both the target IP and the gateway (in a loop).
+3. 启动感染线程来执行ARP感染攻击。浙江启动抓包的嗅探器。**poison_target**函数建立ARP请求，以感染目的IP和网关（使用循环）。
 
-4. Write out the captured packets and restore the network. The function **restore_target** sends out the ARP packets to the network broadcast address to reset the ARP caches of the gateway and target machines.
+4. 记录抓到的包并恢复网络。**restore_target**函数把ARP数据包发送到网络广播地址，以重置网关和目标及其的ARP缓存。
 
 
 ```python
@@ -689,13 +689,13 @@ if __name__ == '__main__':
         sys.exist()
 ```
 
-To run this ARP cache poisoning script, we need to tell the local host machine (Kali Linux) to forward packets along both the gateway and the target IP address:
+为了运行ARP缓存感染脚本，我们需要告诉本地主机(Kali Linux)向网关和目的IP转发数据包：
 
 ```sh
 $ echo 1 /proc/sys/net/ipv4/ip_foward
 ```
 
-Finally, we run out script, which prints the following output:
+最后，我们运行这个脚本，会得到如下输出：
 
 ```
 $ sudo python arp_cache_poisoning.py
@@ -707,11 +707,12 @@ $ sudo python arp_cache_poisoning.py
 [*] ARP poison attack finished.
 [*] Restoring targets...
 ```
-While running that, we can see the changes in the victim's machine (Windows):
+
+运行过程中，我们将看到受攻击主机(Windows)的变化：
 
 ![](http://i.imgur.com/RFdIz4H.png)
 
-Once you are done,  open the PCAP file resulting from the script. BAM! The entire traffic from the victim is in your hand!
+一旦你完成了，打开这个脚本生成的PCAP文件。BAM！受攻击主机的整个网络流量数据都在你手中了！
 
 
 
@@ -721,25 +722,26 @@ Once you are done,  open the PCAP file resulting from the script. BAM! The entir
 ------
 ## <a name="pcap"></a> 加载PCAP文件
 
-We have learned how to steal credentials from some email protocols, now let us extend this to all the traffic in the network!
+我们已经学习了如何从邮件协议中窃取凭据。现在让我们将这项功能扩展到所有网络流量数据中！
 
-### The PCAP Files Manipulation
+### PCAP文件的处理
 
-To save packets we can use the function **wrpacp**:
+使用**wrpacp**保存数据包：
+
 ```python
 wrpcap('packets.pcap', p)
 ```
 
-To read packets we can use **rdpcap**:
+使用**rdpcap**阅读数据包：
+
 ```python
 p = rdpcap('packets.pcap', p)
 p.show()
 ```
 
-### Setting up the Enviroment
+### 搭建环境
 
-
-Based in one of the examples from [Black Hat Python]() we are going to analyze images from HTTP traffic dumped in a PCAP file. We can do this with the library [opencv](http://opencv.org/). We also need to install [numpy](http://www.numpy.org/) and [scipy](http://www.scipy.org/):
+基于[Black Hat Python]()中的一个示例，我们将分析在PCAP文件中转储的HTTP流量中的图像。我们可以使用[opencv](http://opencv.org/)库来完成。另外还需要安装[numpy](http://www.numpy.org/)和[scipy](http://www.scipy.org/):
 
 ```sh
 $ sudo pip install numpy
@@ -747,14 +749,14 @@ $ sudo pip install scipy
 $ sudo yum install opencv-python
 ```
 
-We are going to go through a script that tries to detect image with human faces. But, first, either create or download a PCAP file with these images. For instance, these are some PCAP dump online sources:
+我们将看到一个试图使用人脸检测图像的脚本。但是，首先，使用这些图像创建或下载PCAP文件。例如，这里有一些在线的PCAP转储资源：
 [here](http://wiki.wireshark.org/SampleCaptures), [here](http://www.netresec.com/?page=PcapFiles), [here](http://www.pcapr.net/home), and [here](http://www.pcapr.net/browse?q=facebook+AND+png).
 
 ### 分析PCAP文件
 
 现在我们准备从HTTP流量转储中识别人脸。我们的脚本大概完成以下步骤：
 
-1) **http_assembler** takes a PCAP and separates each TCP session in a dictionary. Then it loops in these sections using the HTTP filter (which is the same as *Follow the TCP stream* in Wireshark). After the HTTP data is assembled, the headers are parsed with the **get_http_headers** function and sent to the **extract_image** function. If  image headers are returned, they are saved and sent to the function **face_detect**.
+1) **http_assembler**取出PCAP文件，并以字典序分离每个TCP会话。然后使用HTTP过滤器循环这些部分(和Wireshark中的*Follow the TCP stream*相同)。在HTTP数据被汇编之后，使用**get_http_headers**函数解析头部信息，并发送给 **extract_image** 函数。如果返回了图像头部，它们将被保存并发送给 **face_detect** 函数。
 
 ```python
 def http_assembler(PCAP):
@@ -789,7 +791,7 @@ def http_assembler(PCAP):
     return carved_images, faces_detected
 ```
 
-2) The **get_http_headers** function splits the headers using regex to find **'Content-Type'**:
+2) **get_http_headers**函数使用regex分割头部以找到**'Content-Type'**:
 
 ```python
 def get_http_headers(http_payload):
@@ -803,7 +805,7 @@ def get_http_headers(http_payload):
     return headers
 ```
 
-3) The **extract_image** extract the data part from the HTTP content, decompressing it if necessary:
+3) **extract_image**从HTTP包中提取数据，必要的时候解压缩：
 
 ```python
 def extract_image(headers, http_payload):
@@ -825,7 +827,7 @@ def extract_image(headers, http_payload):
     return image, image_type
 ```
 
-4) Finally, the **face_detect** function uses the **opencv** library to apply a classifier that is trained for detecting faces. It returns a rectangle coordinates to where the face is and saves the final image (by the way, beyond face detection, other types of image classifiers can be found [here](http://alereimondo.no-ip.org/OpenCV/34)):
+4) 最后，**face_detect** 函数使用 **opencv** 库来使用一个专门用于面部识别的分类器。它会在脸部位置显示一个矩形坐标，然后储存最终的图像(顺便说一下，除了面部识别，你也可以在 [这里](http://alereimondo.no-ip.org/OpenCV/34)找到其它类型的图像分类器）：
 
 ```python
 def face_detect(path, file_name):
