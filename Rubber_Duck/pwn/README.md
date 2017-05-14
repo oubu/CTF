@@ -79,55 +79,55 @@ FireFox配置文件副本
   GUI r
   REM 将会持有 Windows-key 并按 r
 
-* MENU or APP emulates the App key, sometimes referred to as the menu key or context menu key. On Windows systems this is similar to the SHIFT F10 key combo.
+* 菜单或应用程序模拟应用程序键，有时被称为菜单键或上下文菜单键。在Windows系统上，这类似于F10键组合的变化。
   GUI d
-  MENU
-  STRING v
-  STRING d
+  菜单
+  字符串 v
+  字符串 d
 
-* SHIFT: unlike CAPSLOCK, cruise control for cool, the SHIFT command can be used when navigating fields to select text, among other functions.
-  SHIFT INSERT
-  REM this is paste for most operating systems
+* 转变: 不同于大写锁定、巡航控制冷却，在导航字段选择文本和其他函数时，可以使用SHIFT命令。
+  转变插入
+  REM 这是大多数操作系统的粘贴
 
-* ALT key is instrumental in many automation operations:
+* ALT键在许多自动化操作中都有帮助:
   GUI r
-  DELAY 50
-  STRING notepad.exe
-  ENTER
-  DELAY 100
-  STRING Hello World
+  延迟 50
+  字符串 notepad.exe
+  输入
+  延迟 100
+  字符串 Hello World
   ALT f
-  STRING s
-  REM alt-f pulls up the File menu and s saves.
+  字符串 s
+  REM alt-f 停文件菜单和保存。
 
 * CONTROL or CTRL:
   CONTROL ESCAPE
-  REM this is equivalent to the GUI key in Windows
+  REM 这就相当于Windows中的GUI键
 
-* Arrow Keys: ^ Command ^ | DOWNARROW or DOWN | | LEFTARROW or LEFT | | RIGHTARROW or RIGHT | | UPARROW or UP |
+* 方向键: ^ 命令 ^ | 下箭头 或 下 | | 左箭头 或 左 | | 右箭头 或 右 | | 上箭头 或 上 |
 
 
-Compiling
+编译
 ==========
 
-Ducky Scripts are compiled into hex files ready to be named inject.bin and moved to the root of a microSD card for execution by the USB Rubber Ducky.
+鸭式脚本被编译成十六进制文件，准备命名为 inject.bin 然后移到 microSD 卡的根上，用USB橡皮鸭来执行。
 
-This is done with the tool duckencoder.
+这是利用 duckencoder 这个工具来完成的.
 
-duckencoder is a cross-platform command-line Java program which converts the Ducky Script syntax into hex files.
+duckencoder 是一个跨平台的命令行Java程序，它将小鸭脚本语法转换成十六进制文件。
 
-For example on a Linux system:
+例如在Linux系统上:
 
 java -jar duckencoder.jar -i exploit.txt -o /media/microsdcard/inject.bin
 
 
-Simple Ducky Payload Generator
+简单的鸭子有效负载产生器
 =============================
 
-Also a good option.
+也是一个不错的选择。
 https://code.google.com/p/simple-ducky-payload-generator/downloads/list
 
 
-Wiki
+维基
 ====
 https://code.google.com/p/ducky-decode/wiki/Index?tm=6
