@@ -1,37 +1,37 @@
 ## [Nikto](http://sectools.org/tool/nikto/)
 
-* Nikto is an Open Source (GPL) web server scanner which performs comprehensive tests against web servers for multiple items, including over 6400 potentially dangerous files/CGIs, checks for outdated versions of over 1200 servers, and version specific problems on over 270 servers. It also checks for server configuration items such as the presence of multiple index files, HTTP server options, and will attempt to identify installed web servers and software.
-
-* Most scanned vulnerabilities are things such as XSS, phpmyadmin logins,
-etc.
+* Nikto是一个开源(GPL)的web服务器扫描仪，它针对web服务器执行全面测试多个项目，,包括超过6400个有潜在危险的文件/CGIs, 检查超过1200台服务器的过时的版本,和超过270台服务器上的特殊问题。它还检查服务器配置项，如存在多个索引文件、HTTP服务器选项，并尝试识别已安装的web服务器和软件。
 
 
-* It's coded in Perl.
+* 大多数诸如XSS漏洞扫描,phpmyadmin登录，等等。
 
-* It is not a stealthy tool. It will test a web server in the quickest time possible, and it is  obvious in log files.
 
-* There is support for LibWhisker's anti-IDS methods.
+* 它是用Perl编写的。
 
-* To fire it up in a website:
+* 它不是一个秘密的工具。它将在最快的时间内测试web服务器，并且它在日志文件中很明确。
+
+* 这是支持 LibWhisker's anti-IDS 的方法。
+
+* 在一个网站上使用它:
 
 ```
 $ ./nikto.pl -h <IP> -p <PORT> -output <OUTPUT-FILE>
 ```
 
-* The output file can be open with *Niktorat*.
+* 输出文件可以用*Niktorat*打开。
 
 
 ## [W3af](http://w3af.org/)
 
-* w3af is a Web Application Attack and Audit Framework. The project's goal is to create a framework to help you secure your web applications by finding and exploiting all web application vulnerabilities.
+* w3af是一个Web应用程序的攻击和审计的框架。该项目的目标是创建一个框架，通过查找和利用所有web应用程序漏洞来帮助您保护web应用程序。
 
-* It's coded in Python.
+* 它是用Python编写的。
 
-* It has plugins that communicate with each other.
+* 它有可以互相通信的插件。
 
-* It removes some of the headaches involved in manual web application testing through its Fuzzy and manual request generator feature.
+* 它通过模糊测试和手动请求生成器特blind  OS性，移除了一些令人头疼的东西，涉及手动web应用程序测试。
 
-* It can be configured to run as a MITM proxy. The requests intercepted can be sent to the request generator and then manual web application testing can be peperformedsing variables parameters.
+* 它可以被配置为作为一个MITM代理运行。截获的请求可以被发送到请求发生器,然后手动web应用程序测试可以执行变量参数。
 
-* It also has features to exploit the vulnerabilities that it finds. w3af supports detection of both simple and blind  OS commanding vulnerability.
+* 它还具有利用其发现的漏洞的特性。w3af支持简单的，以及盲OS（blind OS）命令脆弱性的检测。
 
