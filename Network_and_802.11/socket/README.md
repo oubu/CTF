@@ -1,21 +1,21 @@
-# The Socket Module (by bt3)
+# Socket模块(by bt3)
 
-Python's [socket](https://docs.python.org/2/library/socket.html) module   contains all the tools to write [TCP](http://en.wikipedia.org/wiki/Transmission_Control_Protocol)/[UDP](http://en.wikipedia.org/wiki/User_Datagram_Protocol) clients and servers, including [raw sockets](http://en.wikipedia.org/wiki/Raw_socket). It's really nice!
+Python的[socket](https://docs.python.org/2/library/socket.html)模块包含所有用来写[TCP](http://en.wikipedia.org/wiki/Transmission_Control_Protocol)/[UDP](http://en.wikipedia.org/wiki/User_Datagram_Protocol)客户端和服务器的工具，包括[原始套接字](http://en.wikipedia.org/wiki/Raw_socket)。真的很棒！
 
 
 ---
-## A TCP Client
+## TCP客户端
 
-Let's start from the beginning. Whenever you want to create a TCP connection with the **socket** module, you do two things: create a socket object and then connect to a host in some port:
+让我们从起点开始。无论什么时候你想要使用**socket**模块创建一个TCP连接，你需要做两件事：创建套接字对象，然后在某个端口与一个主机相连接：
 
 ```python
 client = socket.socket( socket.AF_INET, socket.SOCK_STREAM )
 client.connect(( HOST, PORT ))
 ```
 
-The **AF_INET** parameter is used to define the standard IPv4 address (other options are *AF_UNIX* and *AF_INET6*). The **SOCK_STREAM** parameters indicate it is a **TCP** connection (other options are *SOCK_DGRAM*,  *SOCK_RAW*, *SOCK_RDM*, *SOCK_SEQPACKET*).
+**AF_INET**参数用来定义标准的IPv4地址(其他选项有*AF_UNIX*和*AF_INET6*)。 **SOCK_STREAM**参数表明这是一个 **TCP** 连接(其他选项包括*SOCK_DGRAM*,  *SOCK_RAW*, *SOCK_RDM*, *SOCK_SEQPACKET*)。
 
-All right, so the next thing you want to do is to send and receive data using socket's **send** and **recv** methods. And this should be good enough for a first script! Let's put everything together to create our TCP client:
+好了，现在你要做的下面一件事就是使用socket的**send**和**recv**方法发送和接受数据。这样我们就可以完成第一个脚本！让我们把所有东西整合起来来创建我们的TCP客户端：
 
 
 ```python
@@ -36,13 +36,13 @@ if __name__ == '__main__':
     tcp_client()
 ```
 
-The simplicity of this script relies in making the following assumptions about the sockets:
+这个脚本的简洁性建立在对套接字做出如下假设的基础上：
 
-* our *connection will always succeed*,
-* the *server is always waiting for us to send data first* (as oppose to servers that expect to send data and then wait for response), and
-* the server will always send us data back in a *short time*.
+* 我们的 *连接总是会成功*，
+* *服务器段总是在等待我们先发送数据* (不同于服务器端发送数据然后等待相应），并且
+* 服务器端总是会在 *很短时间* 内向我们返回消息
 
-Let's run this script (notice that we get *Moved Permanently* because Google  issues HTTPS connections):
+让我们运行这个脚本(注意我们得到了 *Moved Permanently* 因为Google建立了HTTPS连接):
 
 ```bash
 $  python tcp_client.py
@@ -66,18 +66,18 @@ The document has moved
 </BODY></HTML>
 ```
 
-Simple like that.
+就是这么简洁~
 
 ----------
-## A TCP Server
+## TCP服务器
 
-Let's move on and write a *multi-threaded* TCP server. For this we will use Python's [threading](https://docs.python.org/2/library/threading.html) module.
+让我们继续来写一个 *多线程* 的TCP服务器。我们要用到Python的[threading](https://docs.python.org/2/library/threading.html)模块。
 
-First we define the IP address and port that we want the server to listen on.  We then define a **handle_client** function that starts a thread to handle client connections. The function takes the client socket and gets data from the client, sending a **ACK** message.
+首先我们要定义IP地址和想要服务器监听的端口号。然后我们定义一个 **handle_client** 函数来启动一个线程处理客户端连接。这个函数接收客户端套接字，从客户端读取数据，发送 **ACK** 消息。
 
-The main function for our server, **tcp_server**, creates a server socket and starts listening on the port and IP (we set the maximum backlog of connections  to 5). Then it starts a loop waiting from when a client connects. When this happens,  it receives the client socket (the client variables go to the **addr** variable).
+我们服务器的主函数 **tcp_server** 创建了一个服务器套接字，并开始监听端口和IP (我们将连接的最大backlog设置为5)。然后它将运行一个循环等待客户端连接。当客户端连接开始时，它将接收客户端套接字(客户端变量变为 **addr** 变量)。
 
-At this point, the program creates a thread object for the function **handle_client** which we mentioned above:
+这里，程序会为我们上面提到的 **handle_client** 函数创建一个线程对象：
 
 ```python
 import socket
@@ -108,19 +108,21 @@ if __name__ == '__main__':
     tcp_server()
 ```
 
-We can run this script in one terminal and the client script (like the one we saw before) in a second terminal. Running the server:
+我们在一个终端上运行这个脚本，并在另一个终端上运行客户端脚本（就是我们之前看到的那个）。运行服务器：
+
 ```bash
 $ python tcp_server.py
 [*] Listening on 0.0.0.0:9090
 ```
 
-Running the client script (we changed it to connect at 127.0.0.1:9090):
+运行客户端脚本(我们使它连接到127.0.0.1:9090):
+
 ```bash
 $ python tcp_client.py
 ACK
 ```
 
-Now, back to the server  terminal, we successfully see the established connection:
+现在，返回服务器的终端，我们可以看到已经成功地建立了连接：
 
 ```bash
 $ python tcp_server.py
@@ -134,15 +136,15 @@ Awesome!
 
 
 ----------
-## An UDP Client
+## UDP客户端
 
-UDP is an alternative protocol to TCP. Like TCP, it is used for packet transfer from one host to another. Unlike TCP, it is a *connectionless* and *non-stream oriented protocol*. This means that an UDP server receives incoming packets from any host without establishing a reliable pipe type of connection.
+UDP是TCP的一个替代协议。和TCP一样，它用来将包从一个主机转发到另一个主机。和TCP不同的是，它是一种 *无连接的* 和 *无连接导向的* 协议。这意味着一个UDP主机不通过建立一个可靠的连接管道，来从其他主机接收包。
 
-We can make a few changes in the previous script to create a UDP client connection:
+对上面的脚本做一些小改动，我们便可以建立一个UDP客户端连接：
 
-* we  use **SOCK_DGRAM** instead of **SOCK_STREAM**,
-* because UDP is a connectionless protocol, we don't need to establish a connection beforehand, and
-* we use **sendto** and **recvfrom** instead of **send** and **recv**.
+* 使用 **SOCK_DGRAM** 代替 **SOCK_STREAM**,
+* 因为UDP是一个无连接的协议，所以我们不需要提前建立连接，并且
+* 我们使用 **sendto** 和 **recvfrom** 代替 **send** 和 **recv**.
 
 ```python
 import socket
@@ -163,9 +165,9 @@ if __name__ == '__main__':
 
 -----
 
-## An UDP Server
+## UDP服务器
 
-Below is an example of a very simple  UDP server. Notice that there is no **listen** or **accept**:
+下面是一个非常简单的UDP服务器的例子。注意这里面没有 **listen** 或 **accept**：
 
 
 ```python
@@ -187,19 +189,18 @@ if __name__ == '__main__':
     udp_server()
 ```
 
-You can test it by running the server in one terminal and the client in another. It works and it's fun!
+你可以在一个终端中运行服务器，在另一个终端中运行客户端，进行测试。它将成功运行，过程也十分有趣。
 
 ---------
-## A Very Simple Netcat Client
+## 一个非常简单的Netcat客户端
 
-Sometimes when you are penetrating a system, you wish you have [netcat](http://netcat.sourceforge.net/), which might be not installed. However, if you have Python, you can create a netcat network client and server.
+有时候，当你侵入一个系统时，你想要[netcat](http://netcat.sourceforge.net/)，但可能你没有安装。但是，如果你有Python，你就可以创建一个netcat网络的客户端和服务器。
 
-The following script is the simplest netcat client setup one can have, extended from our TCP client script to support a loop.
+下面这个脚本就是一个可以完成的最简单的netcat客户端的建立脚本，由我们的TCP客户端脚本添加循环后扩展而来。
 
-In addition, now we use the **sendall** method. Unlike **send**, it will continue to send data until either all data has been sent or an error occurs (None is returned on success).
+另外，现在我们将使用 **sendall** 方法。不同于 **send**，它会持续地发送数据直到所有的数据被发送完或者产生了错误（没有成功的返回结果）。
 
-We also use **close** to release the resource. This does not necessarily close the connection immediately so we use **shutdown**  to close the connection in a timely fashion:
-
+我们也需要使用 **close** 来释放资源。它并不会立刻关闭连接，所以我们使用 **shutdown** 来及时关闭连接：
 
 ```python
 import socket
@@ -233,16 +234,16 @@ if __name__ == '__main__':
 
 
 ---------
-## A Complete Netcat Client and Server
+## 一个完整的Netcat客户端和服务器
 
+让我们拓展我们之前的例子，来写一个完整的netcat的客户端和服务器的程序。
 
-Let's extend our previous example to write a full program for a netcat server and client.
-
-For this task we are going to use two special Python modules: [getopt](https://docs.python.org/2/library/getopt.html), which is a parser for command line options (familiar to users of the C getopt()), and [subprocess](https://docs.python.org/2/library/subprocess.html), which allows you to spawn new processes.
+为了完成这个任务，我们将使用两个特别的Python模块：[getopt](https://docs.python.org/2/library/getopt.html)，用来作为命令行选项的解析器(和C的getopt()很像)和[subprocess](https://docs.python.org/2/library/subprocess.html)，用于产生一个新的进程。
 
 
 ### The Usage Menu
-The first function we write is  **usage**, with the options we want for our tool:
+
+我们写的第一个函数是 **usage**，以及我们的工具需要的选项：
 
 ```python
 def usage():
@@ -260,8 +261,9 @@ def usage():
     sys.exit(0)
 ```
 
-## Parsing Arguments in the Main Function
-Now, before we dive in each specific functions, let's see what the **main** function does. First it reads the arguments and parses them using **getopt**. Then, it processes them. Finally, the program decides if it is a client or a server, with the constant **LISTEN**:
+## 解析主函数中的参数
+
+现在，在我们具体研究特定函数之前，让我们看看 **主** 函数都做了什么。首先，它都去了参数并使用 **getopt** 解析了它们。然后，它加载参数。最后程序使用常量 **LISTEN** 判定它是一个客户端还是一个服务器：
 
 ```python
 import socket
@@ -330,8 +332,9 @@ if __name__ == '__main__':
 ```
 
 
-### The Client Function
-The **client_sender** function is very similar to the netcat client snippet we have seen above. It creates a socket object and then it goes to a loop to send/receive data:
+### 客户端函数
+
+**client_sender** 函数和我们上面看到的客户端代码片很像。它创建了一个套接字对象，然后在一个循环中发送/接收数据：
 
 ```python
 def client_sender(buffer):
@@ -368,8 +371,8 @@ def client_sender(buffer):
         client.close()
 ```
 
-### The Server Functions
-Now, let's take a look into the  **server_loop**  function, which is very similar to the TCP server script we saw before:
+### 服务器函数
+现在，让我们看一下 **server_loop** 函数，它和我们上面看到的TCP服务器脚本很像：
 
 ```python
 def server_loop():
@@ -384,7 +387,8 @@ def server_loop():
         client_thread.start()
 ```
 
-The **threading** function calls **client_handler** which will either upload a file, or execute a command (in a special shell named *NETCAT*):
+**threading** 函数调用 **client_handler** ，以上传文件或者执行命令(在一个特殊的*NETCAT* shell中):
+
 ```python
 
 def client_handler(client_socket):
@@ -433,7 +437,7 @@ def client_handler(client_socket):
             client_socket.send(response)
 ```
 
-Observe the two last lines above. The program calls the function **run_command** which use the **subprocess** library to allow a process-creation interface. This gives a number of ways to start and interact with client programs:
+观察上面脚本的最后两行。这个程序调用了一个使用 **subprocess** 库的 **run_command** 函数来构造一个进程建立端口。它给出了一系列启动和与客户端程序交互的方法：
 
 ```python
 def run_command(command):
@@ -447,14 +451,14 @@ def run_command(command):
     return output
 ```
 
-### Firing Up a Server and a Client
-Now we can put everything together and run the script as a server in a terminal and as a client in another. Running as a server:
+### 启动服务器和客户端
+现在我们将所有的东西整合起来。在一个客户端里面运行服务器脚本，在另一个里面运行客户端脚本。作为服务器运行：
 
 ```bash
 $ netcat_awesome.py -l -p 9000 -c
 ```
 
-And as a client (to get the shell, press CTRL+D for EOF):
+作为客户端(要获取shell，CTRL+D来EOF):
 
 ```bash
 $ python socket/netcat_awesome.py -t localhost -p 9000
@@ -472,7 +476,7 @@ NETCAT:
 
 ### The Good 'n' Old Request
 
-Additionally, we can use our client to send out requests:
+此外，我们可以使用客户端来发送响应：
 
 ```bash
 $  echo -ne "GET / HTTP/1.1\nHost: www.google.com\r\n\r\n" | python socket/netcat_awesome.py -t www.google.com -p 80
@@ -492,19 +496,19 @@ Transfer-Encoding: chunked
 (...)
 ```
 
-Cool, huh?
+很酷吧？
 
 ------
 
-## A TCP Proxy
+## TCP代理
 
-A TCP proxy can be very useful for forwarding traffic and when assessing network-based softwares (for example, when you cannot run [Wireshark](http://bt3gl.github.io/wiresharking-for-fun-or-profit.html) or you cannot load drivers or tools in the machine you are exploiting).
+在转发流量和评估基于网络的软件时，TCP代理是十分有用的(例如，但你无法运行[Wireshark](http://bt3gl.github.io/wiresharking-for-fun-or-profit.html)或者你无法加载你正在使用的机器的驱动程序或工具）。
 
-To create a proxy we need to verify if we need to *first initiate a connection* to the remote side. This will request data before going into our main loop and some server daemons expect you to do this first (for instance, FTP servers send a banner first).  We call this information **receive_first**.
+要创建代理，我们需要验证我们是否需要 *先启动到远程端的连接* 。它将在进入主循环之前请求数据，一些服务器守护程序希望你首先执行这个操作（例如，FTP服务器首先发送banner）。我们把这个信息叫做 **receive_first**。
 
 
-### The Main Function
-So let us start with our **main** function. First we define the usage, which should have four more arguments together with  **receive_first**. Then we check these arguments to variables and start a listening socket:
+### 主函数
+所以，让我们 **主** 函数开始。首先，我们来定义用法，它应该有4个多的参数和 **receive_first**。然后让我们检测参数到变量，并启动一个监听套接字：
 
 ```python
 import socket
@@ -531,9 +535,9 @@ def main():
 ```
 
 
-### The Server Loop Function
+### 服务器循环函数
 
-Like before we start creating a socket and binding this to a port and a host. Then we start a loop that accepts incoming connections and spawns a thread to the new connection:
+就像我们之前开始创建一个套接字并将它和端口和主机绑定。然后我们需要开始一个循环，并接受将要进行的连接，然后为新的连接创建一个新的线程：
 
 ```python
 def server_loop(local_host, local_port, remote_host, remote_port, receive_first):
@@ -558,18 +562,18 @@ def server_loop(local_host, local_port, remote_host, remote_port, receive_first)
         proxy.start()
 ```
 
-### The Proxy Handler Functions
+### 代理Handler函数
 
-In the last two lines of the above snippet, the program spawns a thread for the function **proxy_handler** which we show below. This function creates a TCP socket and connects to the remote host and port. It then checks for the **receive_first** parameter. Finally, it goes to a loop where it:
+在上面的程序的最后两行，这个程序给我们即将展示的 **proxy_handler** 函数启动了一个新的线程。这个函数创建了一个TCP套接字，然后和远端主机和端口进行连接。然后它将校验 **receive_first** 参数。最后，进入一个循环：
 
-1. reads from local host (with the function **receive_from**),
-2. processes (with the function **hexdump**),
-3. sends to remote host (with the function **response_handler** and **send**),
-4. reads from remote host (with the function **receive_from**),
-5. processes (with the function **hexdump**), and
-6. sends to local host (with the function **response_handler** and **send**).
+1. 从本地主机读取（使用 **receive_from** 函数)，
+2. 加载 (使用 **hexdump** 函数)，
+3. 发送给远端主机（使用 **response_handler** 和 **send** 函数)，
+4. 从远端主机读取(使用 **receive_from** 函数)，
+5. 加载(使用 **hexdump** 函数)，然后
+6. 发送给本地主机(使用 **response_handler** 和 **send** 函数)
 
-This keeps going until the loop is stopped, which happens when both local and remote buffers are empty. Let's take a look:
+这个程序将会持续运行，直到本地和远端的缓冲区都为空时循环终止。让我们来看一下：
 
 ```python
 def proxy_handler(client_socket, remote_host, remote_port, receive_first):
@@ -611,7 +615,7 @@ def proxy_handler(client_socket, remote_host, remote_port, receive_first):
 ```
 
 
-The **receive_from** function takes a socket object and performs the receive, dumping the contents of the packet:
+**receive_from** 函数接收一个套接字对象并执行接收，转储包的内容：
 
 ```python
 def receive_from(connection):
@@ -628,7 +632,7 @@ def receive_from(connection):
     return buffer
 ```
 
-The **response_handler** function is used to modify the packet contents from the inbound traffic (for example, to  perform fuzzing, test for authentication, etc). The function **request_handler** does the same for outbound traffic:
+**response_handler** 函数用于修改进入的流量的数据包内容（例如，执行fuzzing，认证测试等）。出站时，**request_handler** 函数执行相同内容：
 
 ```python
 def request_handler(buffer):
@@ -642,7 +646,7 @@ def response_handler(buffer):
 ```
 
 
-Finally, the function **hexdump** outputs the packet details with hexadecimal and ASCII characters:
+最后， **hexdump** 函数使用十六进制和ASCII字符输出包的细节：
 
 ```python
 def hexdump(src, length=16):
@@ -657,9 +661,10 @@ def hexdump(src, length=16):
 
 
 
-### Firing Up our Proxy
+### 运行我们的代理
 
-Now we just need to run our script with some server. For example, for a FTP server at the standard port 21:
+现在我们只需要用某个服务器来运行我们的脚本。比如，使用标准端口21的FTP服务器：
+
 ```sh
 $ sudo ./tcp_proxy.py localhost 21 ftp.target 21 True
 [*] Listening on localhost:21
@@ -670,63 +675,63 @@ $ sudo ./tcp_proxy.py localhost 21 ftp.target 21 True
 
 
 ---
-## Extra Stuff: The socket Object Methods
+## 其他东西：socket对象方法
 
-Additionally, let's  take a quick look to all the methods available with the **socket** object from the **socket** module. I think it's useful to have an idea of this list:
+另外，让我们来看一下 **socket** 模块中 **socket** 对象提供的所有方法。我认为掌握这个列表是很有用的：
 
-* **socket.accept()**: Accept a connection.
+* **socket.accept()**: 接受连接
 
-* **socket.bind(address)**: Bind the socket to address.
+* **socket.bind(address)**: 绑定地址到套接字
 
-* **socket.close()**: Close the socket.
+* **socket.close()**: 关闭套接字
 
-* **socket.fileno()**: Return the socket's file descriptor.
+* **socket.fileno()**: 返回套接字文件描述符
 
-* **socket.getpeername()**: Return the remote address to which the socket is connected.
+* **socket.getpeername()**: 返回连接到当前套接字的远端地址
 
-* **socket.getsockname()**: Return the socket's own address.
+* **socket.getsockname()**: 返回当前套接字的地址
 
-* **socket.getsockopt(level, optname[, buflen])**: Return the value of the given socket option.
+* **socket.getsockopt(level, optname[, buflen])**: 返回指定套接字的参数
 
-* **socket.listen(backlog)**: Listen for connections made to the socket. The backlog argument specifies the maximum number of queued connections
+* **socket.listen(backlog)**: 开始对连接的监听。backlog参数定了最大的连接数
 
-* **socket.makefile([mode[, bufsize]])**: Return a file object associated with the socket.
+* **socket.makefile([mode[, bufsize]])**: 创建并返回一个与该套接字相关联的文件
 
-* **socket.recv(bufsize[, flags])**: Receive data from the socket.
+* **socket.recv(bufsize[, flags])**: 接收TCP套接字数据
 
-* **socket.recvfrom(bufsize[, flags])**: Receive data from the socket.
+* **socket.recvfrom(bufsize[, flags])**: 接收UDP套接字数据
 
-* **socket.recv_into(buffer[, nbytes[, flags]])**: Receive up to nbytes bytes from the socket, storing the data into a buffer rather than creating a new string.
+* **socket.recv_into(buffer[, nbytes[, flags]])**: 从套接字接收n 字节，将数据转储到缓冲区而不是创建一个新的字符串
 
-* **socket.send(string[, flags])**: Send data to the socket.
+* **socket.send(string[, flags])**: 发送TCP数据
 
-* **socket.sendall(string[, flags])**: Send data to the socket.
+* **socket.sendall(string[, flags])**: 完整发送TCP数据
 
-* **socket.sendto(string, address)**: Send data to the socket.
+* **socket.sendto(string, address)**: 发送UDP数据
 
-* **socket.setblocking(flag)**: Set blocking or non-blocking mode of the socket.
+* **socket.setblocking(flag)**: 设置套接字的阻塞与非阻塞模式
 
-* **socket.settimeout(value)**: Set a timeout on blocking socket operations.
+* **socket.settimeout(value)**: 设置阻塞套接字操作的超时时间
 
-* **socket.gettimeout()**: Return the timeout in seconds associated with socket operations, or None if no timeout is set.
+* **socket.gettimeout()**: 返回阻塞套接字操作的超时时间
 
-* **socket.setsockopt(level, optname, value)**: Set the value of the given socket option.
+* **socket.setsockopt(level, optname, value)**: 设定指定套接字的参数
 
-* **socket.shutdown(how)**: Shut down one or both halves of the connection.
+* **socket.shutdown(how)**: 关闭连接的两个部分
 
-* **socket.family**: The socket family.
+* **socket.family**: 套接字家族
 
-* **socket.type**: The socket type.
+* **socket.type**: 套接字
 
-* **socket.proto**: The socket protocol.
-
-
+* **socket.proto**: 套接字协议
 
 
 
 
 
-## Further References:
+
+
+## 更多相关资料：
 
 - [Python's Socket Documentation](https://docs.python.org/2/library/socket.html)
 - [Black Hat Python](http://www.nostarch.com/blackhatpython).
