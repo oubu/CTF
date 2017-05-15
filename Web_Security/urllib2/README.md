@@ -1,4 +1,4 @@
-# Hacking the Web with Python's urllib2 (by bt3)
+# 用Python的urllib2(by bt3网络黑客攻击)进行
 
 Python's  [urllib2](https://docs.python.org/2/library/urllib2.html) library is **the tool** to interact with web services, with several functions and classes to help handling URLs. **urllib2** is written in the top of [httplib](https://docs.python.org/2/library/httplib.html) library (which defines classes to implement the client side of HTTP and HTTPs). In turn, **httplib** uses the [socket](http://bt3gl.github.io/black-hat-python-networking-the-socket-module.html) library.
 
