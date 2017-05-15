@@ -31,8 +31,8 @@
 ### Vulnerabilities and Exploits 杨慧茹
 
 ### Web Security 
-- (main) + SQLi + Scanners + urllib2 README.md 曾令仪
-- OS_Command_Injection + Phishing README.md 杨慧茹
+- (main) + SQLi + Scanners README.md 曾令仪
+- OS_Command_Injection + Phishing + urllib2 README.md 杨慧茹
 
 
 
