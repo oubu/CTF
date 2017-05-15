@@ -1,21 +1,21 @@
-# 用Python的urllib2(by bt3网络黑客攻击)进行
+# 用Python的urllib2(by bt3)进行网络黑客攻击
 
-Python's  [urllib2](https://docs.python.org/2/library/urllib2.html) library is **the tool** to interact with web services, with several functions and classes to help handling URLs. **urllib2** is written in the top of [httplib](https://docs.python.org/2/library/httplib.html) library (which defines classes to implement the client side of HTTP and HTTPs). In turn, **httplib** uses the [socket](http://bt3gl.github.io/black-hat-python-networking-the-socket-module.html) library.
+Python的[urllib2](https://docs.python.org/2/library/urllib2.html)资料库是**the tool**,可以与web服务进行交互,有一些函数和类别来帮助处理url. **urllib2**在[httplib]顶端写入(https://docs.python.org/2/library/httplib.html)资料库(它定义了类实现的HTTP和HTTPs的客户端).反过来, **httplib**使用[socket](http://bt3gl.github.io/black-hat-python-networking-the-socket-module.html)资料库.
 
-In this post I [introduce urllib2](#intro) and then I work on two problems: [mapping  webapps  from their installation files](#map) and [brute-forcing the contents of webapps to find hidden resources](#brute1).
+这一次我[介绍urllib2](#intro),然后我主要攻克两个问题:[如何从他们的安装文件映射网页应用程序](#map)和[如何强力爆破网页应用程序内容以找到隐藏的资源](#brute1).
 
 
 -----
+开始的最简单的方法是查看**urlopen**方法,返回一个在Python中类似于**file**的对象(附加三个方法: **geturl**,针对资源的URL; **info**,针对元信息;以及**getcode**,针对HTTP状态代码).
 
 ## <a name="intro"></a>urllib2 101
 
 
-The easiest way to start is by taking a look at the **urlopen** method, which returns an object similar to a **file** in Python (plus three more methods: **geturl**, for the URL of the resource; **info**, for meta-information; and **getcode**, for HTTP status code).
 
 
 
-### A Simple GET
-Let's see how a simple [GET](http://www.w3schools.com/tags/ref_httpmethods.asp) request works. This is done directly  with [urlopen](https://docs.python.org/2/library/urllib2.html#urllib2.urlopen):
+### 简单获取
+让我们看看一个简单的例子,如何[获取](http://www.w3schools.com/tags/ref_httpmethods.asp)所需求的工作.这是直接用[urlopen]完成的(https://docs.python.org/2/library/urllib2.html#urllib2.urlopen):
 
 
 ```python
@@ -25,9 +25,9 @@ Let's see how a simple [GET](http://www.w3schools.com/tags/ref_httpmethods.asp) 
 <!doctype html><html itemscope="" itemtype="http://schema.org/WebPage" lang="en"><head><meta content="Search the world's information, including (...)
 ```
 
-Notice that, differently from modules such as [scapy](http://bt3gl.github.io/black-hat-python-infinite-possibilities-with-the-scapy-module.html) or [socket](http://bt3gl.github.io/black-hat-python-the-socket-module.html), we *need to specify the protocol* in the URL (HTTP).
+请注意,不同于类似[scapy](http://bt3gl.github.io/black-hat-python-infinite-possibilities-with-the-scapy-module.html)或[socket](http://bt3gl.github.io/black-hat-python-the-socket-module.html)的模块,我们在URL(HTTP)中*需要指定协议*.
 
-Now, let's be fancy and customize the output:
+现在,让我们创造并且自定义输出:
 
 ```python
 import urllib2
@@ -47,7 +47,7 @@ print 'DATA    :'
 print data
 ```
 
-Which leads to something like this:
+将会导致这样:
 ```sh
 RESPONSE: <addinfourl at 140210027950304 whose fp = <socket._fileobject object at 0x7f8530eec350>>
 URL     : http://www.google.com
@@ -71,14 +71,13 @@ DATA    :
 ```
 
 
-### A simple POST
+### 简单文章
 
-[POST](http://www.w3schools.com/tags/ref_httpmethods.asp) requests send data to a URL ([often refering](https://docs.python.org/2/howto/urllib2.html#data) to [CGI](http://en.wikipedia.org/wiki/Common_Gateway_Interface) scripts or forms in a web applications).
+[POST](http://www.w3schools.com/tags/ref_httpmethods.asp)需要向URL传输数据([往往参照](https://docs.python.org/2/howto/urllib2.html#data)[CGI](http://en.wikipedia.org/wiki/Common_Gateway_Interface)在网页应用程序中的脚本或形式).
 
-POST requests, differently from GET requests, usually have side-effects such as changing the state of the system. But data can also be passed in an HTTP GET reqest by encoding it in the URL.
+POST需要,不同于GET的要求,通常有诸如改变系统的状态之类的副作用.但数据也可以通过在URL中进行编码来通过一个HTTP GET请求.
 
-In the case of a HTTML form, the data needs to be encoded and  this encoding is made with [urllib](https://docs.python.org/2/library/urllib.html)'s method **urlencode** (a method used for the generation
-of GET query strings):
+在HTTML形式下,数据需要被编码并且这一编码由[urllib](https://docs.python.org/2/library/urllib.html)的工具**urlencode** (这里使用的一种方法以进行GET字符串查询)完成:
 
 
 ```python
@@ -94,7 +93,7 @@ response = urllib2.urlopen(url)
 print response.read()
 ```
 
-In reality, when working with **urllib2**, a more efficient way to customize the **urlopen** method is by passing a **Request object** as the data argument:
+事实上,使用**urllib2**时,更有效定制**urlopen**类函数的方式是通过将**Request object**作为数据参数:
 
 ```python
 data = { 'q':'query string', 'foo':'bar' }
@@ -106,7 +105,7 @@ response = urllib2.urlopen(req)
 print response.read()
 ```
 
-That's one of the differences between **urllib2** and **urllib**: the former can accept a **Request object** to set the headers for a URL request, while the last  accepts only a URL.
+这是一个**urllib2**和**urllib**之间的区别:前者可以接受**Request object**设置头文件的URL请求,而后一个只接受URL.
 
 
 
